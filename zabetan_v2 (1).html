@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZabeTan · زیب تن — Pakistani Women Dresses</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'GandharaSuls';
+  src: url('https://urdufonts.net/fonts/gandhara-suls-regular.ttf') format('truetype'),
+       url('https://cdn.jsdelivr.net/gh/google/fonts@main/ofl/notonastalijurdu/NotoNastaliqUrdu%5Bwght%5D.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+</style>
+<script id="zt-loader">
+(function(){
+  fetch('zt-data.json?v='+Date.now())
+    .then(function(r){return r.ok?r.json():null;})
+    .then(function(d){
+      if(!d)return;
+      if(d.products)localStorage.setItem('zt_products',JSON.stringify(d.products));
+      if(d.socials)localStorage.setItem('zt_socials',JSON.stringify(d.socials));
+      if(d.adminPass)localStorage.setItem('zt_adminpass',d.adminPass);
+      if(d.owner)localStorage.setItem('zt_owner',JSON.stringify(d.owner));
+      if(d.reviews)localStorage.setItem('zt_reviews',JSON.stringify(d.reviews));
+      if(typeof renderProducts==='function')renderProducts();
+      if(typeof renderSocials==='function')renderSocials();
+      if(typeof renderOwnerStrip==='function')renderOwnerStrip();
+      if(typeof renderReviews==='function')renderReviews();
+    }).catch(function(){});
+}());
+</script>
+<style>
+:root{
+  --rose:#b5556a;
+  --blush:#f5e6ea;
+  --cream:#fdf8f4;
+  --gold:#c8963e;
+  --deep:#2d1a22;
+  --muted:#9a7f88;
+  --warm:#ede0e4;
+  --sage:#7a9e7e;
+  --ink:#1e1014;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Cormorant Garamond',Georgia,serif;background:var(--cream);color:var(--ink);overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:0.5;}
+
+/* ── HERO SLIDESHOW ── */
+.hero-slides{position:absolute;inset:0;z-index:0;}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;opacity:0;transition:opacity 1.2s ease;}
+.hero-slide.active{opacity:1;}
+.hero-slide-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(45,26,34,0.72) 0%,rgba(45,26,34,0.55) 50%,rgba(45,26,34,0.80) 100%);}
+.hero-slide-dots{position:absolute;bottom:90px;left:50%;transform:translateX(-50%);z-index:3;display:flex;gap:8px;}
+.hero-slide-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:all .25s;border:none;padding:0;}
+.hero-slide-dot.active{background:var(--gold);transform:scale(1.3);}
+.hero-no-img{position:absolute;inset:0;z-index:0;}
+
+/* Admin hero upload button (only visible in edit mode) */
+.hero-edit-btn{position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:10;background:rgba(45,26,34,0.85);color:var(--gold);border:1px solid rgba(200,150,62,.4);padding:8px 18px;border-radius:20px;font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;display:none;align-items:center;gap:7px;transition:all .2s;backdrop-filter:blur(4px);}
+.hero-edit-btn:hover{background:rgba(200,150,62,.2);border-color:var(--gold);}
+body.admin-active .hero-edit-btn{display:flex;}
+
+/* Admin hero images panel section */
+.hero-img-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px;}
+.hero-img-slot{border:2px dashed rgba(181,85,106,.3);border-radius:3px;aspect-ratio:16/9;position:relative;overflow:hidden;cursor:pointer;transition:all .2s;background:var(--cream);}
+.hero-img-slot:hover{border-color:var(--rose);}
+.hero-img-slot.filled{border-style:solid;border-color:var(--sage);}
+.hero-img-slot img{width:100%;height:100%;object-fit:cover;display:block;}
+.hero-img-slot input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.hero-img-slot-hint{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;}
+.hero-img-slot-hint span{font-size:1.1rem;}
+.hero-img-slot-hint p{font-family:'DM Mono',monospace;font-size:.48rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:3px;}
+.hero-img-slot.filled .hero-img-slot-hint{display:none;}
+.hero-img-slot-rm{position:absolute;top:4px;right:4px;background:rgba(45,26,34,.8);color:#fff;border:none;border-radius:50%;width:20px;height:20px;display:none;align-items:center;justify-content:center;font-size:.65rem;cursor:pointer;z-index:2;}
+.hero-img-slot.filled .hero-img-slot-rm{display:flex;}
+
+/* ── HERO ── */
+header{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--deep);overflow:hidden;padding:60px 20px;}
+.hero-petals{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.petal{position:absolute;width:300px;height:300px;border-radius:50%;opacity:.06;}
+.petal-1{background:var(--rose);top:-80px;right:-60px;width:500px;height:500px;}
+.petal-2{background:var(--gold);bottom:-100px;left:-80px;width:420px;height:420px;}
+.petal-3{background:#e8b4c2;top:40%;left:60%;width:200px;height:200px;opacity:.04;}
+.hero-pattern{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(200,150,62,.08) 1px,transparent 1px);background-size:32px 32px;}
+
+.logo-wrap{position:relative;z-index:2;text-align:center;animation:fadeUp 1.2s ease both;}
+.logo-urdu{font-family:'GandharaSuls','Noto Nastaliq Urdu',serif;font-size:clamp(1.4rem,4vw,2.2rem);color:var(--gold);letter-spacing:.02em;margin-bottom:4px;direction:rtl;}
+.logo-english{font-size:clamp(4.5rem,14vw,10rem);font-weight:300;line-height:.85;color:var(--cream);letter-spacing:-.02em;}
+.logo-english em{font-style:italic;color:var(--rose);}
+.logo-divider{width:80px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:18px auto;}
+.logo-tagline{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.4em;color:var(--muted);text-transform:uppercase;margin-top:4px;}
+.logo-tagline-urdu{font-family:'GandharaSuls','Noto Nastaliq Urdu',serif;font-size:.9rem;color:rgba(200,150,62,.7);margin-top:6px;direction:rtl;}
+
+.hero-badges{position:relative;z-index:2;display:flex;gap:16px;margin-top:40px;flex-wrap:wrap;justify-content:center;animation:fadeUp 1.4s .2s ease both;}
+.hero-badge{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.2em;padding:7px 16px;border:1px solid rgba(200,150,62,.3);color:rgba(200,150,62,.8);border-radius:20px;text-transform:uppercase;}
+.scroll-cue{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;animation:fadeUp 1.6s .4s ease both;}
+.scroll-cue span{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.25em;color:var(--muted);text-transform:uppercase;}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite;}
+
+/* ── NAV ── */
+.nav-strip{background:var(--deep);border-bottom:1px solid rgba(200,150,62,.18);position:sticky;top:0;z-index:100;padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:58px;}
+.nav-brand{display:flex;flex-direction:column;align-items:flex-start;}
+.nav-brand-en{font-size:1.1rem;font-weight:300;color:var(--cream);letter-spacing:.08em;}
+.nav-brand-en em{font-style:italic;color:var(--rose);}
+.nav-brand-ur{font-family:'GandharaSuls','Noto Nastaliq Urdu',serif;font-size:.8rem;color:var(--gold);line-height:1;direction:rtl;}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-cart{display:flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;cursor:pointer;padding:6px 14px;border:1px solid rgba(200,150,62,.25);border-radius:20px;transition:all .2s;}
+.nav-cart:hover{border-color:var(--gold);color:var(--gold);}
+.nav-cart-count{background:var(--rose);color:#fff;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:.55rem;}
+
+/* ── OWNER STRIP ── */
+.owner-strip{background:linear-gradient(135deg,var(--deep) 0%,#3d1f2d 100%);padding:22px 60px;display:flex;align-items:center;gap:20px;border-bottom:1px solid rgba(200,150,62,.15);}
+.owner-avatar{width:58px;height:58px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);flex-shrink:0;}
+.owner-avatar-placeholder{width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--gold));display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;border:2px solid rgba(200,150,62,.4);}
+.owner-info{flex:1;}
+.owner-name{font-size:1.15rem;font-weight:400;color:var(--cream);}
+.owner-tagline{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-top:3px;}
+.owner-badges{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
+.owner-badge{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.12em;padding:3px 10px;border:1px solid rgba(200,150,62,.3);color:var(--gold);border-radius:20px;text-transform:uppercase;}
+.owner-urdu{font-family:'GandharaSuls','Noto Nastaliq Urdu',serif;font-size:1rem;color:rgba(200,150,62,.7);direction:rtl;margin-left:auto;}
+
+/* ── INTRO BAND ── */
+.intro-band{background:var(--blush);padding:80px 60px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;border-bottom:1px solid rgba(181,85,106,.1);}
+.intro-text p{font-size:1.2rem;line-height:1.8;color:var(--muted);font-weight:300;margin-top:18px;}
+.section-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.4em;color:var(--rose);text-transform:uppercase;margin-bottom:8px;}
+.section-title{font-size:clamp(2rem,5vw,3.2rem);font-weight:300;line-height:1.1;}
+.section-title em{font-style:italic;color:var(--rose);}
+.section-title-urdu{font-family:'GandharaSuls','Noto Nastaliq Urdu',serif;font-size:1.4rem;color:var(--muted);margin-top:6px;direction:rtl;}
+.intro-stats{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+.stat{border-left:2px solid var(--rose);padding-left:20px;}
+.stat-num{font-size:2.4rem;font-weight:300;color:var(--deep);line-height:1;}
+.stat-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-top:4px;}
+
+/* ── FILTERS ── */
+/* ── SECTION TABS (Women / Men) ── */
+.section-tabs{display:flex;gap:0;margin-bottom:50px;border-bottom:2px solid var(--warm);justify-content:center;}
+.section-tab{display:flex;align-items:center;gap:8px;padding:14px 40px;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;cursor:pointer;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);transition:all .2s;}
+.section-tab:hover{color:var(--rose);}
+.section-tab.active{color:var(--rose);border-bottom-color:var(--rose);}
+.section-tab svg{transition:transform .2s;}
+.section-tab.active svg{transform:scale(1.15);}
+
+.gallery-section{padding:90px 60px;}
+.gallery-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:50px;flex-wrap:wrap;gap:20px;}
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;}
+.filter-btn{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.14em;padding:8px 18px;border:1px solid currentColor;background:none;cursor:pointer;text-transform:uppercase;color:var(--muted);transition:all .2s;border-radius:20px;}
+.filter-btn.active,.filter-btn:hover{background:var(--rose);color:#fff;border-color:var(--rose);}
+
+/* ── PRODUCT GRID ── */
+.product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.product-card{position:relative;background:#fff;border-radius:8px;overflow:hidden;cursor:pointer;transition:transform .4s cubic-bezier(.25,.46,.45,.94),box-shadow .4s ease;border:1px solid rgba(181,85,106,.08);}
+.product-card:hover{transform:translateY(-8px);box-shadow:0 28px 60px rgba(45,26,34,.15);}
+.product-card.tall{grid-row:span 2;}
+.product-card.sold-out{opacity:.85;}
+
+/* BADGES */
+.card-badges{position:absolute;top:12px;left:12px;z-index:10;display:flex;flex-direction:column;gap:5px;}
+.badge{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.12em;padding:4px 10px;border-radius:20px;text-transform:uppercase;}
+.badge-discount{background:var(--rose);color:#fff;}
+.badge-sold{background:#555;color:#fff;}
+.badge-new{background:var(--sage);color:#fff;}
+.badge-hot{background:var(--gold);color:var(--deep);}
+
+/* WISHLIST */
+.wishlist-btn{position:absolute;top:12px;right:12px;z-index:10;width:32px;height:32px;background:rgba(255,255,255,.9);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all .2s;backdrop-filter:blur(4px);}
+.wishlist-btn:hover{background:#fff;transform:scale(1.1);}
+.wishlist-btn.liked{color:var(--rose);}
+
+/* SLIDESHOW */
+.card-slideshow{position:relative;overflow:hidden;}
+.slide-img{width:100%;aspect-ratio:3/4;object-fit:cover;display:none;transition:transform .6s ease;}
+.product-card.tall .slide-img{aspect-ratio:2/3;}
+.slide-img.active{display:block;}
+.product-card:hover .slide-img.active{transform:scale(1.04);}
+.color-placeholder{width:100%;aspect-ratio:3/4;}
+.product-card.tall .color-placeholder{aspect-ratio:2/3;}
+.slide-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:5;}
+.slide-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;transition:all .2s;}
+.slide-dot.active{background:#fff;transform:scale(1.2);}
+.slide-arrows{position:absolute;top:50%;transform:translateY(-50%);width:100%;display:flex;justify-content:space-between;padding:0 10px;z-index:5;opacity:0;transition:opacity .2s;}
+.product-card:hover .slide-arrows{opacity:1;}
+.slide-arr{background:rgba(255,255,255,.85);color:var(--deep);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;backdrop-filter:blur(4px);}
+.slide-arr:hover{background:#fff;}
+
+/* COLOR GRADIENTS */
+.d1{background:linear-gradient(160deg,#f0b8c8,#c4607a,#7a2840);}
+.d2{background:linear-gradient(145deg,#e8d5b0,#c4983a,#7a5a1a);}
+.d3{background:linear-gradient(150deg,#b8d4c0,#608070,#2a4a38);}
+.d4{background:linear-gradient(140deg,#d4b0d8,#8060a0,#40205e);}
+.d5{background:linear-gradient(155deg,#f5d0c0,#c87850,#7a3820);}
+.d6{background:linear-gradient(148deg,#c0c8e0,#5868a0,#202860);}
+.d7{background:linear-gradient(142deg,#e8c8b8,#b87858,#603828);}
+.d8{background:linear-gradient(158deg,#d0e8d0,#589858,#1a5828);}
+
+/* CARD BODY */
+.card-body{padding:18px 20px 20px;}
+.card-tag{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.2em;color:var(--rose);text-transform:uppercase;margin-bottom:4px;}
+.card-title{font-size:1.15rem;font-weight:500;color:var(--deep);line-height:1.2;}
+.card-title-urdu{font-family:'GandharaSuls','Noto Nastaliq Urdu',serif;font-size:.95rem;color:var(--muted);direction:rtl;margin-top:2px;}
+.card-size-fabric{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap;}
+.card-pill{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.12em;padding:3px 9px;border:1px solid var(--warm);color:var(--muted);border-radius:20px;text-transform:uppercase;}
+
+/* SIZE SELECTOR */
+.size-selector{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;align-items:center;}
+.size-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;}
+.size-btn{font-family:'DM Mono',monospace;font-size:.5rem;padding:4px 9px;border:1px solid var(--warm);background:none;border-radius:4px;cursor:pointer;color:var(--muted);transition:all .15s;}
+.size-btn:hover,.size-btn.active{border-color:var(--rose);color:var(--rose);background:rgba(181,85,106,.06);}
+
+/* PRICE */
+.price-row{display:flex;align-items:baseline;gap:10px;margin-top:10px;flex-wrap:wrap;}
+.card-price-current{font-size:1.5rem;font-weight:300;color:var(--deep);}
+.card-price-original{font-size:1rem;color:var(--muted);text-decoration:line-through;}
+.card-price-saved{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.1em;color:var(--rose);text-transform:uppercase;background:rgba(181,85,106,.08);padding:2px 7px;border-radius:10px;}
+
+/* META */
+.card-meta{display:flex;align-items:center;justify-content:space-between;margin-top:8px;flex-wrap:wrap;gap:6px;}
+.card-qty{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;}
+.card-qty.low{color:var(--rose);}
+.card-qty.out{color:#888;}
+.card-stars{display:flex;align-items:center;gap:4px;}
+.stars-visual{color:var(--gold);font-size:.82rem;letter-spacing:1px;}
+.stars-count{font-family:'DM Mono',monospace;font-size:.52rem;color:var(--muted);}
+
+/* ACTIONS */
+.card-actions{display:flex;gap:6px;margin-top:14px;flex-wrap:wrap;}
+.order-btn{display:flex;align-items:center;justify-content:center;gap:5px;text-decoration:none;padding:9px 12px;font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;border-radius:4px;transition:all .2s;border:none;cursor:pointer;}
+.add-cart-btn{background:var(--rose);color:#fff;flex:2;}
+.add-cart-btn:hover{background:#9e3d52;transform:scale(1.02);}
+.wa-btn{background:var(--deep);color:var(--cream);flex:1;}
+.wa-btn:hover{background:#1a252b;transform:scale(1.02);}
+.email-btn{background:var(--sage);color:#fff;flex:1;}
+.email-btn:hover{background:#5a7a5e;transform:scale(1.02);}
+.order-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+
+/* SIZE CHART MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(45,26,34,.8);backdrop-filter:blur(6px);z-index:600;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:var(--cream);border-radius:8px;padding:40px;max-width:520px;width:100%;animation:fadeUp .3s ease both;position:relative;max-height:90vh;overflow-y:auto;}
+.modal-box h3{font-size:1.6rem;font-weight:300;color:var(--deep);margin-bottom:6px;}
+.modal-box p{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:20px;}
+.size-chart-table{width:100%;border-collapse:collapse;}
+.size-chart-table th{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--rose);padding:8px 12px;border-bottom:2px solid var(--warm);text-align:left;}
+.size-chart-table td{font-size:.95rem;padding:8px 12px;border-bottom:1px solid var(--warm);color:var(--deep);}
+.size-chart-table tr:hover td{background:var(--blush);}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:1.4rem;color:var(--muted);cursor:pointer;transition:color .2s;}
+.modal-close:hover{color:var(--rose);}
+
+/* CART PANEL */
+.cart-panel{position:fixed;top:0;right:-420px;width:420px;max-width:100vw;height:100vh;background:var(--cream);z-index:700;box-shadow:-8px 0 40px rgba(45,26,34,.2);transition:right .3s ease;overflow-y:auto;border-left:1px solid rgba(181,85,106,.15);}
+.cart-panel.open{right:0;}
+.cart-header{background:var(--deep);color:var(--cream);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:2;}
+.cart-header h3{font-size:1rem;font-weight:300;}
+.cart-header span{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;display:block;margin-top:2px;}
+.cart-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.4rem;line-height:1;transition:color .2s;}
+.cart-close:hover{color:var(--cream);}
+.cart-body{padding:20px;}
+.cart-empty{text-align:center;padding:60px 20px;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;}
+.cart-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--warm);align-items:flex-start;}
+.cart-item-img{width:64px;height:64px;border-radius:4px;object-fit:cover;flex-shrink:0;background:var(--blush);}
+.cart-item-info{flex:1;}
+.cart-item-name{font-size:1rem;font-weight:400;color:var(--deep);}
+.cart-item-meta{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-top:3px;}
+.cart-item-price{font-size:1.1rem;font-weight:300;color:var(--deep);margin-top:4px;}
+.cart-item-qty{display:flex;align-items:center;gap:8px;margin-top:8px;}
+.qty-btn{width:24px;height:24px;border:1px solid var(--warm);background:none;border-radius:4px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:all .2s;color:var(--deep);}
+.qty-btn:hover{border-color:var(--rose);color:var(--rose);}
+.qty-num{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--deep);min-width:20px;text-align:center;}
+.cart-item-remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.8rem;padding:4px;transition:color .2s;}
+.cart-item-remove:hover{color:var(--rose);}
+.cart-footer{padding:20px;border-top:2px solid var(--warm);position:sticky;bottom:0;background:var(--cream);}
+.cart-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.cart-total-label{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;}
+.cart-total-price{font-size:1.8rem;font-weight:300;color:var(--deep);}
+.cart-checkout-btn{width:100%;padding:14px;background:var(--rose);color:#fff;border:none;border-radius:4px;font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background .2s;}
+.cart-checkout-btn:hover{background:#9e3d52;}
+.cart-wa-btn{width:100%;padding:12px;background:none;color:var(--deep);border:1px solid var(--warm);border-radius:4px;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.cart-wa-btn:hover{border-color:var(--rose);color:var(--rose);}
+
+/* REVIEWS */
+.reviews-section{background:var(--cream);padding:80px 60px;border-top:1px solid var(--warm);}
+.reviews-grid{display:grid;grid-template-columns:1fr 2fr;gap:60px;margin-top:50px;align-items:start;}
+.reviews-summary{text-align:center;background:var(--blush);border-radius:8px;padding:40px 24px;}
+.reviews-big-score{font-size:4rem;font-weight:300;color:var(--deep);line-height:1;}
+.reviews-big-stars{font-size:1.4rem;color:var(--gold);letter-spacing:2px;margin:8px 0;}
+.reviews-total{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;}
+.rating-bars{margin-top:20px;}
+.rating-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.rating-bar-label{font-family:'DM Mono',monospace;font-size:.52rem;color:var(--muted);width:12px;}
+.rating-bar-track{flex:1;height:5px;background:rgba(45,26,34,.08);border-radius:3px;overflow:hidden;}
+.rating-bar-fill{height:100%;background:linear-gradient(to right,var(--rose),var(--gold));border-radius:3px;transition:width .6s ease;}
+.reviews-list{display:flex;flex-direction:column;gap:18px;max-height:440px;overflow-y:auto;padding-right:6px;}
+.reviews-list::-webkit-scrollbar{width:4px;}
+.reviews-list::-webkit-scrollbar-thumb{background:var(--warm);border-radius:2px;}
+.review-card{background:#fff;border-radius:6px;padding:20px;border:1px solid var(--warm);transition:border-color .2s;}
+.review-card:hover{border-color:rgba(181,85,106,.2);}
+.review-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;gap:10px;flex-wrap:wrap;}
+.review-author{font-size:1rem;font-weight:600;color:var(--deep);}
+.review-date{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;}
+.review-stars{color:var(--gold);font-size:.88rem;letter-spacing:1px;margin-bottom:6px;}
+.review-product{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;color:var(--rose);text-transform:uppercase;margin-bottom:6px;}
+.review-text{font-size:1rem;line-height:1.7;color:var(--muted);font-weight:300;}
+.write-review-box{background:var(--deep);border-radius:8px;padding:32px;margin-top:28px;color:var(--cream);}
+.write-review-box h4{font-size:1.3rem;font-weight:300;margin-bottom:4px;}
+.write-review-box .wr-sub{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;margin-bottom:20px;}
+.review-form{display:flex;flex-direction:column;gap:12px;}
+.review-input{padding:12px 14px;border:1px solid rgba(255,255,255,.1);border-radius:4px;font-family:'Cormorant Garamond',serif;font-size:1rem;background:rgba(255,255,255,.05);color:var(--cream);outline:none;transition:border-color .2s;width:100%;}
+.review-input::placeholder{color:rgba(154,127,136,.6);}
+.review-input:focus{border-color:var(--gold);}
+.review-select{appearance:none;cursor:pointer;}
+.review-select option{background:var(--deep);color:var(--cream);}
+.star-picker{display:flex;gap:6px;align-items:center;}
+.star-picker-label{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;}
+.star-btn{background:none;border:none;font-size:1.5rem;cursor:pointer;color:rgba(200,150,62,.25);transition:color .15s;padding:2px;}
+.star-btn.lit{color:var(--gold);}
+.review-submit{padding:12px;background:var(--rose);color:#fff;border:none;border-radius:4px;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background .2s;}
+.review-submit:hover{background:#9e3d52;}
+
+/* PROCESS */
+.process-strip{background:var(--deep);padding:80px 60px;color:var(--cream);}
+.process-strip .section-title{color:var(--cream);}
+.process-strip .section-label{color:var(--gold);}
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;margin-top:56px;}
+.process-item .process-num{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.2em;color:var(--gold);margin-bottom:14px;}
+.process-icon{width:48px;height:48px;border:1px solid rgba(200,150,62,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:14px;color:var(--gold);}
+.process-item h3{font-size:1.15rem;font-weight:300;margin-bottom:8px;}
+.process-item p{font-size:.9rem;color:var(--muted);line-height:1.7;font-weight:300;}
+
+/* ORDER */
+.email-order-section{background:linear-gradient(135deg,var(--deep) 0%,#3d1f2d 100%);padding:80px 60px;color:var(--cream);}
+.email-order-section .section-title{color:var(--cream);}
+.email-order-section .section-label{color:var(--gold);}
+.email-form-wrap{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:50px;align-items:start;}
+.email-form-desc{font-size:1.1rem;color:var(--muted);line-height:1.8;font-weight:300;margin-top:12px;}
+.contact-methods{display:flex;flex-direction:column;gap:12px;margin-top:24px;}
+.contact-method-item{display:flex;align-items:center;gap:14px;padding:14px 18px;border:1px solid rgba(200,150,62,.18);border-radius:6px;text-decoration:none;color:var(--cream);transition:all .2s;}
+.contact-method-item:hover{border-color:var(--gold);background:rgba(200,150,62,.05);}
+.contact-method-item svg{flex-shrink:0;color:var(--gold);}
+.contact-method-label{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;display:block;}
+.contact-method-value{font-size:1rem;color:var(--cream);display:block;margin-top:2px;}
+.email-form{display:flex;flex-direction:column;gap:14px;}
+.form-input{width:100%;padding:14px 16px;border:1px solid rgba(255,255,255,.1);border-radius:4px;font-family:'Cormorant Garamond',serif;font-size:1rem;background:rgba(255,255,255,.05);color:var(--cream);outline:none;transition:border-color .2s;}
+.form-input::placeholder{color:rgba(154,127,136,.6);}
+.form-input:focus{border-color:var(--gold);background:rgba(255,255,255,.08);}
+.form-select{appearance:none;cursor:pointer;}
+.form-select option{background:var(--deep);color:var(--cream);}
+.form-textarea{resize:vertical;min-height:90px;}
+.form-submit{padding:14px;background:var(--rose);color:#fff;border:none;border-radius:4px;font-family:'DM Mono',monospace;font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background .2s,transform .2s;}
+.form-submit:hover{background:#9e3d52;transform:scale(1.02);}
+.form-success{display:none;text-align:center;padding:24px;border:1px solid rgba(200,150,62,.3);border-radius:4px;}
+.form-success.show{display:block;}
+.form-success h4{font-size:1.3rem;font-weight:300;color:var(--gold);margin-bottom:8px;}
+.form-success p{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;}
+
+/* FOOTER */
+footer{background:var(--deep);color:var(--cream);padding:64px 60px 40px;}
+.footer-logo{font-size:1.8rem;font-weight:300;margin-bottom:4px;}
+.footer-logo em{font-style:italic;color:var(--rose);}
+.footer-logo-urdu{font-family:'GandharaSuls','Noto Nastaliq Urdu',serif;font-size:1rem;color:var(--gold);direction:rtl;margin-bottom:12px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:60px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.06);}
+.footer-desc{font-size:.95rem;color:var(--muted);line-height:1.7;font-weight:300;max-width:280px;margin-top:8px;}
+.footer-email-link{display:inline-flex;align-items:center;gap:8px;margin-top:14px;color:var(--gold);text-decoration:none;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;transition:color .2s;}
+.footer-email-link:hover{color:var(--cream);}
+.footer-col h4{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:18px;}
+.footer-col ul{list-style:none;}
+.footer-col li{margin-bottom:10px;}
+.footer-col a{color:var(--muted);text-decoration:none;font-size:.95rem;transition:color .2s;}
+.footer-col a:hover{color:var(--cream);}
+.payment-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+.chip{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.12em;padding:5px 10px;border:1px solid rgba(200,150,62,.25);color:var(--gold);border-radius:20px;text-transform:uppercase;}
+.social-links{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}
+.social-link{display:flex;align-items:center;gap:6px;padding:7px 13px;border:1px solid rgba(255,255,255,.08);border-radius:20px;text-decoration:none;color:var(--muted);font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;transition:all .2s;}
+.social-link:hover{border-color:var(--gold);color:var(--gold);}
+.social-link.fb:hover{border-color:#1877f2;color:#1877f2;}
+.social-link.ig:hover{border-color:#e1306c;color:#e1306c;}
+.social-link.tt:hover{border-color:#69c9d0;color:#69c9d0;}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;flex-wrap:wrap;gap:12px;}
+.footer-copy{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.12em;color:rgba(154,127,136,.55);}
+
+/* WHATSAPP */
+.whatsapp-float{position:fixed;bottom:30px;right:30px;z-index:500;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(37,211,102,.4);text-decoration:none;transition:transform .2s;animation:floatPop .5s 1s cubic-bezier(.34,1.56,.64,1) both;}
+.whatsapp-float:hover{transform:scale(1.1);}
+
+/* ADMIN */
+.admin-toggle{position:fixed;bottom:100px;right:30px;z-index:500;width:44px;height:44px;background:var(--deep);border:1px solid rgba(200,150,62,.35);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--gold);transition:all .2s;animation:floatPop .5s 1.2s cubic-bezier(.34,1.56,.64,1) both;}
+.admin-toggle:hover{background:#3d1f2d;transform:scale(1.08);}
+.admin-login-overlay{display:none;position:fixed;inset:0;background:rgba(45,26,34,.9);backdrop-filter:blur(6px);z-index:900;align-items:center;justify-content:center;}
+.admin-login-overlay.open{display:flex;}
+.login-box{background:var(--cream);border-radius:8px;padding:48px 40px;width:340px;text-align:center;animation:fadeUp .3s ease both;}
+.login-box h3{font-size:1.5rem;font-weight:300;margin-bottom:4px;color:var(--deep);}
+.login-box-urdu{font-family:'GandharaSuls','Noto Nastaliq Urdu',serif;font-size:1rem;color:var(--muted);direction:rtl;margin-bottom:24px;}
+.login-input{width:100%;padding:12px 14px;border:1px solid var(--warm);border-radius:4px;font-family:'DM Mono',monospace;font-size:.8rem;background:#fff;color:var(--deep);margin-bottom:12px;outline:none;transition:border-color .2s;}
+.login-input:focus{border-color:var(--rose);}
+.login-btn{width:100%;padding:12px;background:var(--rose);color:#fff;border:none;border-radius:4px;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background .2s;}
+.login-btn:hover{background:#9e3d52;}
+.login-error{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--rose);margin-top:10px;display:none;}
+.login-cancel{display:block;margin-top:14px;font-family:'DM Mono',monospace;font-size:.55rem;color:var(--muted);cursor:pointer;text-transform:uppercase;text-decoration:underline;background:none;border:none;}
+
+/* ADMIN PANEL */
+.admin-panel{display:none;position:fixed;top:0;right:0;width:460px;max-width:100vw;height:100vh;background:var(--cream);border-left:1px solid rgba(181,85,106,.15);z-index:800;overflow-y:auto;box-shadow:-8px 0 40px rgba(45,26,34,.2);}
+.admin-panel.open{display:block;animation:slideIn .3s ease both;}
+.panel-header{background:var(--deep);color:var(--cream);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:2;}
+.panel-header h3{font-size:1rem;font-weight:300;}
+.panel-header span{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;display:block;margin-top:2px;}
+.panel-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.4rem;line-height:1;transition:color .2s;}
+.panel-close:hover{color:var(--cream);}
+.panel-body{padding:24px;}
+.panel-section-title{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.25em;color:var(--rose);text-transform:uppercase;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--warm);margin-top:24px;}
+.panel-section-title:first-child{margin-top:0;}
+.social-setting-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding:10px 12px;background:#fff;border:1px solid var(--warm);border-radius:4px;}
+.edit-card-item{background:#fff;border-radius:4px;padding:16px;margin-bottom:10px;border:1px solid var(--warm);transition:border-color .2s;}
+.edit-card-item:hover{border-color:rgba(181,85,106,.3);}
+.edit-card-header{display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:8px;}
+.edit-card-name{font-size:1rem;font-weight:400;color:var(--deep);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.edit-card-toggle{font-size:.7rem;color:var(--muted);transition:transform .2s;flex-shrink:0;}
+.edit-card-item.expanded .edit-card-toggle{transform:rotate(180deg);}
+.edit-fields{display:none;margin-top:14px;}
+.edit-card-item.expanded .edit-fields{display:block;}
+.field-group{margin-bottom:10px;}
+.field-label{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.16em;color:var(--muted);text-transform:uppercase;margin-bottom:4px;display:block;}
+.field-input{width:100%;padding:8px 10px;border:1px solid var(--warm);border-radius:4px;font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--deep);background:var(--cream);outline:none;transition:border-color .2s;}
+.field-input:focus{border-color:var(--rose);}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+/* Image slots */
+.multi-img-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:6px;}
+.img-slot{position:relative;border:2px dashed rgba(181,85,106,.3);border-radius:4px;aspect-ratio:1;overflow:hidden;cursor:pointer;background:var(--cream);transition:all .2s;}
+.img-slot:hover{border-color:var(--rose);background:rgba(181,85,106,.04);}
+.img-slot.has-img{border-style:solid;border-color:var(--sage);}
+.img-slot img{width:100%;height:100%;object-fit:cover;display:none;}
+.img-slot.has-img img{display:block;}
+.img-slot-hint{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:.48rem;color:var(--muted);text-transform:uppercase;gap:3px;}
+.img-slot.has-img .img-slot-hint{display:none;}
+.img-slot-input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.img-slot-remove{position:absolute;top:3px;right:3px;background:rgba(181,85,106,.85);color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:.6rem;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:2;}
+.img-slot.has-img .img-slot-remove{display:flex;}
+.img-slot-label{font-family:'DM Mono',monospace;font-size:.48rem;color:var(--muted);text-transform:uppercase;text-align:center;margin-top:3px;}
+
+/* Owner photo */
+.owner-img-area{border:2px dashed rgba(181,85,106,.3);border-radius:4px;padding:16px;text-align:center;cursor:pointer;position:relative;overflow:hidden;background:var(--cream);transition:all .2s;}
+.owner-img-area:hover{border-color:var(--rose);}
+.owner-img-area.has-image{border-style:solid;border-color:var(--sage);}
+.owner-img-preview{width:80px;height:80px;border-radius:50%;object-fit:cover;display:none;margin:0 auto 8px;}
+.owner-img-preview.visible{display:block;}
+.upload-hint{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;}
+.owner-file-input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.btn-remove-img{background:none;border:1px solid var(--rose);color:var(--rose);border-radius:4px;padding:5px 12px;font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;margin-top:8px;transition:all .2s;display:none;position:relative;z-index:2;}
+.btn-remove-img:hover{background:var(--rose);color:#fff;}
+.owner-img-area.has-image .btn-remove-img{display:inline-block;}
+
+.btn-save-card{width:100%;margin-top:12px;padding:9px;background:var(--deep);color:var(--cream);border:none;border-radius:4px;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:background .2s;}
+.btn-save-card:hover{background:var(--sage);}
+.btn-delete-card{width:100%;margin-top:6px;padding:8px;background:none;color:var(--rose);border:1px solid var(--rose);border-radius:4px;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.btn-delete-card:hover{background:var(--rose);color:#fff;}
+.btn-add-card{width:100%;padding:12px;background:none;color:var(--rose);border:1px dashed rgba(181,85,106,.4);border-radius:4px;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-top:4px;}
+.btn-add-card:hover{background:rgba(181,85,106,.06);border-style:solid;}
+.btn-save-settings{width:100%;padding:10px;background:var(--rose);color:#fff;border:none;border-radius:4px;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:background .2s;margin-top:10px;}
+.btn-save-settings:hover{background:#9e3d52;}
+.password-row{display:flex;gap:8px;align-items:center;}
+.password-row .field-input{flex:1;}
+.btn-change-pass{padding:8px 14px;background:var(--deep);color:var(--cream);border:none;border-radius:4px;font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:background .2s;}
+.btn-change-pass:hover{background:var(--rose);}
+.sync-status-box{margin-top:10px;display:none;padding:10px 12px;border-radius:4px;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;line-height:1.7;white-space:pre-line;}
+
+/* TOAST */
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--deep);color:var(--cream);padding:12px 24px;border-radius:4px;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.14em;border-left:3px solid var(--gold);z-index:2000;transition:transform .3s ease;pointer-events:none;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.toast.success{border-left-color:var(--sage);}
+.toast.error{border-left-color:var(--rose);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scrollPulse{0%,100%{opacity:.4}50%{opacity:1}}
+@keyframes floatPop{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+
+@media(max-width:900px){
+  .intro-band,.gallery-section,.reviews-section,.process-strip,.email-order-section{padding:60px 24px;}
+  .intro-band{grid-template-columns:1fr;gap:40px;}
+  .product-grid{grid-template-columns:repeat(2,1fr);}
+  .product-card.tall{grid-row:span 1;}
+  .gallery-header{flex-direction:column;align-items:flex-start;}
+  .process-grid{grid-template-columns:1fr 1fr;gap:24px;}
+  .footer-grid{grid-template-columns:1fr;gap:36px;}
+  footer{padding:50px 24px 30px;}
+  .nav-links{display:none;}
+  .footer-bottom{flex-direction:column;text-align:center;}
+  .email-form-wrap,.reviews-grid{grid-template-columns:1fr;gap:30px;}
+  .owner-strip{padding:16px 24px;}
+}
+@media(max-width:540px){
+  .product-grid{grid-template-columns:1fr;}
+  .nav-strip{padding:0 20px;}
+  .admin-panel,.cart-panel{width:100vw;}
+  .multi-img-grid{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header>
+  <!-- SLIDESHOW BACKGROUND -->
+  <div class="hero-slides" id="heroSlides">
+    <div class="hero-no-img">
+      <div class="hero-petals">
+        <div class="petal petal-1"></div>
+        <div class="petal petal-2"></div>
+        <div class="petal petal-3"></div>
+      </div>
+      <div class="hero-pattern"></div>
+    </div>
+  </div>
+  <div class="hero-slide-dots" id="heroSlideDots"></div>
+
+  <!-- Admin: edit hero images (only visible when admin panel open) -->
+  <button class="hero-edit-btn" id="heroEditBtn" onclick="openHeroUploader()">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+    Edit Hero Images
+  </button>
+
+  <div class="logo-wrap">
+    <div class="logo-urdu">زیب تن</div>
+    <h1 class="logo-english">Zabe<em>Tan</em></h1>
+    <div class="logo-divider"></div>
+    <p class="logo-tagline">Est. 2025 · Faisalabad</p>
+  </div>
+  <div class="hero-badges">
+    <span class="hero-badge">✦ Original Designs</span>
+    <span class="hero-badge">✦ Premium Fabric</span>
+    <span class="hero-badge">✦ Nationwide Delivery</span>
+    <span class="hero-badge">✦ Custom Stitching</span>
+  </div>
+  <div class="scroll-cue"><span>Explore Collection</span><div class="scroll-line"></div></div>
+</header>
+
+<!-- NAV -->
+<nav class="nav-strip">
+  <div class="nav-brand">
+    <span class="nav-brand-en">Zabe<em>Tan</em></span>
+    <span class="nav-brand-ur">زیب تن</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#process">How It Works</a></li>
+    <li><a href="#order">Order</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cart" onclick="toggleCart()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    Cart
+    <span class="nav-cart-count" id="navCartCount">0</span>
+  </button>
+</nav>
+
+<!-- OWNER STRIP -->
+<div class="owner-strip" id="ownerStrip"></div>
+
+<!-- INTRO -->
+<section class="intro-band">
+  <div>
+    <p class="section-label">Hamari Kahani · ہماری کہانی</p>
+    <h2 class="section-title">Har dress mein<br>ek <em>khwab</em></h2>
+    <div class="section-title-urdu">ہر لباس میں ایک خواب</div>
+    <p>Zabetan mein har dress premium fabric se tayar ki jaati hai — custom stitching ke saath, jo aapki personality ko reflect kare. Pakistan ki sab se khubsurat designs, aapke liye.</p>
+  </div>
+  <div class="intro-stats">
+    <div class="stat"><div class="stat-num">200+</div><div class="stat-label">Happy Customers</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Original Designs</div></div>
+    <div class="stat"><div class="stat-num">5★</div><div class="stat-label">Customer Rating</div></div>
+    <div class="stat"><div class="stat-num">PK</div><div class="stat-label">Nationwide Delivery</div></div>
+  </div>
+</section>
+
+<!-- SHOP / GALLERY -->
+<section class="gallery-section" id="shop">
+  <!-- SECTION TABS -->
+  <div class="section-tabs">
+    <button class="section-tab active" data-section="women" onclick="switchSection('women',this)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M12 12v8M9 18h6"/></svg>
+      Women's Wear
+    </button>
+    <button class="section-tab" data-section="mens" onclick="switchSection('mens',this)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M12 12v4M15 19l-3-3-3 3"/></svg>
+      Men's Wear
+    </button>
+  </div>
+
+  <!-- WOMEN'S SECTION -->
+  <div id="womenSection">
+    <div class="gallery-header">
+      <div>
+        <p class="section-label">Women's Collection · خواتین کا کلیکشن</p>
+        <h2 class="section-title">Our <em>Dresses</em></h2>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;">
+        <button class="order-btn" style="background:none;border:1px solid rgba(181,85,106,.4);color:var(--rose);padding:8px 16px;border-radius:20px;font-size:.56rem;" onclick="document.getElementById('sizeChartModal').classList.add('open')">
+          📏 Size Chart
+        </button>
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="lawn">Lawn</button>
+          <button class="filter-btn" data-filter="chiffon">Chiffon</button>
+          <button class="filter-btn" data-filter="cotton">Cotton</button>
+          <button class="filter-btn" data-filter="embroidered">Embroidered</button>
+          <button class="filter-btn" data-filter="bridal">Bridal</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-grid" id="productGrid"></div>
+  </div>
+
+  <!-- MEN'S SECTION -->
+  <div id="mensSection" style="display:none;">
+    <div class="gallery-header">
+      <div>
+        <p class="section-label">Men's Collection · مردانہ کلیکشن</p>
+        <h2 class="section-title">Men's <em>Wear</em></h2>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;">
+        <button class="order-btn" style="background:none;border:1px solid rgba(181,85,106,.4);color:var(--rose);padding:8px 16px;border-radius:20px;font-size:.56rem;" onclick="document.getElementById('sizeChartModal').classList.add('open')">
+          📏 Size Chart
+        </button>
+        <div class="filter-bar" id="mensFilterBar">
+          <button class="filter-btn mens-filter active" data-mfilter="all">All</button>
+          <button class="filter-btn mens-filter" data-mfilter="shalwar">Shalwar Kameez</button>
+          <button class="filter-btn mens-filter" data-mfilter="kurta">Kurta</button>
+          <button class="filter-btn mens-filter" data-mfilter="waistcoat">Waistcoat</button>
+          <button class="filter-btn mens-filter" data-mfilter="sherwani">Sherwani</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-grid" id="mensGrid"></div>
+  </div>
+</section>
+
+<!-- SIZE CHART MODAL -->
+<div class="modal-overlay" id="sizeChartModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('sizeChartModal').classList.remove('open')">✕</button>
+    <h3>Size Chart</h3>
+    <p>Sizing Guide · سائز گائیڈ</p>
+    <table class="size-chart-table">
+      <thead><tr><th>Size</th><th>Chest (in)</th><th>Waist (in)</th><th>Hips (in)</th><th>Length (in)</th></tr></thead>
+      <tbody>
+        <tr><td>XS (34)</td><td>34–35</td><td>28–29</td><td>36–37</td><td>52</td></tr>
+        <tr><td>S (36)</td><td>36–37</td><td>30–31</td><td>38–39</td><td>53</td></tr>
+        <tr><td>M (38)</td><td>38–39</td><td>32–33</td><td>40–41</td><td>54</td></tr>
+        <tr><td>L (40)</td><td>40–41</td><td>34–35</td><td>42–43</td><td>55</td></tr>
+        <tr><td>XL (42)</td><td>42–43</td><td>36–37</td><td>44–45</td><td>56</td></tr>
+        <tr><td>XXL (44)</td><td>44–45</td><td>38–39</td><td>46–47</td><td>57</td></tr>
+        <tr><td>Custom</td><td colspan="4" style="color:var(--rose);">WhatsApp pe measurements bhejein</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:16px;font-family:'DM Mono',monospace;font-size:.56rem;color:var(--muted);line-height:1.7;">Measurements mein doubt ho to WhatsApp pe poochh saktey hain — 0308-5738857</p>
+  </div>
+</div>
+
+<!-- CART PANEL -->
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <div><h3>Your Cart</h3><span>آپ کی ٹوکری</span></div>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total">
+      <span class="cart-total-label">Total Amount</span>
+      <span class="cart-total-price" id="cartTotalPrice">Rs. 0</span>
+    </div>
+    <button class="cart-checkout-btn" onclick="cartCheckout()">Checkout via Email →</button>
+    <button class="cart-wa-btn" onclick="cartWhatsapp()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      Order via WhatsApp
+    </button>
+  </div>
+</div>
+
+<!-- REVIEWS -->
+<section class="reviews-section" id="reviews">
+  <p class="section-label">Customer Reviews · گاہک کی رائے</p>
+  <h2 class="section-title">What our <em>customers</em> say</h2>
+  <div class="reviews-grid">
+    <div><div class="reviews-summary" id="reviewsSummary"></div></div>
+    <div>
+      <div class="reviews-list" id="reviewsList"></div>
+      <div class="write-review-box">
+        <h4>Write a Review</h4>
+        <p class="wr-sub">اپنی رائے دیں · Share your experience</p>
+        <div class="review-form">
+          <input class="review-input" id="rvName" placeholder="Your name · آپ کا نام" />
+          <select class="review-input review-select" id="rvProduct"><option value="">Select dress...</option></select>
+          <div class="star-picker">
+            <span class="star-picker-label">Rating:</span>
+            <button class="star-btn" data-val="1" onclick="setReviewStar(1)">★</button>
+            <button class="star-btn" data-val="2" onclick="setReviewStar(2)">★</button>
+            <button class="star-btn" data-val="3" onclick="setReviewStar(3)">★</button>
+            <button class="star-btn" data-val="4" onclick="setReviewStar(4)">★</button>
+            <button class="star-btn" data-val="5" onclick="setReviewStar(5)">★</button>
+          </div>
+          <textarea class="review-input" id="rvText" rows="3" placeholder="Apna experience likhein..."></textarea>
+          <button class="review-submit" onclick="submitReview()">Submit Review →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-strip" id="process">
+  <p class="section-label">How It Works</p>
+  <h2 class="section-title">Order karna hai <em>asaan</em></h2>
+  <div class="process-grid">
+    <div class="process-item">
+      <p class="process-num">01</p>
+      <div class="process-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+      <h3>Browse & Choose</h3>
+      <p>Gallery mein apni pasand ki dress choose karein, size chart dekh kar apna size select karein.</p>
+    </div>
+    <div class="process-item">
+      <p class="process-num">02</p>
+      <div class="process-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.95 13c-.95-2.72-1.44-5.6-1.44-8.52A2 2 0 0 1 5.69 2.5h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L9.91 10.1a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.02z"/></svg></div>
+      <h3>WhatsApp ya Email</h3>
+      <p>WhatsApp pe turant reply milti hai ya order form bhar ke email karein — dono option available hain.</p>
+    </div>
+    <div class="process-item">
+      <p class="process-num">03</p>
+      <div class="process-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+      <h3>Easy Payment</h3>
+      <p>JazzCash, EasyPaisa, ya bank transfer — jo bhi aapke liye convenient ho usi se pay karein.</p>
+    </div>
+    <div class="process-item">
+      <p class="process-num">04</p>
+      <div class="process-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      <h3>Safe Delivery</h3>
+      <p>Dress carefully pack karke poore Pakistan mein deliver ki jaati hai — 3-5 working days mein.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER -->
+<section class="email-order-section" id="order">
+  <p class="section-label">Order Karein · آرڈر کریں</p>
+  <h2 class="section-title" style="color:var(--cream);">Place your <em>order</em></h2>
+  <div class="email-form-wrap">
+    <div>
+      <p class="email-form-desc">Order form bhar ke submit karein — 24 ghanton ke andar confirm kar denge. Ya seedha WhatsApp ya email karein.</p>
+      <div class="contact-methods">
+        <a class="contact-method-item" href="https://wa.me/923085738857" target="_blank">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          <div><span class="contact-method-label">WhatsApp (Instant Reply)</span><span class="contact-method-value">0308-5738857</span></div>
+        </a>
+        <a class="contact-method-item" href="mailto:s3074790@gmail.com">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <div><span class="contact-method-label">Email</span><span class="contact-method-value">s3074790@gmail.com</span></div>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="email-form" id="orderForm">
+        <input class="form-input" type="text" id="orderName" placeholder="Aapka naam · Your full name" />
+        <input class="form-input" type="email" id="orderEmail" placeholder="Email address" />
+        <input class="form-input" type="tel" id="orderPhone" placeholder="Phone / WhatsApp number" />
+        <select class="form-input form-select" id="orderProduct"><option value="">Dress select karein...</option></select>
+        <select class="form-input form-select" id="orderSize">
+          <option value="">Size select karein...</option>
+          <option>XS (34)</option><option>S (36)</option><option>M (38)</option>
+          <option>L (40)</option><option>XL (42)</option><option>XXL (44)</option><option>Custom Stitching</option>
+        </select>
+        <input class="form-input" type="text" id="orderCity" placeholder="Aapka sheher · Your city" />
+        <textarea class="form-input form-textarea" id="orderMessage" placeholder="Custom stitching details ya koi bhi note..."></textarea>
+        <button class="form-submit" onclick="submitOrder()">Send Order Request →</button>
+      </div>
+      <div class="form-success" id="orderSuccess">
+        <h4>Order Mila! ✓</h4>
+        <p>24 ghanton mein confirm kar denge aur payment details bhejenge.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Zabe<em>Tan</em></div>
+      <div class="footer-logo-urdu">زیب تن</div>
+      <p class="footer-desc">Premium Pakistani women dresses — original designs, quality fabric, custom stitching. Delivered nationwide.</p>
+      <a class="footer-email-link" href="mailto:s3074790@gmail.com">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        s3074790@gmail.com
+      </a>
+      <div class="social-links" id="footerSocials"></div>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="https://wa.me/923085738857">WhatsApp: 0308-5738857</a></li>
+        <li><a href="mailto:s3074790@gmail.com">s3074790@gmail.com</a></li>
+        <li><a href="#">Faisalabad, Pakistan</a></li>
+        <li><a href="#" onclick="document.getElementById('sizeChartModal').classList.add('open');return false;">Size Chart</a></li>
+        <li><a href="#">Custom Stitching Available</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Payment Methods</h4>
+      <div class="payment-chips">
+        <span class="chip">JazzCash</span>
+        <span class="chip">EasyPaisa</span>
+        <span class="chip">Bank Transfer</span>
+        <span class="chip">Cash on Delivery*</span>
+      </div>
+      <p style="font-family:'DM Mono',monospace;font-size:.5rem;color:var(--muted);margin-top:10px;line-height:1.6;">*COD selected cities only</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 ZabeTan · زیب تن · All rights reserved</p>
+    <p class="footer-copy">Made with ♥ in Faisalabad, Pakistan</p>
+  </div>
+</footer>
+
+<!-- WHATSAPP -->
+<a class="whatsapp-float" href="https://wa.me/923085738857?text=Assalam%20o%20Alaikum!%20ZabeTan%20ki%20dresses%20ke%20baare%20mein%20poochna%20tha." target="_blank" title="WhatsApp pe order karein">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<!-- ADMIN TOGGLE -->
+<button class="admin-toggle" id="adminToggle" title="Admin Panel">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+</button>
+
+<!-- LOGIN -->
+<div class="admin-login-overlay" id="adminLoginOverlay">
+  <div class="login-box">
+    <h3>Admin Access</h3>
+    <div class="login-box-urdu">پاس ورڈ درج کریں</div>
+    <input class="login-input" type="password" id="adminPassword" placeholder="Password" />
+    <button class="login-btn" id="loginSubmit">Enter Panel</button>
+    <div class="login-error" id="loginError">Galat password. Dobara try karein.</div>
+    <button class="login-cancel" id="loginCancel">Cancel</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="adminPanel">
+  <div class="panel-header">
+    <div><h3>Admin Panel</h3><span>ZabeTan · زیب تن</span></div>
+    <button class="panel-close" id="panelClose">✕</button>
+  </div>
+  <div class="panel-body">
+
+    <p class="panel-section-title">🖼 Hero Slideshow Images</p>
+    <p style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--muted);line-height:1.6;margin-bottom:10px;">Up to 5 images — yeh hero background mein slide hongi. Best size: 1920×1080px (landscape).</p>
+    <div class="hero-img-grid" id="heroImgGrid">
+      <!-- rendered by JS -->
+    </div>
+    <p style="font-family:'DM Mono',monospace;font-size:.52rem;color:var(--muted);line-height:1.6;margin-top:4px;">Max 5MB per image. Slideshow har 4 seconds mein change hogi.</p>
+
+    <p class="panel-section-title">Owner / Shop Details</p>
+    <div class="field-group"><label class="field-label">Owner Name</label><input class="field-input" id="own_name" placeholder="e.g. Fatima Zahra" /></div>
+    <div class="field-group"><label class="field-label">Tagline</label><input class="field-input" id="own_tagline" placeholder="e.g. Founder · ZabeTan" /></div>
+    <div class="field-group">
+      <label class="field-label">Owner Photo</label>
+      <div class="owner-img-area" id="ownerImgArea">
+        <img class="owner-img-preview" id="ownerImgPreview" src="" alt="owner" />
+        <div class="upload-hint">👤 Upload owner photo</div>
+        <input class="owner-file-input" type="file" accept="image/*" onchange="handleOwnerImg(event)" />
+        <button class="btn-remove-img" onclick="removeOwnerImg(event)">✕ Remove</button>
+      </div>
+    </div>
+    <button class="btn-save-settings" onclick="saveOwnerSettings()">Save Owner Details</button>
+
+    <p class="panel-section-title">Social Media Links</p>
+    <div class="social-setting-row">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      <input class="field-input" id="set_facebook" placeholder="https://facebook.com/zabetan" />
+    </div>
+    <div class="social-setting-row">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      <input class="field-input" id="set_instagram" placeholder="https://instagram.com/zabetan" />
+    </div>
+    <div class="social-setting-row">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.77a8.17 8.17 0 0 0 4.77 1.52V6.86a4.85 4.85 0 0 1-1-.17z"/></svg>
+      <input class="field-input" id="set_tiktok" placeholder="https://tiktok.com/@zabetan" />
+    </div>
+    <button class="btn-save-settings" onclick="saveSocialSettings()">Save Social Links</button>
+
+    <p class="panel-section-title">GitHub Auto-Sync</p>
+    <div id="githubSetupBox">
+      <div class="field-group"><label class="field-label">GitHub Username</label><input class="field-input" id="gh_user" placeholder="e.g. yourname" /></div>
+      <div class="field-group"><label class="field-label">Repository Name</label><input class="field-input" id="gh_repo" placeholder="e.g. zabetan" /></div>
+      <div class="field-group"><label class="field-label">File Path</label><input class="field-input" id="gh_path" value="index.html" /></div>
+      <div class="field-group">
+        <label class="field-label">Personal Access Token (Classic)</label>
+        <input class="field-input" type="password" id="gh_token" placeholder="ghp_xxxxxxxxxxxx" />
+        <p style="font-family:'DM Mono',monospace;font-size:.5rem;color:var(--muted);margin-top:5px;line-height:1.6;">GitHub → Settings → Developer settings → Tokens (classic) → repo scope</p>
+      </div>
+      <button class="btn-save-settings" onclick="saveGithubSettings()">Save GitHub Settings</button>
+    </div>
+    <div id="githubSyncBox" style="display:none;margin-top:4px;">
+      <div style="background:#fff;border:1px solid var(--warm);border-radius:4px;padding:12px 14px;margin-bottom:10px;">
+        <p style="font-family:'DM Mono',monospace;font-size:.56rem;color:var(--muted);text-transform:uppercase;">Connected to</p>
+        <p style="font-size:1rem;color:var(--deep);margin-top:3px;" id="ghConnectedLabel">—</p>
+      </div>
+      <button class="btn-save-settings" id="btnSyncGithub" onclick="syncToGithub()" style="background:var(--deep);">↑ Sync to GitHub Now</button>
+      <button style="width:100%;margin-top:6px;padding:8px;background:none;color:var(--muted);border:1px solid var(--warm);border-radius:4px;font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;" onclick="resetGithubSettings()">Change Settings</button>
+      <div class="sync-status-box" id="syncStatus"></div>
+    </div>
+
+    <p class="panel-section-title">Change Password</p>
+    <div class="field-group">
+      <label class="field-label">New Password</label>
+      <div class="password-row">
+        <input class="field-input" type="password" id="newPassword" placeholder="Min 6 characters" />
+        <button class="btn-change-pass" onclick="changePassword()">Save</button>
+      </div>
+    </div>
+
+    <p class="panel-section-title">👗 Women's Dresses</p>
+    <div id="editCardsList"></div>
+    <button class="btn-add-card" id="btnAddCard">+ Add Women's Dress</button>
+
+    <p class="panel-section-title">👔 Men's Wear</p>
+    <div id="editMensCardsList"></div>
+    <button class="btn-add-card" id="btnAddMensCard">+ Add Men's Item</button>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const WA_NUMBER   = '923085738857';
+const OWNER_EMAIL = 's3074790@gmail.com';
+function getAdminPass(){return localStorage.getItem('zt_adminpass')||'zabetan2025';}
+
+// ── DEFAULT DATA ──
+const defaultProducts=[
+  {id:1,name:'Gulabi Lawn',nameUrdu:'گلابی لان',tag:'Lawn · 3-Piece',fabric:'Premium Lawn',price:'3,500',origPrice:'4,500',discount:22,sizes:'XS,S,M,L,XL,XXL',quantity:8,delivery:'Free delivery',tall:true,colorClass:'d1',waText:'Gulabi Lawn',images:[null,null,null,null],isNew:false},
+  {id:2,name:'Zari Chiffon',nameUrdu:'زری شفان',tag:'Chiffon · Embroidered',fabric:'Pure Chiffon',price:'5,800',origPrice:'',discount:0,sizes:'S,M,L,XL',quantity:3,delivery:'Free delivery',tall:false,colorClass:'d4',waText:'Zari Chiffon',images:[null,null,null,null],isNew:true},
+  {id:3,name:'Khaddar Suit',nameUrdu:'کھدر سوٹ',tag:'Cotton · 2-Piece',fabric:'Pure Khaddar',price:'2,800',origPrice:'3,200',discount:12,sizes:'XS,S,M,L,XL,XXL',quantity:12,delivery:'Free delivery',tall:false,colorClass:'d8',waText:'Khaddar Suit',images:[null,null,null,null],isNew:false},
+  {id:4,name:'Bridal Lehnga',nameUrdu:'دلہن لہنگہ',tag:'Bridal · Custom',fabric:'Silk & Net',price:'28,000',origPrice:'',discount:0,sizes:'Custom Only',quantity:2,delivery:'Free delivery',tall:false,colorClass:'d5',waText:'Bridal Lehnga',images:[null,null,null,null],isNew:false},
+  {id:5,name:'Banarsi Dupatta Set',nameUrdu:'بنارسی دوپٹہ',tag:'Embroidered · 3-Piece',fabric:'Banarsi Silk',price:'7,200',origPrice:'8,500',discount:15,sizes:'S,M,L,XL',quantity:5,delivery:'Free delivery',tall:false,colorClass:'d2',waText:'Banarsi Dupatta Set',images:[null,null,null,null],isNew:false},
+  {id:6,name:'Cotton Casual',nameUrdu:'کاٹن کیژوال',tag:'Cotton · Everyday',fabric:'Pure Cotton',price:'1,800',origPrice:'',discount:0,sizes:'XS,S,M,L,XL,XXL',quantity:20,delivery:'Free delivery',tall:false,colorClass:'d3',waText:'Cotton Casual',images:[null,null,null,null],isNew:true},
+];
+const defaultMensProducts=[
+  {id:101,name:'White Shalwar Kameez',nameUrdu:'سفید شلوار قمیض',tag:'Shalwar Kameez · Classic',fabric:'Premium Cotton',price:'2,800',origPrice:'3,500',discount:20,sizes:'S,M,L,XL,XXL',quantity:15,delivery:'Free delivery',tall:false,colorClass:'d8',waText:'White Shalwar Kameez',images:[null,null,null,null],isNew:false},
+  {id:102,name:'Embroidered Kurta',nameUrdu:'کڑھائی کرتہ',tag:'Kurta · Embroidered',fabric:'Lawn with Embroidery',price:'3,200',origPrice:'',discount:0,sizes:'S,M,L,XL,XXL',quantity:8,delivery:'Free delivery',tall:true,colorClass:'d2',waText:'Embroidered Kurta',images:[null,null,null,null],isNew:true},
+  {id:103,name:'Waistcoat Set',nameUrdu:'واسکٹ سیٹ',tag:'Waistcoat · 3-Piece',fabric:'Khaddar & Silk',price:'5,500',origPrice:'6,500',discount:15,sizes:'S,M,L,XL',quantity:6,delivery:'Free delivery',tall:false,colorClass:'d5',waText:'Waistcoat Set',images:[null,null,null,null],isNew:false},
+  {id:104,name:'Bridal Sherwani',nameUrdu:'دولہا شروانی',tag:'Sherwani · Bridal',fabric:'Pure Silk & Net',price:'35,000',origPrice:'',discount:0,sizes:'Custom Only',quantity:3,delivery:'Free delivery',tall:false,colorClass:'d1',waText:'Bridal Sherwani',images:[null,null,null,null],isNew:false},
+  {id:105,name:'Casual Kurta',nameUrdu:'کیژوال کرتہ',tag:'Kurta · Daily Wear',fabric:'Pure Cotton',price:'1,500',origPrice:'',discount:0,sizes:'XS,S,M,L,XL,XXL',quantity:25,delivery:'Free delivery',tall:false,colorClass:'d3',waText:'Casual Kurta',images:[null,null,null,null],isNew:true},
+  {id:106,name:'Festive Shalwar Kameez',nameUrdu:'عید شلوار قمیض',tag:'Shalwar Kameez · Festive',fabric:'Embroidered Lawn',price:'4,200',origPrice:'5,000',discount:16,sizes:'S,M,L,XL,XXL',quantity:10,delivery:'Free delivery',tall:false,colorClass:'d4',waText:'Festive Shalwar Kameez',images:[null,null,null,null],isNew:false},
+];
+const defaultOwner={name:'ZabeTan',tagline:'Premium Pakistani Dresses · Faisalabad',image:null};
+const defaultReviews=[
+  {id:1,author:'Sana Malik',product:'Gulabi Lawn',rating:5,text:'Bilkul waisay hi aaya jaisay picture mein tha. Fabric bohot soft hai aur stitching perfect. Zaroor dobara order karoungi!',date:'2025-03-12'},
+  {id:2,author:'Zainab A.',product:'Zari Chiffon',rating:5,text:'Shadi mein pehna aur sab ne taarif ki. Quality ekdam top class hai. Delivery bhi time pe aai.',date:'2025-04-05'},
+  {id:3,author:'Nida R.',product:'Khaddar Suit',rating:4,text:'Bahut acha suit hai, fabric aur color dono achi quality ke hain. Custom stitching option ke liye shukriya.',date:'2025-05-01'},
+];
+
+// ── STORAGE ──
+function getProducts(){try{const s=localStorage.getItem('zt_products');return s?JSON.parse(s):defaultProducts;}catch(e){return defaultProducts;}}
+function saveProducts(d){localStorage.setItem('zt_products',JSON.stringify(d));}
+function getMensProducts(){try{const s=localStorage.getItem('zt_mens');return s?JSON.parse(s):defaultMensProducts;}catch(e){return defaultMensProducts;}}
+function saveMensProducts(d){localStorage.setItem('zt_mens',JSON.stringify(d));}
+function getSocials(){try{const s=localStorage.getItem('zt_socials');return s?JSON.parse(s):{facebook:'',instagram:'',tiktok:''};}catch(e){return{facebook:'',instagram:'',tiktok:''};}}
+function saveSocialData(d){localStorage.setItem('zt_socials',JSON.stringify(d));}
+function getOwner(){try{const s=localStorage.getItem('zt_owner');return s?JSON.parse(s):defaultOwner;}catch(e){return defaultOwner;}}
+function saveOwnerData(d){localStorage.setItem('zt_owner',JSON.stringify(d));}
+function getReviews(){try{const s=localStorage.getItem('zt_reviews');return s?JSON.parse(s):defaultReviews;}catch(e){return defaultReviews;}}
+function saveReviews(d){localStorage.setItem('zt_reviews',JSON.stringify(d));}
+
+// ── CART ──
+let cart=[];
+let wishlist=[];
+function priceNum(str){return parseInt((str||'0').replace(/,/g,''))||0;}
+function addToCart(id,selectedSize,gender='women'){
+  const p=(gender==='mens'?getMensProducts():getProducts()).find(x=>x.id===id);
+  if(!p)return;
+  const sizes=(p.sizes||'').split(',').map(s=>s.trim()).filter(Boolean);
+  if(sizes.length>0&&!selectedSize){showToast('Pehle size select karein','error');return;}
+  const key=`${id}_${selectedSize||''}`;
+  const ex=cart.find(x=>x.key===key);
+  if(ex)ex.qty++;
+  else cart.push({key,id,title:p.name,nameUrdu:p.nameUrdu,size:selectedSize,price:p.price,qty:1,img:(p.images&&p.images[0])||null});
+  updateCartUI();renderCartPanel();
+  showToast(`${p.name} — cart mein add hua ✓`,'success');
+}
+function removeFromCart(key){cart=cart.filter(x=>x.key!==key);updateCartUI();renderCartPanel();}
+function changeQty(key,delta){
+  const item=cart.find(x=>x.key===key);
+  if(!item)return;
+  item.qty=Math.max(1,item.qty+delta);
+  updateCartUI();renderCartPanel();
+}
+function updateCartUI(){
+  const total=cart.reduce((s,x)=>s+x.qty,0);
+  const el=document.getElementById('navCartCount');
+  if(el)el.textContent=total;
+}
+function toggleCart(){document.getElementById('cartPanel').classList.toggle('open');}
+function renderCartPanel(){
+  const body=document.getElementById('cartBody');
+  const footer=document.getElementById('cartFooter');
+  if(!cart.length){
+    body.innerHTML='<div class="cart-empty">Cart khali hai · آپ کی ٹوکری خالی ہے<br><br>🛍️</div>';
+    if(footer)footer.style.display='none';return;
+  }
+  if(footer)footer.style.display='block';
+  body.innerHTML=cart.map(item=>`
+    <div class="cart-item">
+      ${item.img?`<img class="cart-item-img" src="${item.img}" alt="${item.title}" />`:`<div class="cart-item-img" style="background:var(--blush);display:flex;align-items:center;justify-content:center;font-size:1.4rem;">👗</div>`}
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.title}</div>
+        <div class="cart-item-meta">${item.size?'Size: '+item.size:''}</div>
+        <div class="cart-item-price">Rs. ${item.price}</div>
+        <div class="cart-item-qty">
+          <button class="qty-btn" onclick="changeQty('${item.key}',-1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty('${item.key}',1)">+</button>
+          <button class="cart-item-remove" onclick="removeFromCart('${item.key}')">✕ Hatao</button>
+        </div>
+      </div>
+    </div>`).join('');
+  const total=cart.reduce((s,x)=>s+priceNum(x.price)*x.qty,0);
+  const totalEl=document.getElementById('cartTotalPrice');
+  if(totalEl)totalEl.textContent='Rs. '+total.toLocaleString('en-PK');
+}
+function cartCheckout(){
+  if(!cart.length)return;
+  const items=cart.map(x=>`${x.title}${x.size?' ('+x.size+')':''} x${x.qty} = Rs.${x.price}`).join('\n');
+  const total=cart.reduce((s,x)=>s+priceNum(x.price)*x.qty,0);
+  const sub=encodeURIComponent(`Cart Order — ZabeTan`);
+  const body=encodeURIComponent(`ZabeTan Order:\n\n${items}\n\nTotal: Rs. ${total.toLocaleString('en-PK')}\n\nPlease confirm and send payment details.\n\n--- zabetan.netlify.app ---`);
+  window.location.href=`mailto:${OWNER_EMAIL}?subject=${sub}&body=${body}`;
+}
+function cartWhatsapp(){
+  if(!cart.length)return;
+  const items=cart.map(x=>`• ${x.title}${x.size?' ('+x.size+')':''} x${x.qty}`).join('%0A');
+  const total=cart.reduce((s,x)=>s+priceNum(x.price)*x.qty,0);
+  window.open(`https://wa.me/${WA_NUMBER}?text=Assalam%20o%20Alaikum!%20ZabeTan%20se%20order%20karna%20hai%3A%0A%0A${items}%0A%0ATotal%3A%20Rs.%20${total.toLocaleString()}%0A%0APlease%20confirm%20karen.`,'_blank');
+}
+
+// ── WISHLIST ──
+function toggleWishlist(id,btn){
+  const idx=wishlist.indexOf(id);
+  if(idx>-1){wishlist.splice(idx,1);if(btn){btn.classList.remove('liked');btn.textContent='♡';}}
+  else{wishlist.push(id);if(btn){btn.classList.add('liked');btn.textContent='♥';}}
+}
+
+// ── STARS ──
+function starsHTML(rating,total){
+  const r=Math.round(rating*2)/2;
+  let s='';for(let i=1;i<=5;i++)s+=i<=r?'★':'☆';
+  return `<span class="stars-visual">${s}</span>${total!==undefined?`<span class="stars-count">(${total})</span>`:''}`;
+}
+
+// ── RENDER PRODUCTS ──
+function buildProductHTML(p, gender='women'){
+  const imgs=p.images||[null,null,null,null];
+  const hasImgs=imgs.some(x=>x);
+  const reviews=getReviews().filter(r=>r.product===p.name);
+  const avg=reviews.length?reviews.reduce((s,r)=>s+r.rating,0)/reviews.length:0;
+  const isSoldOut=parseInt(p.quantity||0)===0;
+  const discPct=parseInt(p.discount||0);
+  const sizes=(p.sizes||'').split(',').map(s=>s.trim()).filter(Boolean);
+
+  let slideHTML='';
+  if(hasImgs){
+    const valid=imgs.filter(x=>x);
+    slideHTML=`<div class="card-slideshow">`;
+    valid.forEach((img,i)=>{slideHTML+=`<img class="slide-img${i===0?' active':''}" src="${img}" alt="${p.name}" />`;});
+    if(valid.length>1){
+      slideHTML+=`<div class="slide-arrows"><button class="slide-arr" onclick="slideCard(event,${p.id},-1)">‹</button><button class="slide-arr" onclick="slideCard(event,${p.id},1)">›</button></div>`;
+      slideHTML+=`<div class="slide-dots">${valid.map((_,i)=>`<div class="slide-dot${i===0?' active':''}" onclick="goSlide(event,${p.id},${i})"></div>`).join('')}</div>`;
+    }
+    slideHTML+=`</div>`;
+  } else {
+    slideHTML=`<div class="color-placeholder ${p.colorClass}"></div>`;
+  }
+
+  let badgesHTML='<div class="card-badges">';
+  if(isSoldOut) badgesHTML+=`<span class="badge badge-sold">Sold Out</span>`;
+  if(discPct>0) badgesHTML+=`<span class="badge badge-discount">${discPct}% OFF</span>`;
+  if(p.isNew&&!isSoldOut) badgesHTML+=`<span class="badge badge-new">New</span>`;
+  badgesHTML+='</div>';
+
+  let priceHTML=`<div class="price-row"><span class="card-price-current">Rs. ${p.price}</span>`;
+  if(discPct>0&&p.origPrice) priceHTML+=`<span class="card-price-original">Rs. ${p.origPrice}</span><span class="card-price-saved">Save ${discPct}%</span>`;
+  priceHTML+=`</div>`;
+
+  const qty=parseInt(p.quantity||0);
+  const qtyClass=qty===0?'card-qty out':qty<=3?'card-qty low':'card-qty';
+  const qtyText=qty===0?'Out of stock':qty<=3?`⚠ Sirf ${qty} bacha!`:`${qty} available`;
+
+  const sizePickerHTML=sizes.length>0?`
+    <div class="size-selector" id="sizes_${p.id}">
+      <span class="size-label">Size:</span>
+      ${sizes.map(s=>`<button class="size-btn" data-size="${s}" onclick="selectSize(event,${p.id},'${s}')">${s}</button>`).join('')}
+    </div>`:'';
+
+  return `
+  <div class="product-card${p.tall?' tall':''}${isSoldOut?' sold-out':''}" data-id="${p.id}" data-tag="${p.tag.toLowerCase()}">
+    ${badgesHTML}
+    <button class="wishlist-btn ${wishlist.includes(p.id)?'liked':''}" onclick="toggleWishlist(${p.id},this)">${wishlist.includes(p.id)?'♥':'♡'}</button>
+    ${slideHTML}
+    <div class="card-body">
+      <p class="card-tag">${p.tag}</p>
+      <h3 class="card-title">${p.name}</h3>
+      ${p.nameUrdu?`<div class="card-title-urdu">${p.nameUrdu}</div>`:''}
+      <div class="card-size-fabric">
+        ${p.fabric?`<span class="card-pill">🧵 ${p.fabric}</span>`:''}
+        ${p.sizes?`<span class="card-pill">📐 ${p.sizes}</span>`:''}
+      </div>
+      ${sizePickerHTML}
+      ${priceHTML}
+      <div class="card-meta">
+        <span class="${qtyClass}">${qtyText}</span>
+        ${reviews.length>0?`<div class="card-stars">${starsHTML(avg,reviews.length)}</div>`:''}
+      </div>
+      <div class="card-actions">
+        <button class="order-btn add-cart-btn" onclick="addToCart(${p.id},getSelectedSize(${p.id}),'${gender}')" ${isSoldOut?'disabled':''}>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          Add to Cart
+        </button>
+        <a class="order-btn wa-btn" href="https://wa.me/${WA_NUMBER}?text=Assalam%20o%20Alaikum!%20${encodeURIComponent(p.name)}%20dress%20ka%20order%20karna%20hai." target="_blank">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          WA
+        </a>
+        <a class="order-btn email-btn" href="#order" onclick="prefillOrder('${p.name}')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Email
+        </a>
+      </div>
+    </div>
+  </div>`;
+}
+function selectSize(e,id,size){
+  e.stopPropagation();
+  const container=document.getElementById(`sizes_${id}`);
+  if(!container)return;
+  container.querySelectorAll('.size-btn').forEach(b=>{b.classList.toggle('active',b.dataset.size===size);});
+}
+function getSelectedSize(id){
+  const container=document.getElementById(`sizes_${id}`);
+  if(!container)return '';
+  const active=container.querySelector('.size-btn.active');
+  return active?active.dataset.size:'';
+}
+// ── SECTION SWITCH (Women / Mens) ──
+let currentSection='women';
+function switchSection(section,btn){
+  currentSection=section;
+  document.querySelectorAll('.section-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const ws=document.getElementById('womenSection');
+  const ms=document.getElementById('mensSection');
+  if(section==='women'){ws.style.display='block';ms.style.display='none';renderProducts();}
+  else{ws.style.display='none';ms.style.display='block';renderMens();}
+}
+
+// ── MENS RENDER ──
+function renderMens(filter){
+  const all=getMensProducts();
+  const list=(!filter||filter==='all')?all:all.filter(p=>p.tag.toLowerCase().includes(filter));
+  const grid=document.getElementById('mensGrid');
+  if(!grid)return;
+  grid.innerHTML=list.map(p=>buildProductHTML(p,'mens')).join('');
+  initCardAnimations();
+}
+
+function renderProducts(filter){
+  const all=getProducts();
+  const list=(!filter||filter==='all')?all:all.filter(p=>p.tag.toLowerCase().includes(filter));
+  document.getElementById('productGrid').innerHTML=list.map(p=>buildProductHTML(p,'women')).join('');
+  initCardAnimations();populateProductSelect();populateReviewSelect();
+}
+function slideCard(e,id,dir){
+  e.preventDefault();e.stopPropagation();
+  const card=document.querySelector(`.product-card[data-id="${id}"]`);
+  if(!card)return;
+  const slides=[...card.querySelectorAll('.slide-img')];
+  const dots=[...card.querySelectorAll('.slide-dot')];
+  if(!slides.length)return;
+  const cur=slides.findIndex(s=>s.classList.contains('active'));
+  const next=(cur+dir+slides.length)%slides.length;
+  slides[cur].classList.remove('active');slides[next].classList.add('active');
+  if(dots.length){dots[cur].classList.remove('active');dots[next].classList.add('active');}
+}
+function goSlide(e,id,idx){
+  e.preventDefault();e.stopPropagation();
+  const card=document.querySelector(`.product-card[data-id="${id}"]`);
+  if(!card)return;
+  [...card.querySelectorAll('.slide-img')].forEach((s,i)=>s.classList.toggle('active',i===idx));
+  [...card.querySelectorAll('.slide-dot')].forEach((d,i)=>d.classList.toggle('active',i===idx));
+}
+function populateProductSelect(){
+  const sel=document.getElementById('orderProduct');
+  if(!sel)return;
+  sel.innerHTML='<option value="">Dress select karein...</option>'+
+    getProducts().map(p=>`<option value="${p.name}">${p.name} — Rs. ${p.price}</option>`).join('');
+}
+function populateReviewSelect(){
+  const sel=document.getElementById('rvProduct');
+  if(!sel)return;
+  sel.innerHTML='<option value="">Select dress...</option>'+
+    getProducts().map(p=>`<option value="${p.name}">${p.name}</option>`).join('');
+}
+
+// ── OWNER ──
+function renderOwnerStrip(){
+  const o=getOwner();
+  const strip=document.getElementById('ownerStrip');
+  const imgHTML=o.image?`<img class="owner-avatar" src="${o.image}" alt="${o.name}" />`:`<div class="owner-avatar-placeholder">👗</div>`;
+  strip.innerHTML=`${imgHTML}
+    <div class="owner-info">
+      <div class="owner-name">${o.name||'ZabeTan'}</div>
+      <div class="owner-tagline">${o.tagline||''}</div>
+      <div class="owner-badges">
+        <span class="owner-badge">✓ Verified Seller</span>
+        <span class="owner-badge">📦 Fast Delivery</span>
+        <span class="owner-badge">✂️ Custom Stitching</span>
+        <span class="owner-badge">⭐ 5-Star Rated</span>
+      </div>
+    </div>
+    <div class="owner-urdu">زیب تن · پریمیم لباس</div>`;
+}
+function handleOwnerImg(event){
+  const file=event.target.files[0];
+  if(!file)return;
+  if(file.size>3*1024*1024){showToast('Image 3MB se chhoti honi chahiye','error');return;}
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const area=document.getElementById('ownerImgArea');
+    const prev=document.getElementById('ownerImgPreview');
+    prev.src=e.target.result;prev.classList.add('visible');area.classList.add('has-image');
+    const o=getOwner();o.image=e.target.result;saveOwnerData(o);renderOwnerStrip();
+    showToast('Owner photo upload ho gai ✓','success');
+  };
+  reader.readAsDataURL(file);
+}
+function removeOwnerImg(e){
+  e.stopPropagation();
+  const area=document.getElementById('ownerImgArea');
+  const prev=document.getElementById('ownerImgPreview');
+  prev.src='';prev.classList.remove('visible');area.classList.remove('has-image');
+  const o=getOwner();o.image=null;saveOwnerData(o);renderOwnerStrip();
+  showToast('Photo hata di');
+}
+function saveOwnerSettings(){
+  const o=getOwner();
+  o.name=document.getElementById('own_name').value.trim()||o.name;
+  o.tagline=document.getElementById('own_tagline').value.trim()||o.tagline;
+  saveOwnerData(o);renderOwnerStrip();showToast('Owner details save ho gayi ✓','success');
+}
+function loadOwnerIntoPanel(){
+  const o=getOwner();
+  document.getElementById('own_name').value=o.name||'';
+  document.getElementById('own_tagline').value=o.tagline||'';
+  const prev=document.getElementById('ownerImgPreview');
+  const area=document.getElementById('ownerImgArea');
+  if(o.image){prev.src=o.image;prev.classList.add('visible');area.classList.add('has-image');}
+  else{prev.src='';prev.classList.remove('visible');area.classList.remove('has-image');}
+}
+
+// ── REVIEWS ──
+let selectedRating=0;
+function setReviewStar(val){
+  selectedRating=val;
+  document.querySelectorAll('.star-btn').forEach(b=>{b.classList.toggle('lit',parseInt(b.dataset.val)<=val);});
+}
+function renderReviews(){
+  const reviews=getReviews();
+  const list=document.getElementById('reviewsList');
+  const summary=document.getElementById('reviewsSummary');
+  if(!list||!summary)return;
+  if(!reviews.length){list.innerHTML='<p style="font-family:\'DM Mono\',monospace;font-size:.58rem;color:var(--muted);text-align:center;padding:24px;">No reviews yet!</p>';
+  }else{
+    list.innerHTML=reviews.slice().reverse().map(r=>`
+      <div class="review-card">
+        <div class="review-header">
+          <div><div class="review-author">${r.author}</div><div class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div></div>
+          <div class="review-date">${r.date||''}</div>
+        </div>
+        ${r.product?`<div class="review-product">Re: ${r.product}</div>`:''}
+        <div class="review-text">${r.text}</div>
+      </div>`).join('');
+  }
+  const avg=reviews.length?reviews.reduce((s,r)=>s+r.rating,0)/reviews.length:0;
+  const counts=[5,4,3,2,1].map(n=>({n,c:reviews.filter(r=>r.rating===n).length}));
+  summary.innerHTML=`
+    <div class="reviews-big-score">${avg?avg.toFixed(1):'—'}</div>
+    <div class="reviews-big-stars">${avg?'★'.repeat(Math.round(avg))+'☆'.repeat(5-Math.round(avg)):'☆☆☆☆☆'}</div>
+    <div class="reviews-total">${reviews.length} review${reviews.length!==1?'s':''}</div>
+    <div class="rating-bars">${counts.map(x=>`
+      <div class="rating-bar-row">
+        <span class="rating-bar-label">${x.n}</span>
+        <div class="rating-bar-track"><div class="rating-bar-fill" style="width:${reviews.length?Math.round(x.c/reviews.length*100):0}%"></div></div>
+        <span style="font-family:'DM Mono',monospace;font-size:.5rem;color:var(--muted);width:16px;">${x.c}</span>
+      </div>`).join('')}</div>`;
+}
+function submitReview(){
+  const name=document.getElementById('rvName').value.trim();
+  const product=document.getElementById('rvProduct').value;
+  const text=document.getElementById('rvText').value.trim();
+  if(!name){showToast('Apna naam likhein','error');return;}
+  if(!selectedRating){showToast('Rating select karein','error');return;}
+  if(!text){showToast('Review likhein','error');return;}
+  const reviews=getReviews();
+  reviews.push({id:Date.now(),author:name,product,rating:selectedRating,text,date:new Date().toISOString().split('T')[0]});
+  saveReviews(reviews);renderReviews();renderProducts();
+  document.getElementById('rvName').value='';document.getElementById('rvProduct').value='';document.getElementById('rvText').value='';
+  selectedRating=0;document.querySelectorAll('.star-btn').forEach(b=>b.classList.remove('lit'));
+  showToast('Shukriya! Review submit ho gaya ✓','success');
+}
+
+// ── SOCIALS ──
+function renderSocials(){
+  const s=getSocials();
+  const c=document.getElementById('footerSocials');
+  let html='';
+  if(s.facebook)html+=`<a class="social-link fb" href="${s.facebook}" target="_blank"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook</a>`;
+  if(s.instagram)html+=`<a class="social-link ig" href="${s.instagram}" target="_blank"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram</a>`;
+  if(s.tiktok)html+=`<a class="social-link tt" href="${s.tiktok}" target="_blank"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.77a8.17 8.17 0 0 0 4.77 1.52V6.86a4.85 4.85 0 0 1-1-.17z"/></svg>TikTok</a>`;
+  c.innerHTML=html;
+}
+function saveSocialSettings(){
+  saveSocialData({facebook:document.getElementById('set_facebook').value.trim(),instagram:document.getElementById('set_instagram').value.trim(),tiktok:document.getElementById('set_tiktok').value.trim()});
+  renderSocials();showToast('Social links save ho gaye ✓','success');
+}
+
+// ── GITHUB ──
+function getGithubSettings(){try{return JSON.parse(localStorage.getItem('zt_github')||'null');}catch(e){return null;}}
+function saveGithubSettings(){
+  const user=document.getElementById('gh_user').value.trim();
+  const repo=document.getElementById('gh_repo').value.trim();
+  const path=document.getElementById('gh_path').value.trim()||'index.html';
+  const token=document.getElementById('gh_token').value.trim();
+  if(!user||!repo||!token){showToast('Username, repo aur token zaroori hain','error');return;}
+  localStorage.setItem('zt_github',JSON.stringify({user,repo,path,token}));
+  applyGithubUI();showToast('GitHub settings save ho gayi ✓','success');
+}
+function resetGithubSettings(){localStorage.removeItem('zt_github');applyGithubUI();}
+function applyGithubUI(){
+  const s=getGithubSettings();
+  const setup=document.getElementById('githubSetupBox');
+  const sync=document.getElementById('githubSyncBox');
+  if(!setup||!sync)return;
+  if(s){setup.style.display='none';sync.style.display='block';document.getElementById('ghConnectedLabel').textContent=`${s.user}/${s.repo} → ${s.path}`;}
+  else{setup.style.display='block';sync.style.display='none';}
+}
+function setSyncStatus(msg,ok){
+  const el=document.getElementById('syncStatus');
+  el.style.display='block';el.textContent=msg;
+  el.style.background=ok?'rgba(122,158,126,.15)':'rgba(181,85,106,.1)';
+  el.style.color=ok?'var(--sage)':'var(--rose)';
+  el.style.border=ok?'1px solid rgba(122,158,126,.3)':'1px solid rgba(181,85,106,.25)';
+}
+function toBase64(str){
+  const bytes=new TextEncoder().encode(str);let bin='';
+  for(let i=0;i<bytes.length;i+=8192)bin+=String.fromCharCode(...bytes.subarray(i,i+8192));
+  return btoa(bin);
+}
+function ghHeaders(token){return{'Authorization':`token ${token}`,'Accept':'application/vnd.github+json','Content-Type':'application/json'};}
+async function ghGetSHA(url,hdrs){
+  const r=await fetch(url,{headers:hdrs});
+  if(r.status===404)return null;
+  if(r.status===401)throw new Error('Token galat ya expire — naya classic token banao (repo scope).');
+  if(r.status===403)throw new Error('Token ko "repo" permission nahi.');
+  if(!r.ok){const t=await r.text();throw new Error(`GitHub (${r.status}): ${t.slice(0,120)}`);}
+  return(await r.json()).sha||null;
+}
+async function ghPutFile(url,hdrs,content,sha,msg){
+  const body={message:msg,content,...(sha?{sha}:{})};
+  const r=await fetch(url,{method:'PUT',headers:hdrs,body:JSON.stringify(body)});
+  if(r.status===401)throw new Error('Token galat ya expire.');
+  if(r.status===403)throw new Error('Write permission nahi — token mein "repo" scope chahiye.');
+  if(r.status===422){const d=await r.json();throw new Error('GitHub reject: '+d.message);}
+  if(!r.ok){const t=await r.text();throw new Error(`Upload failed (${r.status}): ${t.slice(0,120)}`);}
+  return await r.json();
+}
+async function syncToGithub(){
+  const s=getGithubSettings();
+  if(!s){showToast('Pehle GitHub settings save karo','error');return;}
+  const btn=document.getElementById('btnSyncGithub');
+  btn.textContent='⏳ Syncing...';btn.disabled=true;
+  const base=`https://api.github.com/repos/${s.user}/${s.repo}/contents/`;
+  const hdrs=ghHeaders(s.token);
+  const ts=new Date().toLocaleString('en-PK');
+  try{
+    setSyncStatus('Repo check ho rahi hai...', true);
+    const rc=await fetch(`https://api.github.com/repos/${s.user}/${s.repo}`,{headers:hdrs});
+    if(rc.status===401)throw new Error('Token galat ya expire — naya classic token banao.');
+    if(rc.status===403)throw new Error('Token ko permission nahi.');
+    if(rc.status===404)throw new Error(`Repo nahi mili: "${s.user}/${s.repo}"`);
+    setSyncStatus('Data save ho raha hai...', true);
+    const data={products:getProducts(),socials:getSocials(),adminPass:getAdminPass(),owner:getOwner(),reviews:getReviews(),updatedAt:ts};
+    const dataStr=JSON.stringify(data);
+    const kb=Math.round(new TextEncoder().encode(dataStr).length/1024);
+    if(kb>8000)throw new Error(`Data ${kb}KB hai — images compress karo.`);
+    const sha=await ghGetSHA(base+'zt-data.json',hdrs);
+    await ghPutFile(base+'zt-data.json',hdrs,toBase64(dataStr),sha,`ZabeTan update — ${ts}`);
+    setSyncStatus(`✓ Sync kamyab! (${kb}KB)\nNetlify 1-2 min mein live ho jaega.`, true);
+    showToast('GitHub sync complete ✓','success');
+  }catch(err){
+    console.error(err);setSyncStatus('✗ '+err.message, false);showToast('Sync failed','error');
+  }finally{btn.textContent='↑ Sync to GitHub Now';btn.disabled=false;}
+}
+
+// ── PASSWORD ──
+function changePassword(){
+  const val=document.getElementById('newPassword').value.trim();
+  if(val.length<6){showToast('Password 6 se zyada characters ka hona chahiye','error');return;}
+  localStorage.setItem('zt_adminpass',val);document.getElementById('newPassword').value='';
+  showToast('Password change ho gaya ✓','success');
+}
+
+// ── ORDER FORM ──
+function prefillOrder(name){
+  const sel=document.getElementById('orderProduct');
+  if(sel)for(let o of sel.options)if(o.value===name){sel.value=o.value;break;}
+  document.getElementById('order').scrollIntoView({behavior:'smooth'});
+}
+function submitOrder(){
+  const name=document.getElementById('orderName').value.trim();
+  const email=document.getElementById('orderEmail').value.trim();
+  const phone=document.getElementById('orderPhone').value.trim();
+  const product=document.getElementById('orderProduct').value;
+  const size=document.getElementById('orderSize').value;
+  const city=document.getElementById('orderCity').value.trim();
+  const message=document.getElementById('orderMessage').value.trim();
+  if(!name||!email){showToast('Naam aur email zaroori hain','error');return;}
+  if(!/\S+@\S+\.\S+/.test(email)){showToast('Valid email address daalen','error');return;}
+  const sub=encodeURIComponent(`Order — ${product||'Dress'} — ZabeTan`);
+  const body=encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone||'—'}\nDress: ${product||'—'}\nSize: ${size||'—'}\nCity: ${city||'—'}\n\n${message||''}\n\n--- ZabeTan Website ---`);
+  window.location.href=`mailto:${OWNER_EMAIL}?subject=${sub}&body=${body}`;
+  document.getElementById('orderForm').style.display='none';
+  document.getElementById('orderSuccess').classList.add('show');
+  setTimeout(()=>{
+    document.getElementById('orderSuccess').classList.remove('show');
+    document.getElementById('orderForm').style.display='flex';
+    ['orderName','orderEmail','orderPhone','orderCity','orderMessage'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('orderProduct').value='';document.getElementById('orderSize').value='';
+  },5000);
+}
+
+// ── ADMIN PANEL ──
+const colorOptions=['d1','d2','d3','d4','d5','d6','d7','d8'];
+const colorLabels=['Pink','Gold','Green','Purple','Orange','Blue','Brown','Dark Green'];
+function buildEditItem(p,gender='women'){
+  const imgs=p.images||[null,null,null,null];
+  const colorSelects=colorOptions.map((c,i)=>`<option value="${c}" ${p.colorClass===c?'selected':''}>${colorLabels[i]}</option>`).join('');
+  const slotLabels=['Main','Photo 2','Photo 3','Photo 4'];
+  const slotsHTML=imgs.map((img,i)=>`
+    <div>
+      <div class="img-slot${img?' has-img':''}" id="slot_${p.id}_${i}">
+        <img src="${img||''}" alt="photo ${i+1}" />
+        <div class="img-slot-hint"><span style="font-size:1rem">📷</span>${slotLabels[i]}</div>
+        <input class="img-slot-input" type="file" accept="image/*" onchange="handleSlotImg(event,${p.id},${i},'${gender}')" />
+        <button class="img-slot-remove" onclick="removeSlotImg(event,${p.id},${i},'${gender}')">✕</button>
+      </div>
+      <div class="img-slot-label">${slotLabels[i]}</div>
+    </div>`).join('');
+  const itemLabel=gender==='mens'?'Item':'Dress';
+  return `
+  <div class="edit-card-item" data-edit-id="${p.id}">
+    <div class="edit-card-header" onclick="toggleEditCard(this)">
+      <span class="edit-card-name">${p.name}</span>
+      <span class="edit-card-toggle">▼</span>
+    </div>
+    <div class="edit-fields">
+      <div class="field-group"><label class="field-label">${itemLabel} Photos (4 tak)</label><div class="multi-img-grid">${slotsHTML}</div></div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">${itemLabel} Name</label><input class="field-input" data-field="name" value="${p.name}" /></div>
+        <div class="field-group"><label class="field-label">Urdu Naam</label><input class="field-input" data-field="nameUrdu" value="${p.nameUrdu||''}" /></div>
+      </div>
+      <div class="field-group"><label class="field-label">Tag / Category</label><input class="field-input" data-field="tag" value="${p.tag}" placeholder="${gender==='mens'?'e.g. Shalwar Kameez · Classic':'e.g. Lawn · 3-Piece'}" /></div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Fabric</label><input class="field-input" data-field="fabric" value="${p.fabric||''}" placeholder="e.g. Premium Lawn" /></div>
+        <div class="field-group"><label class="field-label">Sizes Available</label><input class="field-input" data-field="sizes" value="${p.sizes||''}" placeholder="XS,S,M,L,XL,XXL" /></div>
+      </div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Sale Price (Rs.)</label><input class="field-input" data-field="price" value="${p.price}" /></div>
+        <div class="field-group"><label class="field-label">Original Price (Rs.)</label><input class="field-input" data-field="origPrice" value="${p.origPrice||''}" /></div>
+      </div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Discount %</label><input class="field-input" type="number" data-field="discount" value="${p.discount||0}" min="0" max="100" /></div>
+        <div class="field-group"><label class="field-label">Quantity</label><input class="field-input" type="number" data-field="quantity" value="${p.quantity||0}" min="0" /></div>
+      </div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Delivery Note</label><input class="field-input" data-field="delivery" value="${p.delivery||''}" /></div>
+        <div class="field-group"><label class="field-label">WhatsApp Text</label><input class="field-input" data-field="waText" value="${p.waText||p.name}" /></div>
+      </div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Background Color</label><select class="field-input" data-field="colorClass">${colorSelects}</select></div>
+        <div class="field-group"><label class="field-label">Card Size</label><select class="field-input" data-field="tall"><option value="false" ${!p.tall?'selected':''}>Normal</option><option value="true" ${p.tall?'selected':''}>Tall (2 rows)</option></select></div>
+      </div>
+      <div class="field-group"><label class="field-label">New Arrival?</label><select class="field-input" data-field="isNew"><option value="false" ${!p.isNew?'selected':''}>No</option><option value="true" ${p.isNew?'selected':''}>Yes — "New" badge</option></select></div>
+      <button class="btn-save-card" onclick="saveCard(${p.id},'${gender}')">✓ Save Changes</button>
+      <button class="btn-delete-card" onclick="deleteCard(${p.id},'${gender}')">✕ Remove ${itemLabel}</button>
+    </div>
+  </div>`;
+}
+function handleSlotImg(event,id,slotIdx){
+  const file=event.target.files[0];
+  if(!file)return;
+  if(file.size>3*1024*1024){showToast('Image 3MB se chhoti honi chahiye','error');return;}
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const dataUrl=e.target.result;
+    const slot=document.getElementById(`slot_${id}_${slotIdx}`);
+    if(slot){slot.querySelector('img').src=dataUrl;slot.classList.add('has-img');}
+    const products=getProducts();const idx=products.findIndex(p=>p.id===id);
+    if(idx>-1){if(!products[idx].images)products[idx].images=[null,null,null,null];products[idx].images[slotIdx]=dataUrl;saveProducts(products);renderProducts();}
+    showToast(`Photo ${slotIdx+1} upload ho gai ✓`,'success');
+  };
+  reader.readAsDataURL(file);
+}
+function removeSlotImg(e,id,slotIdx){
+  e.stopPropagation();
+  const slot=document.getElementById(`slot_${id}_${slotIdx}`);
+  if(slot){slot.querySelector('img').src='';slot.classList.remove('has-img');}
+  const products=getProducts();const idx=products.findIndex(p=>p.id===id);
+  if(idx>-1){if(!products[idx].images)products[idx].images=[null,null,null,null];products[idx].images[slotIdx]=null;saveProducts(products);renderProducts();}
+  showToast('Photo hata di');
+}
+function renderEditPanel(){
+  document.getElementById('editCardsList').innerHTML=getProducts().map(p=>buildEditItem(p,'women')).join('');
+  const mensList=document.getElementById('editMensCardsList');
+  if(mensList)mensList.innerHTML=getMensProducts().map(p=>buildEditItem(p,'mens')).join('');
+  loadSocialIntoPanel();loadOwnerIntoPanel();applyGithubUI();
+  const s=getGithubSettings();
+  if(s){document.getElementById('gh_user').value=s.user||'';document.getElementById('gh_repo').value=s.repo||'';document.getElementById('gh_path').value=s.path||'index.html';}
+  renderHeroImgGrid();
+}
+function loadSocialIntoPanel(){
+  const s=getSocials();
+  document.getElementById('set_facebook').value=s.facebook||'';
+  document.getElementById('set_instagram').value=s.instagram||'';
+  document.getElementById('set_tiktok').value=s.tiktok||'';
+}
+function toggleEditCard(header){header.closest('.edit-card-item').classList.toggle('expanded');}
+function saveCard(id,gender='women'){
+  const isM=gender==='mens';
+  const products=isM?getMensProducts():getProducts();const idx=products.findIndex(p=>p.id===id);if(idx===-1)return;
+  const item=document.querySelector(`.edit-card-item[data-edit-id="${id}"]`);
+  item.querySelectorAll('[data-field]').forEach(input=>{
+    const field=input.dataset.field;let val=input.value.trim();
+    if(field==='tall'||field==='isNew')val=val==='true';
+    else if(field==='discount'||field==='quantity')val=parseInt(val)||0;
+    products[idx][field]=val;
+  });
+  item.querySelector('.edit-card-name').textContent=products[idx].name;
+  if(isM){saveMensProducts(products);renderMens();}else{saveProducts(products);renderProducts();}
+  showToast('Update ho gaya ✓','success');
+}
+function deleteCard(id,gender='women'){
+  const isM=gender==='mens';
+  if(!confirm('Is item ko list se hatao?'))return;
+  if(isM){saveMensProducts(getMensProducts().filter(p=>p.id!==id));renderMens();}
+  else{saveProducts(getProducts().filter(p=>p.id!==id));renderProducts();}
+  renderEditPanel();showToast('Item hata diya');
+}
+document.getElementById('btnAddCard').addEventListener('click',()=>{
+  const products=getProducts();const newId=Date.now();
+  products.push({id:newId,name:'Nai Dress',nameUrdu:'نئی ڈریس',tag:'Lawn · 3-Piece',fabric:'',price:'3,000',origPrice:'',discount:0,sizes:'S,M,L,XL',quantity:1,delivery:'Free delivery',tall:false,colorClass:'d1',waText:'Nai Dress',images:[null,null,null,null],isNew:true});
+  saveProducts(products);renderProducts();renderEditPanel();
+  setTimeout(()=>{const el=document.querySelector(`.edit-card-item[data-edit-id="${newId}"]`);if(el){el.classList.add('expanded');el.scrollIntoView({behavior:'smooth',block:'center'});}},50);
+  showToast('Nai dress add ho gai — details fill karein');
+});
+document.getElementById('btnAddMensCard').addEventListener('click',()=>{
+  const products=getMensProducts();const newId=Date.now()+1;
+  products.push({id:newId,name:'Naya Shalwar Kameez',nameUrdu:'نیا شلوار قمیض',tag:'Shalwar Kameez · Classic',fabric:'',price:'2,500',origPrice:'',discount:0,sizes:'S,M,L,XL',quantity:1,delivery:'Free delivery',tall:false,colorClass:'d8',waText:'Naya Shalwar Kameez',images:[null,null,null,null],isNew:true});
+  saveMensProducts(products);renderMens();renderEditPanel();
+  setTimeout(()=>{const el=document.querySelector(`.edit-card-item[data-edit-id="${newId}"]`);if(el){el.classList.add('expanded');el.scrollIntoView({behavior:'smooth',block:'center'});}},50);
+  showToast('Naya men\'s item add ho gaya — details fill karein');
+});
+
+// ── TOAST ──
+function showToast(msg,type){
+  const t=document.getElementById('toast');t.textContent=msg;t.className='toast'+(type?' '+type:'');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// ── HERO SLIDESHOW ──
+function getHeroImages(){try{const s=localStorage.getItem('zt_hero_images');return s?JSON.parse(s):[null,null,null,null,null];}catch(e){return[null,null,null,null,null];}}
+function saveHeroImages(imgs){localStorage.setItem('zt_hero_images',JSON.stringify(imgs));}
+
+let heroSlideIndex=0;let heroTimer=null;
+function buildHeroSlideshow(){
+  const imgs=getHeroImages().filter(Boolean);
+  const container=document.getElementById('heroSlides');
+  const dotsContainer=document.getElementById('heroSlideDots');
+  // Remove old slides (keep .hero-no-img)
+  container.querySelectorAll('.hero-slide').forEach(s=>s.remove());
+  if(!imgs.length){
+    dotsContainer.innerHTML='';
+    container.querySelector('.hero-no-img').style.display='block';
+    if(heroTimer)clearInterval(heroTimer);
+    return;
+  }
+  container.querySelector('.hero-no-img').style.display='none';
+  imgs.forEach((src,i)=>{
+    const slide=document.createElement('div');
+    slide.className='hero-slide'+(i===0?' active':'');
+    slide.style.backgroundImage=`url('${src}')`;
+    const overlay=document.createElement('div');
+    overlay.className='hero-slide-overlay';
+    slide.appendChild(overlay);
+    container.appendChild(slide);
+  });
+  // Dots
+  dotsContainer.innerHTML=imgs.map((_,i)=>`<button class="hero-slide-dot${i===0?' active':''}" onclick="goHeroSlide(${i})"></button>`).join('');
+  heroSlideIndex=0;
+  if(heroTimer)clearInterval(heroTimer);
+  if(imgs.length>1){heroTimer=setInterval(()=>goHeroSlide((heroSlideIndex+1)%imgs.length),4000);}
+}
+function goHeroSlide(idx){
+  heroSlideIndex=idx;
+  document.querySelectorAll('.hero-slide').forEach((s,i)=>s.classList.toggle('active',i===idx));
+  document.querySelectorAll('.hero-slide-dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+}
+
+function renderHeroImgGrid(){
+  const imgs=getHeroImages();
+  const grid=document.getElementById('heroImgGrid');
+  if(!grid)return;
+  grid.innerHTML=imgs.map((img,i)=>`
+    <div class="hero-img-slot ${img?'filled':''}" id="heroSlot_${i}">
+      ${img?`<img src="${img}" alt="Hero ${i+1}" />`:''}
+      <div class="hero-img-slot-hint"><span>🖼</span><p>Slide ${i+1}</p></div>
+      <input type="file" accept="image/*" onchange="handleHeroImg(event,${i})" />
+      <button class="hero-img-slot-rm" onclick="removeHeroImg(event,${i})">✕</button>
+    </div>`).join('');
+}
+function handleHeroImg(event,idx){
+  const file=event.target.files[0];if(!file)return;
+  if(file.size>5*1024*1024){showToast('Max 5MB per image','error');return;}
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const imgs=getHeroImages();imgs[idx]=e.target.result;saveHeroImages(imgs);
+    const slot=document.getElementById(`heroSlot_${idx}`);
+    if(slot){let img=slot.querySelector('img');if(!img){img=document.createElement('img');slot.prepend(img);}img.src=e.target.result;slot.classList.add('filled');}
+    buildHeroSlideshow();showToast(`Slide ${idx+1} upload ho gaya ✓`,'success');
+  };
+  reader.readAsDataURL(file);
+}
+function removeHeroImg(event,idx){
+  event.stopPropagation();
+  const imgs=getHeroImages();imgs[idx]=null;saveHeroImages(imgs);
+  const slot=document.getElementById(`heroSlot_${idx}`);
+  if(slot){const img=slot.querySelector('img');if(img)img.remove();slot.classList.remove('filled');}
+  buildHeroSlideshow();showToast('Slide remove ho gaya');
+}
+function openHeroUploader(){
+  // Scroll admin panel to hero section
+  const panel=document.getElementById('adminPanel');
+  const grid=document.getElementById('heroImgGrid');
+  if(grid)grid.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+// ── FILTER ──
+document.querySelectorAll('.filter-btn:not(.mens-filter)').forEach(btn=>{
+  btn.addEventListener('click',()=>{document.querySelectorAll('.filter-btn:not(.mens-filter)').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderProducts(btn.dataset.filter);});
+});
+document.querySelectorAll('.mens-filter').forEach(btn=>{
+  btn.addEventListener('click',()=>{document.querySelectorAll('.mens-filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderMens(btn.dataset.mfilter);});
+});
+
+// ── ANIMATIONS ──
+function initCardAnimations(){
+  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}});},{threshold:.1});
+  document.querySelectorAll('.product-card').forEach((card,i)=>{card.style.opacity='0';card.style.transform='translateY(30px)';card.style.transition=`opacity .6s ${i*.07}s ease,transform .6s ${i*.07}s ease`;obs.observe(card);});
+}
+
+// ── LOGIN ──
+document.getElementById('adminToggle').addEventListener('click',()=>{document.getElementById('adminLoginOverlay').classList.add('open');document.getElementById('adminPassword').value='';document.getElementById('loginError').style.display='none';setTimeout(()=>document.getElementById('adminPassword').focus(),100);});
+document.getElementById('loginCancel').addEventListener('click',()=>document.getElementById('adminLoginOverlay').classList.remove('open'));
+document.getElementById('loginSubmit').addEventListener('click',attemptLogin);
+document.getElementById('adminPassword').addEventListener('keydown',e=>{if(e.key==='Enter')attemptLogin();});
+function attemptLogin(){
+  const pw=document.getElementById('adminPassword');
+  if(pw.value===getAdminPass()){
+    document.getElementById('adminLoginOverlay').classList.remove('open');
+    document.getElementById('adminPanel').classList.add('open');
+    document.body.classList.add('admin-active');
+    renderEditPanel();
+    renderHeroImgGrid();
+  }
+  else{document.getElementById('loginError').style.display='block';pw.value='';pw.focus();pw.style.borderColor='var(--rose)';setTimeout(()=>pw.style.borderColor='',1000);}
+}
+document.getElementById('panelClose').addEventListener('click',()=>{
+  document.getElementById('adminPanel').classList.remove('open');
+  document.body.classList.remove('admin-active');
+});
+
+// Close cart when clicking outside
+document.addEventListener('click',e=>{const panel=document.getElementById('cartPanel');if(panel.classList.contains('open')&&!panel.contains(e.target)&&!e.target.closest('.nav-cart')&&!e.target.closest('.add-cart-btn'))panel.classList.remove('open');});
+document.getElementById('sizeChartModal').addEventListener('click',e=>{if(e.target===document.getElementById('sizeChartModal'))e.target.classList.remove('open');});
+
+// ── INIT ──
+renderProducts();
+renderMens();
+renderSocials();
+renderOwnerStrip();
+renderReviews();
+renderCartPanel();
+buildHeroSlideshow();
+</script>
+</body>
+</html>
