@@ -909,7 +909,7 @@ const defaultReviews=[
 
 // ── STORAGE ──
 function getProducts(){try{const s=localStorage.getItem('zt_products');return s?JSON.parse(s):defaultProducts;}catch(e){return defaultProducts;}}
-function saveProducts(d){localStorage.setItem('zt_products',JSON.stringify(d));}
+function saveProducts(d){return safeSave('zt_products',d);}
 function getSocials(){try{const s=localStorage.getItem('zt_socials');return s?JSON.parse(s):{facebook:'',instagram:'',tiktok:''};}catch(e){return{facebook:'',instagram:'',tiktok:''};}}
 function saveSocialData(d){localStorage.setItem('zt_socials',JSON.stringify(d));}
 function getOwner(){try{const s=localStorage.getItem('zt_owner');return s?JSON.parse(s):defaultOwner;}catch(e){return defaultOwner;}}
@@ -1425,40 +1425,69 @@ function buildEditItem(p){
     </div>
   </div>`;
 }
+// ── IMAGE COMPRESSION (localStorage quota fix) ──
+function compressImage(file, maxW, maxH, quality){
+  return new Promise((resolve, reject)=>{
+    const reader=new FileReader();
+    reader.onerror=reject;
+    reader.onload=ev=>{
+      const img=new Image();
+      img.onerror=reject;
+      img.onload=()=>{
+        let w=img.width, h=img.height;
+        if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}
+        if(h>maxH){w=Math.round(w*maxH/h);h=maxH;}
+        const canvas=document.createElement('canvas');
+        canvas.width=w; canvas.height=h;
+        const ctx=canvas.getContext('2d');
+        ctx.drawImage(img,0,0,w,h);
+        let dataUrl=canvas.toDataURL('image/jpeg', quality||0.75);
+        if(dataUrl.length>400*1024) dataUrl=canvas.toDataURL('image/jpeg', 0.5);
+        if(dataUrl.length>250*1024) dataUrl=canvas.toDataURL('image/jpeg', 0.35);
+        resolve(dataUrl);
+      };
+      img.src=ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+function safeSave(key, value){
+  try{localStorage.setItem(key, JSON.stringify(value));return true;}
+  catch(err){
+    if(err.name==='QuotaExceededError'||err.code===22||err.code===1014)
+      showToast('Storage bhar gaya — purani images hatao phir dobara try karein','error');
+    else showToast('Save nahi hua: '+err.message,'error');
+    return false;
+  }
+}
 function handleSlotImg(event,id,slotIdx){
   const file=event.target.files[0];
   if(!file)return;
-  if(file.size>5*1024*1024){showToast('Image 5MB se chhoti honi chahiye','error');return;}
-  const reader=new FileReader();
-  reader.onload=e=>{
-    const dataUrl=e.target.result;
-    // 1. Save to localStorage immediately
+  showToast('Image compress ho rahi hai...','');
+  compressImage(file, 900, 1200, 0.72).then(dataUrl=>{
+    const kb=Math.round(dataUrl.length/1024);
     const products=getProducts();
     const idx=products.findIndex(p=>p.id===id);
     if(idx<0)return;
     if(!Array.isArray(products[idx].images)||products[idx].images.length<8)
       products[idx].images=[null,null,null,null,null,null,null,null];
     products[idx].images[slotIdx]=dataUrl;
-    saveProducts(products);
-    // 2. Update the slot UI directly (no panel re-render so other slots stay open)
-    const slot=document.getElementById(`slot_${id}_${slotIdx}`);
+    const ok=safeSave('zt_products', products);
+    if(!ok)return;
+    const slot=document.getElementById('slot_'+id+'_'+slotIdx);
     if(slot){
       let img=slot.querySelector('img');
       if(!img){img=document.createElement('img');slot.insertBefore(img,slot.firstChild);}
       img.src=dataUrl;
       slot.classList.add('has-img');
-      // Show remove button
       const rmBtn=slot.querySelector('.img-slot-remove');
       if(rmBtn)rmBtn.style.display='flex';
-      // Hide hint
       const hint=slot.querySelector('.img-slot-hint');
       if(hint)hint.style.display='none';
     }
-    // 3. Refresh only the product card in gallery (not whole grid rebuild)
     refreshProductCard(id);
-    showToast(`Photo ${slotIdx+1} upload ho gai ✓`,'success');
-  };
-  reader.readAsDataURL(file);
+    showToast('Photo '+(slotIdx+1)+' upload ho gai ✓ ('+kb+'KB compressed)','success');
+  }).catch(()=>showToast('Image process nahi hui — dobara try karein','error'));
 }
 function removeSlotImg(e,id,slotIdx){
   e.stopPropagation();
@@ -1468,10 +1497,9 @@ function removeSlotImg(e,id,slotIdx){
     if(!Array.isArray(products[idx].images)||products[idx].images.length<8)
       products[idx].images=[null,null,null,null,null,null,null,null];
     products[idx].images[slotIdx]=null;
-    saveProducts(products);
+    safeSave('zt_products', products);
   }
-  // Update slot UI
-  const slot=document.getElementById(`slot_${id}_${slotIdx}`);
+  const slot=document.getElementById('slot_'+id+'_'+slotIdx);
   if(slot){
     const img=slot.querySelector('img');
     if(img)img.src='';
@@ -1549,7 +1577,7 @@ function showToast(msg,type){
 
 // ── HERO SLIDESHOW ──
 function getHeroImages(){try{const s=localStorage.getItem('zt_hero_images');return s?JSON.parse(s):[null,null,null,null,null,null,null,null,null,null];}catch(e){return[null,null,null,null,null,null,null,null,null,null];}}
-function saveHeroImages(imgs){localStorage.setItem('zt_hero_images',JSON.stringify(imgs));}
+function saveHeroImages(imgs){return safeSave('zt_hero_images',imgs);}
 
 let heroSlideIndex=0;let heroTimer=null;
 function buildHeroSlideshow(){
@@ -1600,15 +1628,18 @@ function renderHeroImgGrid(){
 }
 function handleHeroImg(event,idx){
   const file=event.target.files[0];if(!file)return;
-  if(file.size>5*1024*1024){showToast('Max 5MB per image','error');return;}
-  const reader=new FileReader();
-  reader.onload=e=>{
-    const imgs=getHeroImages();imgs[idx]=e.target.result;saveHeroImages(imgs);
-    const slot=document.getElementById(`heroSlot_${idx}`);
-    if(slot){let img=slot.querySelector('img');if(!img){img=document.createElement('img');slot.prepend(img);}img.src=e.target.result;slot.classList.add('filled');}
-    buildHeroSlideshow();showToast(`Slide ${idx+1} upload ho gaya ✓`,'success');
-  };
-  reader.readAsDataURL(file);
+  showToast('Image compress ho rahi hai...','');
+  // Hero: max 1280x720, quality 0.70 — keeps file small for localStorage
+  compressImage(file, 1280, 720, 0.70).then(dataUrl=>{
+    const kb=Math.round(dataUrl.length/1024);
+    const imgs=getHeroImages();imgs[idx]=dataUrl;
+    const ok=saveHeroImages(imgs);
+    if(!ok)return;
+    const slot=document.getElementById('heroSlot_'+idx);
+    if(slot){let img=slot.querySelector('img');if(!img){img=document.createElement('img');slot.prepend(img);}img.src=dataUrl;slot.classList.add('filled');}
+    buildHeroSlideshow();
+    showToast('Slide '+(idx+1)+' upload ho gaya ✓ ('+kb+'KB compressed)','success');
+  }).catch(()=>showToast('Image process nahi hui','error'));
 }
 function removeHeroImg(event,idx){
   event.stopPropagation();
