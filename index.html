@@ -139,14 +139,6 @@ header{position:relative;min-height:100vh;display:flex;flex-direction:column;jus
 .stat-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-top:4px;}
 
 /* ── FILTERS ── */
-/* ── SECTION TABS (Women / Men) ── */
-.section-tabs{display:flex;gap:0;margin-bottom:50px;border-bottom:2px solid var(--warm);justify-content:center;}
-.section-tab{display:flex;align-items:center;gap:8px;padding:14px 40px;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;cursor:pointer;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);transition:all .2s;}
-.section-tab:hover{color:var(--rose);}
-.section-tab.active{color:var(--rose);border-bottom-color:var(--rose);}
-.section-tab svg{transition:transform .2s;}
-.section-tab.active svg{transform:scale(1.15);}
-
 .gallery-section{padding:90px 60px;}
 .gallery-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:50px;flex-wrap:wrap;gap:20px;}
 .filter-bar{display:flex;gap:10px;flex-wrap:wrap;}
@@ -529,6 +521,7 @@ footer{background:var(--deep);color:var(--cream);padding:64px 60px 40px;}
     <h1 class="logo-english">Zabe<em>Tan</em></h1>
     <div class="logo-divider"></div>
     <p class="logo-tagline">Est. 2025 · Faisalabad</p>
+    <p class="logo-tagline-urdu">پاکستانی خواتین کے لباس</p>
   </div>
   <div class="hero-badges">
     <span class="hero-badge">✦ Original Designs</span>
@@ -580,64 +573,26 @@ footer{background:var(--deep);color:var(--cream);padding:64px 60px 40px;}
 
 <!-- SHOP / GALLERY -->
 <section class="gallery-section" id="shop">
-  <!-- SECTION TABS -->
-  <div class="section-tabs">
-    <button class="section-tab active" data-section="women" onclick="switchSection('women',this)">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M12 12v8M9 18h6"/></svg>
-      Women's Wear
-    </button>
-    <button class="section-tab" data-section="mens" onclick="switchSection('mens',this)">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M12 12v4M15 19l-3-3-3 3"/></svg>
-      Men's Wear
-    </button>
-  </div>
-
-  <!-- WOMEN'S SECTION -->
-  <div id="womenSection">
-    <div class="gallery-header">
-      <div>
-        <p class="section-label">Women's Collection · خواتین کا کلیکشن</p>
-        <h2 class="section-title">Our <em>Dresses</em></h2>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;">
-        <button class="order-btn" style="background:none;border:1px solid rgba(181,85,106,.4);color:var(--rose);padding:8px 16px;border-radius:20px;font-size:.56rem;" onclick="document.getElementById('sizeChartModal').classList.add('open')">
-          📏 Size Chart
-        </button>
-        <div class="filter-bar">
-          <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="lawn">Lawn</button>
-          <button class="filter-btn" data-filter="chiffon">Chiffon</button>
-          <button class="filter-btn" data-filter="cotton">Cotton</button>
-          <button class="filter-btn" data-filter="embroidered">Embroidered</button>
-          <button class="filter-btn" data-filter="bridal">Bridal</button>
-        </div>
+  <div class="gallery-header">
+    <div>
+      <p class="section-label">Collection · کلیکشن</p>
+      <h2 class="section-title">Our <em>Dresses</em></h2>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;">
+      <button class="order-btn" style="background:none;border:1px solid rgba(181,85,106,.4);color:var(--rose);padding:8px 16px;border-radius:20px;font-size:.56rem;" onclick="document.getElementById('sizeChartModal').classList.add('open')">
+        📏 Size Chart
+      </button>
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="lawn">Lawn</button>
+        <button class="filter-btn" data-filter="chiffon">Chiffon</button>
+        <button class="filter-btn" data-filter="cotton">Cotton</button>
+        <button class="filter-btn" data-filter="embroidered">Embroidered</button>
+        <button class="filter-btn" data-filter="bridal">Bridal</button>
       </div>
     </div>
-    <div class="product-grid" id="productGrid"></div>
   </div>
-
-  <!-- MEN'S SECTION -->
-  <div id="mensSection" style="display:none;">
-    <div class="gallery-header">
-      <div>
-        <p class="section-label">Men's Collection · مردانہ کلیکشن</p>
-        <h2 class="section-title">Men's <em>Wear</em></h2>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;">
-        <button class="order-btn" style="background:none;border:1px solid rgba(181,85,106,.4);color:var(--rose);padding:8px 16px;border-radius:20px;font-size:.56rem;" onclick="document.getElementById('sizeChartModal').classList.add('open')">
-          📏 Size Chart
-        </button>
-        <div class="filter-bar" id="mensFilterBar">
-          <button class="filter-btn mens-filter active" data-mfilter="all">All</button>
-          <button class="filter-btn mens-filter" data-mfilter="shalwar">Shalwar Kameez</button>
-          <button class="filter-btn mens-filter" data-mfilter="kurta">Kurta</button>
-          <button class="filter-btn mens-filter" data-mfilter="waistcoat">Waistcoat</button>
-          <button class="filter-btn mens-filter" data-mfilter="sherwani">Sherwani</button>
-        </div>
-      </div>
-    </div>
-    <div class="product-grid" id="mensGrid"></div>
-  </div>
+  <div class="product-grid" id="productGrid"></div>
 </section>
 
 <!-- SIZE CHART MODAL -->
@@ -856,7 +811,7 @@ footer{background:var(--deep);color:var(--cream);padding:64px 60px 40px;}
   <div class="panel-body">
 
     <p class="panel-section-title">🖼 Hero Slideshow Images</p>
-    <p style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--muted);line-height:1.6;margin-bottom:10px;">Up to 5 images — yeh hero background mein slide hongi. Best size: 1920×1080px (landscape).</p>
+    <p style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--muted);line-height:1.6;margin-bottom:10px;">Up to 10 images — yeh hero background mein slide hongi. Best size: 1920×1080px (landscape).</p>
     <div class="hero-img-grid" id="heroImgGrid">
       <!-- rendered by JS -->
     </div>
@@ -922,13 +877,9 @@ footer{background:var(--deep);color:var(--cream);padding:64px 60px 40px;}
       </div>
     </div>
 
-    <p class="panel-section-title">👗 Women's Dresses</p>
+    <p class="panel-section-title">Dresses / Products</p>
     <div id="editCardsList"></div>
-    <button class="btn-add-card" id="btnAddCard">+ Add Women's Dress</button>
-
-    <p class="panel-section-title">👔 Men's Wear</p>
-    <div id="editMensCardsList"></div>
-    <button class="btn-add-card" id="btnAddMensCard">+ Add Men's Item</button>
+    <button class="btn-add-card" id="btnAddCard">+ Add New Dress</button>
 
   </div>
 </div>
@@ -942,20 +893,12 @@ function getAdminPass(){return localStorage.getItem('zt_adminpass')||'zabetan202
 
 // ── DEFAULT DATA ──
 const defaultProducts=[
-  {id:1,name:'Gulabi Lawn',nameUrdu:'گلابی لان',tag:'Lawn · 3-Piece',fabric:'Premium Lawn',price:'3,500',origPrice:'4,500',discount:22,sizes:'XS,S,M,L,XL,XXL',quantity:8,delivery:'Free delivery',tall:true,colorClass:'d1',waText:'Gulabi Lawn',images:[null,null,null,null],isNew:false},
-  {id:2,name:'Zari Chiffon',nameUrdu:'زری شفان',tag:'Chiffon · Embroidered',fabric:'Pure Chiffon',price:'5,800',origPrice:'',discount:0,sizes:'S,M,L,XL',quantity:3,delivery:'Free delivery',tall:false,colorClass:'d4',waText:'Zari Chiffon',images:[null,null,null,null],isNew:true},
-  {id:3,name:'Khaddar Suit',nameUrdu:'کھدر سوٹ',tag:'Cotton · 2-Piece',fabric:'Pure Khaddar',price:'2,800',origPrice:'3,200',discount:12,sizes:'XS,S,M,L,XL,XXL',quantity:12,delivery:'Free delivery',tall:false,colorClass:'d8',waText:'Khaddar Suit',images:[null,null,null,null],isNew:false},
-  {id:4,name:'Bridal Lehnga',nameUrdu:'دلہن لہنگہ',tag:'Bridal · Custom',fabric:'Silk & Net',price:'28,000',origPrice:'',discount:0,sizes:'Custom Only',quantity:2,delivery:'Free delivery',tall:false,colorClass:'d5',waText:'Bridal Lehnga',images:[null,null,null,null],isNew:false},
-  {id:5,name:'Banarsi Dupatta Set',nameUrdu:'بنارسی دوپٹہ',tag:'Embroidered · 3-Piece',fabric:'Banarsi Silk',price:'7,200',origPrice:'8,500',discount:15,sizes:'S,M,L,XL',quantity:5,delivery:'Free delivery',tall:false,colorClass:'d2',waText:'Banarsi Dupatta Set',images:[null,null,null,null],isNew:false},
-  {id:6,name:'Cotton Casual',nameUrdu:'کاٹن کیژوال',tag:'Cotton · Everyday',fabric:'Pure Cotton',price:'1,800',origPrice:'',discount:0,sizes:'XS,S,M,L,XL,XXL',quantity:20,delivery:'Free delivery',tall:false,colorClass:'d3',waText:'Cotton Casual',images:[null,null,null,null],isNew:true},
-];
-const defaultMensProducts=[
-  {id:101,name:'White Shalwar Kameez',nameUrdu:'سفید شلوار قمیض',tag:'Shalwar Kameez · Classic',fabric:'Premium Cotton',price:'2,800',origPrice:'3,500',discount:20,sizes:'S,M,L,XL,XXL',quantity:15,delivery:'Free delivery',tall:false,colorClass:'d8',waText:'White Shalwar Kameez',images:[null,null,null,null],isNew:false},
-  {id:102,name:'Embroidered Kurta',nameUrdu:'کڑھائی کرتہ',tag:'Kurta · Embroidered',fabric:'Lawn with Embroidery',price:'3,200',origPrice:'',discount:0,sizes:'S,M,L,XL,XXL',quantity:8,delivery:'Free delivery',tall:true,colorClass:'d2',waText:'Embroidered Kurta',images:[null,null,null,null],isNew:true},
-  {id:103,name:'Waistcoat Set',nameUrdu:'واسکٹ سیٹ',tag:'Waistcoat · 3-Piece',fabric:'Khaddar & Silk',price:'5,500',origPrice:'6,500',discount:15,sizes:'S,M,L,XL',quantity:6,delivery:'Free delivery',tall:false,colorClass:'d5',waText:'Waistcoat Set',images:[null,null,null,null],isNew:false},
-  {id:104,name:'Bridal Sherwani',nameUrdu:'دولہا شروانی',tag:'Sherwani · Bridal',fabric:'Pure Silk & Net',price:'35,000',origPrice:'',discount:0,sizes:'Custom Only',quantity:3,delivery:'Free delivery',tall:false,colorClass:'d1',waText:'Bridal Sherwani',images:[null,null,null,null],isNew:false},
-  {id:105,name:'Casual Kurta',nameUrdu:'کیژوال کرتہ',tag:'Kurta · Daily Wear',fabric:'Pure Cotton',price:'1,500',origPrice:'',discount:0,sizes:'XS,S,M,L,XL,XXL',quantity:25,delivery:'Free delivery',tall:false,colorClass:'d3',waText:'Casual Kurta',images:[null,null,null,null],isNew:true},
-  {id:106,name:'Festive Shalwar Kameez',nameUrdu:'عید شلوار قمیض',tag:'Shalwar Kameez · Festive',fabric:'Embroidered Lawn',price:'4,200',origPrice:'5,000',discount:16,sizes:'S,M,L,XL,XXL',quantity:10,delivery:'Free delivery',tall:false,colorClass:'d4',waText:'Festive Shalwar Kameez',images:[null,null,null,null],isNew:false},
+  {id:1,name:'Gulabi Lawn',nameUrdu:'گلابی لان',tag:'Lawn · 3-Piece',fabric:'Premium Lawn',price:'3,500',origPrice:'4,500',discount:22,sizes:'XS,S,M,L,XL,XXL',quantity:8,delivery:'Free delivery',tall:true,colorClass:'d1',waText:'Gulabi Lawn',images:[null,null,null,null,null,null,null,null],isNew:false},
+  {id:2,name:'Zari Chiffon',nameUrdu:'زری شفان',tag:'Chiffon · Embroidered',fabric:'Pure Chiffon',price:'5,800',origPrice:'',discount:0,sizes:'S,M,L,XL',quantity:3,delivery:'Free delivery',tall:false,colorClass:'d4',waText:'Zari Chiffon',images:[null,null,null,null,null,null,null,null],isNew:true},
+  {id:3,name:'Khaddar Suit',nameUrdu:'کھدر سوٹ',tag:'Cotton · 2-Piece',fabric:'Pure Khaddar',price:'2,800',origPrice:'3,200',discount:12,sizes:'XS,S,M,L,XL,XXL',quantity:12,delivery:'Free delivery',tall:false,colorClass:'d8',waText:'Khaddar Suit',images:[null,null,null,null,null,null,null,null],isNew:false},
+  {id:4,name:'Bridal Lehnga',nameUrdu:'دلہن لہنگہ',tag:'Bridal · Custom',fabric:'Silk & Net',price:'28,000',origPrice:'',discount:0,sizes:'Custom Only',quantity:2,delivery:'Free delivery',tall:false,colorClass:'d5',waText:'Bridal Lehnga',images:[null,null,null,null,null,null,null,null],isNew:false},
+  {id:5,name:'Banarsi Dupatta Set',nameUrdu:'بنارسی دوپٹہ',tag:'Embroidered · 3-Piece',fabric:'Banarsi Silk',price:'7,200',origPrice:'8,500',discount:15,sizes:'S,M,L,XL',quantity:5,delivery:'Free delivery',tall:false,colorClass:'d2',waText:'Banarsi Dupatta Set',images:[null,null,null,null,null,null,null,null],isNew:false},
+  {id:6,name:'Cotton Casual',nameUrdu:'کاٹن کیژوال',tag:'Cotton · Everyday',fabric:'Pure Cotton',price:'1,800',origPrice:'',discount:0,sizes:'XS,S,M,L,XL,XXL',quantity:20,delivery:'Free delivery',tall:false,colorClass:'d3',waText:'Cotton Casual',images:[null,null,null,null,null,null,null,null],isNew:true},
 ];
 const defaultOwner={name:'ZabeTan',tagline:'Premium Pakistani Dresses · Faisalabad',image:null};
 const defaultReviews=[
@@ -967,8 +910,6 @@ const defaultReviews=[
 // ── STORAGE ──
 function getProducts(){try{const s=localStorage.getItem('zt_products');return s?JSON.parse(s):defaultProducts;}catch(e){return defaultProducts;}}
 function saveProducts(d){localStorage.setItem('zt_products',JSON.stringify(d));}
-function getMensProducts(){try{const s=localStorage.getItem('zt_mens');return s?JSON.parse(s):defaultMensProducts;}catch(e){return defaultMensProducts;}}
-function saveMensProducts(d){localStorage.setItem('zt_mens',JSON.stringify(d));}
 function getSocials(){try{const s=localStorage.getItem('zt_socials');return s?JSON.parse(s):{facebook:'',instagram:'',tiktok:''};}catch(e){return{facebook:'',instagram:'',tiktok:''};}}
 function saveSocialData(d){localStorage.setItem('zt_socials',JSON.stringify(d));}
 function getOwner(){try{const s=localStorage.getItem('zt_owner');return s?JSON.parse(s):defaultOwner;}catch(e){return defaultOwner;}}
@@ -980,8 +921,8 @@ function saveReviews(d){localStorage.setItem('zt_reviews',JSON.stringify(d));}
 let cart=[];
 let wishlist=[];
 function priceNum(str){return parseInt((str||'0').replace(/,/g,''))||0;}
-function addToCart(id,selectedSize,gender='women'){
-  const p=(gender==='mens'?getMensProducts():getProducts()).find(x=>x.id===id);
+function addToCart(id,selectedSize){
+  const p=getProducts().find(x=>x.id===id);
   if(!p)return;
   const sizes=(p.sizes||'').split(',').map(s=>s.trim()).filter(Boolean);
   if(sizes.length>0&&!selectedSize){showToast('Pehle size select karein','error');return;}
@@ -1062,8 +1003,8 @@ function starsHTML(rating,total){
 }
 
 // ── RENDER PRODUCTS ──
-function buildProductHTML(p, gender='women'){
-  const imgs=p.images||[null,null,null,null];
+function buildProductHTML(p){
+  const imgs=p.images||[null,null,null,null,null,null,null,null];
   const hasImgs=imgs.some(x=>x);
   const reviews=getReviews().filter(r=>r.product===p.name);
   const avg=reviews.length?reviews.reduce((s,r)=>s+r.rating,0)/reviews.length:0;
@@ -1125,7 +1066,7 @@ function buildProductHTML(p, gender='women'){
         ${reviews.length>0?`<div class="card-stars">${starsHTML(avg,reviews.length)}</div>`:''}
       </div>
       <div class="card-actions">
-        <button class="order-btn add-cart-btn" onclick="addToCart(${p.id},getSelectedSize(${p.id}),'${gender}')" ${isSoldOut?'disabled':''}>
+        <button class="order-btn add-cart-btn" onclick="addToCart(${p.id},getSelectedSize(${p.id}))" ${isSoldOut?'disabled':''}>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           Add to Cart
         </button>
@@ -1153,32 +1094,10 @@ function getSelectedSize(id){
   const active=container.querySelector('.size-btn.active');
   return active?active.dataset.size:'';
 }
-// ── SECTION SWITCH (Women / Mens) ──
-let currentSection='women';
-function switchSection(section,btn){
-  currentSection=section;
-  document.querySelectorAll('.section-tab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  const ws=document.getElementById('womenSection');
-  const ms=document.getElementById('mensSection');
-  if(section==='women'){ws.style.display='block';ms.style.display='none';renderProducts();}
-  else{ws.style.display='none';ms.style.display='block';renderMens();}
-}
-
-// ── MENS RENDER ──
-function renderMens(filter){
-  const all=getMensProducts();
-  const list=(!filter||filter==='all')?all:all.filter(p=>p.tag.toLowerCase().includes(filter));
-  const grid=document.getElementById('mensGrid');
-  if(!grid)return;
-  grid.innerHTML=list.map(p=>buildProductHTML(p,'mens')).join('');
-  initCardAnimations();
-}
-
 function renderProducts(filter){
   const all=getProducts();
   const list=(!filter||filter==='all')?all:all.filter(p=>p.tag.toLowerCase().includes(filter));
-  document.getElementById('productGrid').innerHTML=list.map(p=>buildProductHTML(p,'women')).join('');
+  document.getElementById('productGrid').innerHTML=list.map(buildProductHTML).join('');
   initCardAnimations();populateProductSelect();populateReviewSelect();
 }
 function slideCard(e,id,dir){
@@ -1234,7 +1153,7 @@ function renderOwnerStrip(){
 function handleOwnerImg(event){
   const file=event.target.files[0];
   if(!file)return;
-  if(file.size>3*1024*1024){showToast('Image 3MB se chhoti honi chahiye','error');return;}
+  if(file.size>5*1024*1024){showToast('Image 5MB se chhoti honi chahiye','error');return;}
   const reader=new FileReader();
   reader.onload=e=>{
     const area=document.getElementById('ownerImgArea');
@@ -1453,21 +1372,20 @@ function submitOrder(){
 // ── ADMIN PANEL ──
 const colorOptions=['d1','d2','d3','d4','d5','d6','d7','d8'];
 const colorLabels=['Pink','Gold','Green','Purple','Orange','Blue','Brown','Dark Green'];
-function buildEditItem(p,gender='women'){
-  const imgs=p.images||[null,null,null,null];
+function buildEditItem(p){
+  const imgs=p.images||[null,null,null,null,null,null,null,null];
   const colorSelects=colorOptions.map((c,i)=>`<option value="${c}" ${p.colorClass===c?'selected':''}>${colorLabels[i]}</option>`).join('');
-  const slotLabels=['Main','Photo 2','Photo 3','Photo 4'];
+  const slotLabels=['Main','Photo 2','Photo 3','Photo 4','Photo 5','Photo 6','Photo 7','Photo 8'];
   const slotsHTML=imgs.map((img,i)=>`
     <div>
       <div class="img-slot${img?' has-img':''}" id="slot_${p.id}_${i}">
         <img src="${img||''}" alt="photo ${i+1}" />
         <div class="img-slot-hint"><span style="font-size:1rem">📷</span>${slotLabels[i]}</div>
-        <input class="img-slot-input" type="file" accept="image/*" onchange="handleSlotImg(event,${p.id},${i},'${gender}')" />
-        <button class="img-slot-remove" onclick="removeSlotImg(event,${p.id},${i},'${gender}')">✕</button>
+        <input class="img-slot-input" type="file" accept="image/*" onchange="handleSlotImg(event,${p.id},${i})" />
+        <button class="img-slot-remove" onclick="removeSlotImg(event,${p.id},${i})">✕</button>
       </div>
       <div class="img-slot-label">${slotLabels[i]}</div>
     </div>`).join('');
-  const itemLabel=gender==='mens'?'Item':'Dress';
   return `
   <div class="edit-card-item" data-edit-id="${p.id}">
     <div class="edit-card-header" onclick="toggleEditCard(this)">
@@ -1475,12 +1393,12 @@ function buildEditItem(p,gender='women'){
       <span class="edit-card-toggle">▼</span>
     </div>
     <div class="edit-fields">
-      <div class="field-group"><label class="field-label">${itemLabel} Photos (4 tak)</label><div class="multi-img-grid">${slotsHTML}</div></div>
+      <div class="field-group"><label class="field-label">Dress Photos (8 tak)</label><div class="multi-img-grid">${slotsHTML}</div></div>
       <div class="field-row">
-        <div class="field-group"><label class="field-label">${itemLabel} Name</label><input class="field-input" data-field="name" value="${p.name}" /></div>
+        <div class="field-group"><label class="field-label">Dress Name</label><input class="field-input" data-field="name" value="${p.name}" /></div>
         <div class="field-group"><label class="field-label">Urdu Naam</label><input class="field-input" data-field="nameUrdu" value="${p.nameUrdu||''}" /></div>
       </div>
-      <div class="field-group"><label class="field-label">Tag / Category</label><input class="field-input" data-field="tag" value="${p.tag}" placeholder="${gender==='mens'?'e.g. Shalwar Kameez · Classic':'e.g. Lawn · 3-Piece'}" /></div>
+      <div class="field-group"><label class="field-label">Tag / Category</label><input class="field-input" data-field="tag" value="${p.tag}" placeholder="e.g. Lawn · 3-Piece" /></div>
       <div class="field-row">
         <div class="field-group"><label class="field-label">Fabric</label><input class="field-input" data-field="fabric" value="${p.fabric||''}" placeholder="e.g. Premium Lawn" /></div>
         <div class="field-group"><label class="field-label">Sizes Available</label><input class="field-input" data-field="sizes" value="${p.sizes||''}" placeholder="XS,S,M,L,XL,XXL" /></div>
@@ -1502,38 +1420,92 @@ function buildEditItem(p,gender='women'){
         <div class="field-group"><label class="field-label">Card Size</label><select class="field-input" data-field="tall"><option value="false" ${!p.tall?'selected':''}>Normal</option><option value="true" ${p.tall?'selected':''}>Tall (2 rows)</option></select></div>
       </div>
       <div class="field-group"><label class="field-label">New Arrival?</label><select class="field-input" data-field="isNew"><option value="false" ${!p.isNew?'selected':''}>No</option><option value="true" ${p.isNew?'selected':''}>Yes — "New" badge</option></select></div>
-      <button class="btn-save-card" onclick="saveCard(${p.id},'${gender}')">✓ Save Changes</button>
-      <button class="btn-delete-card" onclick="deleteCard(${p.id},'${gender}')">✕ Remove ${itemLabel}</button>
+      <button class="btn-save-card" onclick="saveCard(${p.id})">✓ Save Changes</button>
+      <button class="btn-delete-card" onclick="deleteCard(${p.id})">✕ Remove Dress</button>
     </div>
   </div>`;
 }
 function handleSlotImg(event,id,slotIdx){
   const file=event.target.files[0];
   if(!file)return;
-  if(file.size>3*1024*1024){showToast('Image 3MB se chhoti honi chahiye','error');return;}
+  if(file.size>5*1024*1024){showToast('Image 5MB se chhoti honi chahiye','error');return;}
   const reader=new FileReader();
   reader.onload=e=>{
     const dataUrl=e.target.result;
+    // 1. Save to localStorage immediately
+    const products=getProducts();
+    const idx=products.findIndex(p=>p.id===id);
+    if(idx<0)return;
+    if(!Array.isArray(products[idx].images)||products[idx].images.length<8)
+      products[idx].images=[null,null,null,null,null,null,null,null];
+    products[idx].images[slotIdx]=dataUrl;
+    saveProducts(products);
+    // 2. Update the slot UI directly (no panel re-render so other slots stay open)
     const slot=document.getElementById(`slot_${id}_${slotIdx}`);
-    if(slot){slot.querySelector('img').src=dataUrl;slot.classList.add('has-img');}
-    const products=getProducts();const idx=products.findIndex(p=>p.id===id);
-    if(idx>-1){if(!products[idx].images)products[idx].images=[null,null,null,null];products[idx].images[slotIdx]=dataUrl;saveProducts(products);renderProducts();}
+    if(slot){
+      let img=slot.querySelector('img');
+      if(!img){img=document.createElement('img');slot.insertBefore(img,slot.firstChild);}
+      img.src=dataUrl;
+      slot.classList.add('has-img');
+      // Show remove button
+      const rmBtn=slot.querySelector('.img-slot-remove');
+      if(rmBtn)rmBtn.style.display='flex';
+      // Hide hint
+      const hint=slot.querySelector('.img-slot-hint');
+      if(hint)hint.style.display='none';
+    }
+    // 3. Refresh only the product card in gallery (not whole grid rebuild)
+    refreshProductCard(id);
     showToast(`Photo ${slotIdx+1} upload ho gai ✓`,'success');
   };
   reader.readAsDataURL(file);
 }
 function removeSlotImg(e,id,slotIdx){
   e.stopPropagation();
+  const products=getProducts();
+  const idx=products.findIndex(p=>p.id===id);
+  if(idx>-1){
+    if(!Array.isArray(products[idx].images)||products[idx].images.length<8)
+      products[idx].images=[null,null,null,null,null,null,null,null];
+    products[idx].images[slotIdx]=null;
+    saveProducts(products);
+  }
+  // Update slot UI
   const slot=document.getElementById(`slot_${id}_${slotIdx}`);
-  if(slot){slot.querySelector('img').src='';slot.classList.remove('has-img');}
-  const products=getProducts();const idx=products.findIndex(p=>p.id===id);
-  if(idx>-1){if(!products[idx].images)products[idx].images=[null,null,null,null];products[idx].images[slotIdx]=null;saveProducts(products);renderProducts();}
+  if(slot){
+    const img=slot.querySelector('img');
+    if(img)img.src='';
+    slot.classList.remove('has-img');
+    const hint=slot.querySelector('.img-slot-hint');
+    if(hint)hint.style.display='';
+    const rmBtn=slot.querySelector('.img-slot-remove');
+    if(rmBtn)rmBtn.style.display='';
+  }
+  refreshProductCard(id);
   showToast('Photo hata di');
 }
+// Refresh a single product card in the gallery without rebuilding the whole grid
+function refreshProductCard(id){
+  const products=getProducts();
+  const p=products.find(x=>x.id===id);
+  if(!p)return;
+  const existing=document.querySelector(`.product-card[data-id="${id}"]`);
+  if(!existing)return;
+  const tmp=document.createElement('div');
+  tmp.innerHTML=buildProductHTML(p);
+  const newCard=tmp.firstElementChild;
+  if(newCard){
+    newCard.style.opacity=existing.style.opacity||'1';
+    newCard.style.transform='translateY(0)';
+    existing.replaceWith(newCard);
+  }
+}
 function renderEditPanel(){
-  document.getElementById('editCardsList').innerHTML=getProducts().map(p=>buildEditItem(p,'women')).join('');
-  const mensList=document.getElementById('editMensCardsList');
-  if(mensList)mensList.innerHTML=getMensProducts().map(p=>buildEditItem(p,'mens')).join('');
+  // Remember which cards were expanded
+  const expanded=new Set([...document.querySelectorAll('.edit-card-item.expanded')].map(el=>el.dataset.editId));
+  document.getElementById('editCardsList').innerHTML=getProducts().map(buildEditItem).join('');
+  // Re-expand previously expanded
+  expanded.forEach(eid=>{const el=document.querySelector(`.edit-card-item[data-edit-id="${eid}"]`);if(el)el.classList.add('expanded');});
   loadSocialIntoPanel();loadOwnerIntoPanel();applyGithubUI();
   const s=getGithubSettings();
   if(s){document.getElementById('gh_user').value=s.user||'';document.getElementById('gh_repo').value=s.repo||'';document.getElementById('gh_path').value=s.path||'index.html';}
@@ -1546,9 +1518,8 @@ function loadSocialIntoPanel(){
   document.getElementById('set_tiktok').value=s.tiktok||'';
 }
 function toggleEditCard(header){header.closest('.edit-card-item').classList.toggle('expanded');}
-function saveCard(id,gender='women'){
-  const isM=gender==='mens';
-  const products=isM?getMensProducts():getProducts();const idx=products.findIndex(p=>p.id===id);if(idx===-1)return;
+function saveCard(id){
+  const products=getProducts();const idx=products.findIndex(p=>p.id===id);if(idx===-1)return;
   const item=document.querySelector(`.edit-card-item[data-edit-id="${id}"]`);
   item.querySelectorAll('[data-field]').forEach(input=>{
     const field=input.dataset.field;let val=input.value.trim();
@@ -1557,29 +1528,18 @@ function saveCard(id,gender='women'){
     products[idx][field]=val;
   });
   item.querySelector('.edit-card-name').textContent=products[idx].name;
-  if(isM){saveMensProducts(products);renderMens();}else{saveProducts(products);renderProducts();}
-  showToast('Update ho gaya ✓','success');
+  saveProducts(products);renderProducts();showToast('Dress update ho gai ✓','success');
 }
-function deleteCard(id,gender='women'){
-  const isM=gender==='mens';
-  if(!confirm('Is item ko list se hatao?'))return;
-  if(isM){saveMensProducts(getMensProducts().filter(p=>p.id!==id));renderMens();}
-  else{saveProducts(getProducts().filter(p=>p.id!==id));renderProducts();}
-  renderEditPanel();showToast('Item hata diya');
+function deleteCard(id){
+  if(!confirm('Is dress ko list se hatao?'))return;
+  saveProducts(getProducts().filter(p=>p.id!==id));renderProducts();renderEditPanel();showToast('Dress hata di');
 }
 document.getElementById('btnAddCard').addEventListener('click',()=>{
   const products=getProducts();const newId=Date.now();
-  products.push({id:newId,name:'Nai Dress',nameUrdu:'نئی ڈریس',tag:'Lawn · 3-Piece',fabric:'',price:'3,000',origPrice:'',discount:0,sizes:'S,M,L,XL',quantity:1,delivery:'Free delivery',tall:false,colorClass:'d1',waText:'Nai Dress',images:[null,null,null,null],isNew:true});
+  products.push({id:newId,name:'Nai Dress',nameUrdu:'نئی ڈریس',tag:'Lawn · 3-Piece',fabric:'',price:'3,000',origPrice:'',discount:0,sizes:'S,M,L,XL',quantity:1,delivery:'Free delivery',tall:false,colorClass:'d1',waText:'Nai Dress',images:[null,null,null,null,null,null,null,null],isNew:true});
   saveProducts(products);renderProducts();renderEditPanel();
   setTimeout(()=>{const el=document.querySelector(`.edit-card-item[data-edit-id="${newId}"]`);if(el){el.classList.add('expanded');el.scrollIntoView({behavior:'smooth',block:'center'});}},50);
   showToast('Nai dress add ho gai — details fill karein');
-});
-document.getElementById('btnAddMensCard').addEventListener('click',()=>{
-  const products=getMensProducts();const newId=Date.now()+1;
-  products.push({id:newId,name:'Naya Shalwar Kameez',nameUrdu:'نیا شلوار قمیض',tag:'Shalwar Kameez · Classic',fabric:'',price:'2,500',origPrice:'',discount:0,sizes:'S,M,L,XL',quantity:1,delivery:'Free delivery',tall:false,colorClass:'d8',waText:'Naya Shalwar Kameez',images:[null,null,null,null],isNew:true});
-  saveMensProducts(products);renderMens();renderEditPanel();
-  setTimeout(()=>{const el=document.querySelector(`.edit-card-item[data-edit-id="${newId}"]`);if(el){el.classList.add('expanded');el.scrollIntoView({behavior:'smooth',block:'center'});}},50);
-  showToast('Naya men\'s item add ho gaya — details fill karein');
 });
 
 // ── TOAST ──
@@ -1588,7 +1548,7 @@ function showToast(msg,type){
 }
 
 // ── HERO SLIDESHOW ──
-function getHeroImages(){try{const s=localStorage.getItem('zt_hero_images');return s?JSON.parse(s):[null,null,null,null,null];}catch(e){return[null,null,null,null,null];}}
+function getHeroImages(){try{const s=localStorage.getItem('zt_hero_images');return s?JSON.parse(s):[null,null,null,null,null,null,null,null,null,null];}catch(e){return[null,null,null,null,null,null,null,null,null,null];}}
 function saveHeroImages(imgs){localStorage.setItem('zt_hero_images',JSON.stringify(imgs));}
 
 let heroSlideIndex=0;let heroTimer=null;
@@ -1665,11 +1625,8 @@ function openHeroUploader(){
 }
 
 // ── FILTER ──
-document.querySelectorAll('.filter-btn:not(.mens-filter)').forEach(btn=>{
-  btn.addEventListener('click',()=>{document.querySelectorAll('.filter-btn:not(.mens-filter)').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderProducts(btn.dataset.filter);});
-});
-document.querySelectorAll('.mens-filter').forEach(btn=>{
-  btn.addEventListener('click',()=>{document.querySelectorAll('.mens-filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderMens(btn.dataset.mfilter);});
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderProducts(btn.dataset.filter);});
 });
 
 // ── ANIMATIONS ──
@@ -1705,7 +1662,6 @@ document.getElementById('sizeChartModal').addEventListener('click',e=>{if(e.targ
 
 // ── INIT ──
 renderProducts();
-renderMens();
 renderSocials();
 renderOwnerStrip();
 renderReviews();
