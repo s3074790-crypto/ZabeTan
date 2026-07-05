@@ -14,6 +14,30 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* ── PATCH: Type Filter Bar (Stitched / Unstitched) ── */
+.type-filter-bar{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;justify-content:flex-end;}
+.type-btn{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.15em;padding:6px 16px;border:1px solid rgba(181,85,106,.35);background:none;cursor:pointer;text-transform:uppercase;color:var(--muted);transition:all .2s;border-radius:20px;}
+.type-btn.active,.type-btn:hover{background:var(--ink);color:var(--cream);border-color:var(--ink);}
+/* ── PATCH: Product type badge on card ── */
+.card-type-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:2px;margin-top:5px;border:1px solid rgba(181,85,106,.3);color:var(--rose);}
+
+/* ── LIVE PATCH SYSTEM ── */
+.patch-textarea{width:100%;min-height:180px;padding:10px 12px;border:1px solid var(--warm2);border-radius:3px;font-family:'DM Mono',monospace;font-size:.7rem;color:var(--ink);background:#fff;outline:none;resize:vertical;line-height:1.6;transition:border-color .2s;}
+.patch-textarea:focus{border-color:var(--rose);}
+.patch-status{margin-top:8px;padding:10px 12px;border-radius:3px;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.1em;line-height:1.6;display:none;}
+.patch-status.ok{display:block;background:rgba(122,140,110,.12);border:1px solid rgba(122,140,110,.3);color:#3a5a30;}
+.patch-status.err{display:block;background:rgba(181,85,106,.1);border:1px solid rgba(181,85,106,.3);color:var(--rose);}
+.patch-history{margin-top:10px;}
+.patch-history-item{padding:8px 12px;background:#fff;border:1px solid var(--warm2);border-radius:3px;margin-bottom:6px;font-family:'DM Mono',monospace;font-size:.55rem;color:var(--muted);display:flex;justify-content:space-between;align-items:center;gap:8px;}
+.patch-history-item span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.patch-revert-btn{background:none;border:1px solid rgba(181,85,106,.4);color:var(--rose);padding:3px 8px;border-radius:2px;font-family:'DM Mono',monospace;font-size:.52rem;cursor:pointer;flex-shrink:0;white-space:nowrap;}
+.patch-revert-btn:hover{background:var(--rose);color:#fff;}
+.patch-tabs{display:flex;gap:0;margin-bottom:14px;border-bottom:1px solid var(--warm2);}
+.patch-tab{padding:8px 16px;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:all .2s;}
+.patch-tab.active{color:var(--rose);border-bottom-color:var(--rose);}
+.patch-tab-content{display:none;}
+.patch-tab-content.active{display:block;}
 </style>
 <script id="zt-loader">
 (function(){
@@ -139,6 +163,11 @@ header{position:relative;min-height:100vh;display:flex;flex-direction:column;jus
 .stat-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-top:4px;}
 
 /* ── FILTERS ── */
+.section-tabs{display:flex;border-bottom:2px solid var(--warm);margin-bottom:50px;justify-content:center;}
+.section-tab{display:flex;align-items:center;gap:8px;padding:14px 44px;background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;cursor:pointer;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);transition:all .2s;}
+.section-tab:hover{color:var(--rose);}
+.section-tab.active{color:var(--rose);border-bottom-color:var(--rose);font-weight:500;}
+.section-tab svg{flex-shrink:0;}
 .gallery-section{padding:90px 60px;}
 .gallery-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:50px;flex-wrap:wrap;gap:20px;}
 .filter-bar{display:flex;gap:10px;flex-wrap:wrap;}
@@ -521,7 +550,6 @@ footer{background:var(--deep);color:var(--cream);padding:64px 60px 40px;}
     <h1 class="logo-english">Zabe<em>Tan</em></h1>
     <div class="logo-divider"></div>
     <p class="logo-tagline">Est. 2025 · Faisalabad</p>
-    <p class="logo-tagline-urdu">پاکستانی خواتین کے لباس</p>
   </div>
   <div class="hero-badges">
     <span class="hero-badge">✦ Original Designs</span>
@@ -573,26 +601,72 @@ footer{background:var(--deep);color:var(--cream);padding:64px 60px 40px;}
 
 <!-- SHOP / GALLERY -->
 <section class="gallery-section" id="shop">
-  <div class="gallery-header">
-    <div>
-      <p class="section-label">Collection · کلیکشن</p>
-      <h2 class="section-title">Our <em>Dresses</em></h2>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;">
-      <button class="order-btn" style="background:none;border:1px solid rgba(181,85,106,.4);color:var(--rose);padding:8px 16px;border-radius:20px;font-size:.56rem;" onclick="document.getElementById('sizeChartModal').classList.add('open')">
-        📏 Size Chart
-      </button>
-      <div class="filter-bar">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="lawn">Lawn</button>
-        <button class="filter-btn" data-filter="chiffon">Chiffon</button>
-        <button class="filter-btn" data-filter="cotton">Cotton</button>
-        <button class="filter-btn" data-filter="embroidered">Embroidered</button>
-        <button class="filter-btn" data-filter="bridal">Bridal</button>
+
+  <!-- TAB SWITCHER -->
+  <div class="section-tabs">
+    <button class="section-tab active" id="tabWomen" onclick="switchSection('women',this)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M12 12v8M9 18h6"/></svg>
+      Women's Wear
+    </button>
+    <button class="section-tab" id="tabMens" onclick="switchSection('mens',this)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M5.5 21c0-3 2.9-5.4 6.5-5.4s6.5 2.4 6.5 5.4"/></svg>
+      Men's Wear
+    </button>
+  </div>
+
+  <!-- WOMEN'S SECTION -->
+  <div id="womenSection">
+    <div class="gallery-header">
+      <div>
+        <p class="section-label">Women's Collection · خواتین کا کلیکشن</p>
+        <h2 class="section-title">Our <em>Dresses</em></h2>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;">
+        <button class="order-btn" style="background:none;border:1px solid rgba(181,85,106,.4);color:var(--rose);padding:8px 16px;border-radius:20px;font-size:.56rem;" onclick="document.getElementById('sizeChartModal').classList.add('open')">
+          📏 Size Chart
+        </button>
+        <div class="filter-bar" id="womenFilterBar">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="lawn">Lawn</button>
+          <button class="filter-btn" data-filter="chiffon">Chiffon</button>
+          <button class="filter-btn" data-filter="cotton">Cotton</button>
+          <button class="filter-btn" data-filter="embroidered">Embroidered</button>
+          <button class="filter-btn" data-filter="bridal">Bridal</button>
+        </div>
+        <!-- PATCH 1: Stitched / Unstitched type filter -->
+        <div class="type-filter-bar" id="typeFilterBar">
+          <button class="type-btn active" data-type="all">All</button>
+          <button class="type-btn" data-type="stitched">Stitched</button>
+          <button class="type-btn" data-type="unstitched">Unstitched</button>
+        </div>
       </div>
     </div>
+    <div class="product-grid" id="productGrid"></div>
   </div>
-  <div class="product-grid" id="productGrid"></div>
+
+  <!-- MEN'S SECTION -->
+  <div id="mensSection" style="display:none;">
+    <div class="gallery-header">
+      <div>
+        <p class="section-label">Men's Collection · مردانہ کلیکشن</p>
+        <h2 class="section-title">Men's <em>Wear</em></h2>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;">
+        <button class="order-btn" style="background:none;border:1px solid rgba(181,85,106,.4);color:var(--rose);padding:8px 16px;border-radius:20px;font-size:.56rem;" onclick="document.getElementById('sizeChartModal').classList.add('open')">
+          📏 Size Chart
+        </button>
+        <div class="filter-bar" id="mensFilterBar">
+          <button class="mens-filter active" data-mfilter="all">All</button>
+          <button class="mens-filter" data-mfilter="shalwar">Shalwar Kameez</button>
+          <button class="mens-filter" data-mfilter="kurta">Kurta</button>
+          <button class="mens-filter" data-mfilter="waistcoat">Waistcoat</button>
+          <button class="mens-filter" data-mfilter="sherwani">Sherwani</button>
+        </div>
+      </div>
+    </div>
+    <div class="product-grid" id="mensGrid"></div>
+  </div>
+
 </section>
 
 <!-- SIZE CHART MODAL -->
@@ -877,9 +951,62 @@ footer{background:var(--deep);color:var(--cream);padding:64px 60px 40px;}
       </div>
     </div>
 
-    <p class="panel-section-title">Dresses / Products</p>
+    <p class="panel-section-title">👗 Women's Dresses</p>
     <div id="editCardsList"></div>
-    <button class="btn-add-card" id="btnAddCard">+ Add New Dress</button>
+    <button class="btn-add-card" id="btnAddCard">+ Add Women's Dress</button>
+
+    <p class="panel-section-title" style="margin-top:28px;">👔 Men's Wear</p>
+    <div id="editMensCardsList"></div>
+    <button class="btn-add-card" id="btnAddMensCard">+ Add Men's Item</button>
+
+    <!-- ══ LIVE PATCH SYSTEM ══ -->
+    <p class="panel-section-title" style="margin-top:32px;">⚡ Live Update System</p>
+    <p style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--muted);line-height:1.7;margin-bottom:14px;">
+      Bina GitHub file edit kiye website update karein.<br>
+      Claude se naya code lo → yahan paste karo → Apply dabao → Website live update!
+    </p>
+
+    <div class="patch-tabs">
+      <button class="patch-tab active" onclick="switchPatchTab('css',this)">CSS</button>
+      <button class="patch-tab" onclick="switchPatchTab('js',this)">JavaScript</button>
+      <button class="patch-tab" onclick="switchPatchTab('html',this)">HTML Inject</button>
+      <button class="patch-tab" onclick="switchPatchTab('history',this)">History</button>
+    </div>
+
+    <!-- CSS TAB -->
+    <div class="patch-tab-content active" id="patchTab_css">
+      <label class="field-label">New CSS — paste here, click Apply</label>
+      <textarea class="patch-textarea" id="patchCssInput" placeholder=".some-class { color: red; }&#10;/* Any CSS to add to the page */"></textarea>
+      <button class="btn-save-set" onclick="applyPatch('css')">⚡ Apply CSS</button>
+    </div>
+
+    <!-- JS TAB -->
+    <div class="patch-tab-content" id="patchTab_js">
+      <label class="field-label">New JavaScript — paste here, click Apply</label>
+      <textarea class="patch-textarea" id="patchJsInput" placeholder="// Paste any JS here&#10;// Example: new function, fix, feature&#10;function myNewFeature(){ ... }"></textarea>
+      <button class="btn-save-set" onclick="applyPatch('js')">⚡ Apply JS</button>
+    </div>
+
+    <!-- HTML INJECT TAB -->
+    <div class="patch-tab-content" id="patchTab_html">
+      <label class="field-label">Target Element ID</label>
+      <input class="field-input" id="patchHtmlTarget" placeholder="e.g. footerSocials, productGrid, womenSection" style="margin-bottom:10px;" />
+      <label class="field-label">HTML to inject (replaces inner content of target)</label>
+      <textarea class="patch-textarea" id="patchHtmlInput" placeholder="<p>New content here</p>"></textarea>
+      <div style="display:flex;gap:8px;margin-top:10px;">
+        <button class="btn-save-set" style="flex:1" onclick="applyPatch('html_replace')">⚡ Replace Content</button>
+        <button class="btn-save-set" style="flex:1;background:var(--sage)" onclick="applyPatch('html_append')">+ Append Content</button>
+      </div>
+    </div>
+
+    <!-- HISTORY TAB -->
+    <div class="patch-tab-content" id="patchTab_history">
+      <p style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--muted);margin-bottom:10px;">Applied patches — revert any individually</p>
+      <div id="patchHistoryList"></div>
+      <button class="btn-del-card" style="margin-top:10px;width:100%" onclick="clearAllPatches()">🗑 Clear All Patches</button>
+    </div>
+
+    <div class="patch-status" id="patchStatus"></div>
 
   </div>
 </div>
@@ -893,23 +1020,31 @@ function getAdminPass(){return localStorage.getItem('zt_adminpass')||'zabetan202
 
 // ── DEFAULT DATA ──
 const defaultProducts=[
-  {id:1,name:'Gulabi Lawn',nameUrdu:'گلابی لان',tag:'Lawn · 3-Piece',fabric:'Premium Lawn',price:'3,500',origPrice:'4,500',discount:22,sizes:'XS,S,M,L,XL,XXL',quantity:8,delivery:'Free delivery',tall:true,colorClass:'d1',waText:'Gulabi Lawn',images:[null,null,null,null,null,null,null,null],isNew:false},
-  {id:2,name:'Zari Chiffon',nameUrdu:'زری شفان',tag:'Chiffon · Embroidered',fabric:'Pure Chiffon',price:'5,800',origPrice:'',discount:0,sizes:'S,M,L,XL',quantity:3,delivery:'Free delivery',tall:false,colorClass:'d4',waText:'Zari Chiffon',images:[null,null,null,null,null,null,null,null],isNew:true},
-  {id:3,name:'Khaddar Suit',nameUrdu:'کھدر سوٹ',tag:'Cotton · 2-Piece',fabric:'Pure Khaddar',price:'2,800',origPrice:'3,200',discount:12,sizes:'XS,S,M,L,XL,XXL',quantity:12,delivery:'Free delivery',tall:false,colorClass:'d8',waText:'Khaddar Suit',images:[null,null,null,null,null,null,null,null],isNew:false},
-  {id:4,name:'Bridal Lehnga',nameUrdu:'دلہن لہنگہ',tag:'Bridal · Custom',fabric:'Silk & Net',price:'28,000',origPrice:'',discount:0,sizes:'Custom Only',quantity:2,delivery:'Free delivery',tall:false,colorClass:'d5',waText:'Bridal Lehnga',images:[null,null,null,null,null,null,null,null],isNew:false},
-  {id:5,name:'Banarsi Dupatta Set',nameUrdu:'بنارسی دوپٹہ',tag:'Embroidered · 3-Piece',fabric:'Banarsi Silk',price:'7,200',origPrice:'8,500',discount:15,sizes:'S,M,L,XL',quantity:5,delivery:'Free delivery',tall:false,colorClass:'d2',waText:'Banarsi Dupatta Set',images:[null,null,null,null,null,null,null,null],isNew:false},
-  {id:6,name:'Cotton Casual',nameUrdu:'کاٹن کیژوال',tag:'Cotton · Everyday',fabric:'Pure Cotton',price:'1,800',origPrice:'',discount:0,sizes:'XS,S,M,L,XL,XXL',quantity:20,delivery:'Free delivery',tall:false,colorClass:'d3',waText:'Cotton Casual',images:[null,null,null,null,null,null,null,null],isNew:true},
+  {id:1,name:'Gulabi Lawn',nameUrdu:'گلابی لان',tag:'Lawn · 3-Piece',fabric:'Premium Lawn',price:'3,500',origPrice:'4,500',discount:22,sizes:'XS,S,M,L,XL,XXL',quantity:8,delivery:'Free delivery',tall:true,colorClass:'d1',waText:'Gulabi Lawn',images:[null,null,null,null,null,null,null,null],type:'unstitched',isNew:false},
+  {id:2,name:'Zari Chiffon',nameUrdu:'زری شفان',tag:'Chiffon · Embroidered',fabric:'Pure Chiffon',price:'5,800',origPrice:'',discount:0,sizes:'S,M,L,XL',quantity:3,delivery:'Free delivery',tall:false,colorClass:'d4',waText:'Zari Chiffon',images:[null,null,null,null,null,null,null,null],type:'unstitched',isNew:true},
+  {id:3,name:'Khaddar Suit',nameUrdu:'کھدر سوٹ',tag:'Cotton · 2-Piece',fabric:'Pure Khaddar',price:'2,800',origPrice:'3,200',discount:12,sizes:'XS,S,M,L,XL,XXL',quantity:12,delivery:'Free delivery',tall:false,colorClass:'d8',waText:'Khaddar Suit',images:[null,null,null,null,null,null,null,null],type:'unstitched',isNew:false},
+  {id:4,name:'Bridal Lehnga',nameUrdu:'دلہن لہنگہ',tag:'Bridal · Custom',fabric:'Silk & Net',price:'28,000',origPrice:'',discount:0,sizes:'Custom Only',quantity:2,delivery:'Free delivery',tall:false,colorClass:'d5',waText:'Bridal Lehnga',images:[null,null,null,null,null,null,null,null],type:'unstitched',isNew:false},
+  {id:5,name:'Banarsi Dupatta Set',nameUrdu:'بنارسی دوپٹہ',tag:'Embroidered · 3-Piece',fabric:'Banarsi Silk',price:'7,200',origPrice:'8,500',discount:15,sizes:'S,M,L,XL',quantity:5,delivery:'Free delivery',tall:false,colorClass:'d2',waText:'Banarsi Dupatta Set',images:[null,null,null,null,null,null,null,null],type:'unstitched',isNew:false},
+  {id:6,name:'Cotton Casual',nameUrdu:'کاٹن کیژوال',tag:'Cotton · Everyday',fabric:'Pure Cotton',price:'1,800',origPrice:'',discount:0,sizes:'XS,S,M,L,XL,XXL',quantity:20,delivery:'Free delivery',tall:false,colorClass:'d3',waText:'Cotton Casual',images:[null,null,null,null,null,null,null,null],type:'unstitched',isNew:true},
 ];
+const defaultMensProducts=[
+  {id:201,name:'Classic Shalwar Kameez',nameUrdu:'کلاسک شلوار قمیض',tag:'Shalwar Kameez · Cotton',fabric:'Premium Cotton',price:'2,500',origPrice:'3,200',discount:22,sizes:'S,M,L,XL,XXL',quantity:15,delivery:'Free delivery',tall:false,colorClass:'d8',waText:'Classic Shalwar Kameez',images:[null,null,null,null,null,null,null,null],type:'unstitched',isNew:false},
+  {id:202,name:'Embroidered Kurta',nameUrdu:'کڑھائی کرتہ',tag:'Kurta · Embroidered',fabric:'Lawn with Embroidery',price:'3,200',origPrice:'',discount:0,sizes:'S,M,L,XL,XXL',quantity:8,delivery:'Free delivery',tall:true,colorClass:'d2',waText:'Embroidered Kurta',images:[null,null,null,null,null,null,null,null],type:'unstitched',isNew:true},
+  {id:203,name:'Festive Waistcoat Set',nameUrdu:'تہواری واسکٹ سیٹ',tag:'Waistcoat · 3-Piece',fabric:'Khaddar & Silk',price:'5,500',origPrice:'6,500',discount:15,sizes:'S,M,L,XL',quantity:6,delivery:'Free delivery',tall:false,colorClass:'d5',waText:'Festive Waistcoat Set',images:[null,null,null,null,null,null,null,null],type:'unstitched',isNew:false},
+  {id:204,name:'Bridal Sherwani',nameUrdu:'دولہا شروانی',tag:'Sherwani · Bridal',fabric:'Pure Silk & Net',price:'35,000',origPrice:'',discount:0,sizes:'Custom Only',quantity:3,delivery:'Free delivery',tall:false,colorClass:'d1',waText:'Bridal Sherwani',images:[null,null,null,null,null,null,null,null],type:'unstitched',isNew:false},
+  {id:205,name:'Casual Daily Kurta',nameUrdu:'روزانہ کرتہ',tag:'Kurta · Daily Wear',fabric:'Pure Cotton',price:'1,500',origPrice:'',discount:0,sizes:'XS,S,M,L,XL,XXL',quantity:25,delivery:'Free delivery',tall:false,colorClass:'d3',waText:'Casual Daily Kurta',images:[null,null,null,null,null,null,null,null],type:'unstitched',isNew:true},
+  {id:206,name:'Eid Special Suit',nameUrdu:'عید اسپیشل سوٹ',tag:'Shalwar Kameez · Festive',fabric:'Embroidered Lawn',price:'4,200',origPrice:'5,000',discount:16,sizes:'S,M,L,XL,XXL',quantity:10,delivery:'Free delivery',tall:false,colorClass:'d4',waText:'Eid Special Suit',images:[null,null,null,null,null,null,null,null],type:'unstitched',isNew:false},
+];
+
 const defaultOwner={name:'ZabeTan',tagline:'Premium Pakistani Dresses · Faisalabad',image:null};
-const defaultReviews=[
-  {id:1,author:'Sana Malik',product:'Gulabi Lawn',rating:5,text:'Bilkul waisay hi aaya jaisay picture mein tha. Fabric bohot soft hai aur stitching perfect. Zaroor dobara order karoungi!',date:'2025-03-12'},
-  {id:2,author:'Zainab A.',product:'Zari Chiffon',rating:5,text:'Shadi mein pehna aur sab ne taarif ki. Quality ekdam top class hai. Delivery bhi time pe aai.',date:'2025-04-05'},
-  {id:3,author:'Nida R.',product:'Khaddar Suit',rating:4,text:'Bahut acha suit hai, fabric aur color dono achi quality ke hain. Custom stitching option ke liye shukriya.',date:'2025-05-01'},
-];
+// PATCH 3: Empty default reviews — existing localStorage reviews are unaffected
+const defaultReviews=[];
 
 // ── STORAGE ──
 function getProducts(){try{const s=localStorage.getItem('zt_products');return s?JSON.parse(s):defaultProducts;}catch(e){return defaultProducts;}}
 function saveProducts(d){return safeSave('zt_products',d);}
+function getMensProducts(){try{const s=localStorage.getItem('zt_mens');return s?JSON.parse(s):defaultMensProducts;}catch(e){return defaultMensProducts;}}
+function saveMensProducts(d){return safeSave('zt_mens',d);}
 function getSocials(){try{const s=localStorage.getItem('zt_socials');return s?JSON.parse(s):{facebook:'',instagram:'',tiktok:''};}catch(e){return{facebook:'',instagram:'',tiktok:''};}}
 function saveSocialData(d){localStorage.setItem('zt_socials',JSON.stringify(d));}
 function getOwner(){try{const s=localStorage.getItem('zt_owner');return s?JSON.parse(s):defaultOwner;}catch(e){return defaultOwner;}}
@@ -1009,7 +1144,8 @@ function buildProductHTML(p){
   const reviews=getReviews().filter(r=>r.product===p.name);
   const avg=reviews.length?reviews.reduce((s,r)=>s+r.rating,0)/reviews.length:0;
   const isSoldOut=parseInt(p.quantity||0)===0;
-  const discPct=parseInt(p.discount||0);
+  // PATCH 4c: auto-calculate discount from prices
+  const discPct=calcDiscount(p.origPrice,p.price)||parseInt(p.discount||0);
   const sizes=(p.sizes||'').split(',').map(s=>s.trim()).filter(Boolean);
 
   let slideHTML='';
@@ -1053,6 +1189,7 @@ function buildProductHTML(p){
     ${slideHTML}
     <div class="card-body">
       <p class="card-tag">${p.tag}</p>
+      ${p.type?`<span class="card-type-badge">${p.type}</span>`:''}
       <h3 class="card-title">${p.name}</h3>
       ${p.nameUrdu?`<div class="card-title-urdu">${p.nameUrdu}</div>`:''}
       <div class="card-size-fabric">
@@ -1094,11 +1231,67 @@ function getSelectedSize(id){
   const active=container.querySelector('.size-btn.active');
   return active?active.dataset.size:'';
 }
-function renderProducts(filter){
-  const all=getProducts();
+// ── SECTION SWITCH ──
+let currentSection='women';
+function switchSection(sec, btn){
+  currentSection=sec;
+  document.querySelectorAll('.section-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const ws=document.getElementById('womenSection');
+  const ms=document.getElementById('mensSection');
+  if(sec==='women'){ws.style.display='block';ms.style.display='none';renderProducts();}
+  else{ws.style.display='none';ms.style.display='block';renderMens();}
+}
+function renderMens(filter){
+  const all=getMensProducts();
   const list=(!filter||filter==='all')?all:all.filter(p=>p.tag.toLowerCase().includes(filter));
-  document.getElementById('productGrid').innerHTML=list.map(buildProductHTML).join('');
-  initCardAnimations();populateProductSelect();populateReviewSelect();
+  const grid=document.getElementById('mensGrid');
+  if(!grid)return;
+  grid.innerHTML=list.map(buildProductHTML).join('');
+  initCardAnimations();
+  // populate selects for mens in order form
+  populateMensSelect();
+}
+function populateMensSelect(){
+  const mens=getMensProducts();
+  const sel=document.getElementById('orderDress');
+  if(!sel)return;
+  // Add mens options to order form if mens section active
+  if(currentSection==='mens'){
+    sel.innerHTML='<option value="">Select a dress / suit...</option>'+
+      getMensProducts().map(p=>`<option value="${p.name}">${p.name} — Rs. ${p.price}</option>`).join('');
+  }
+}
+// ── PATCH 4: Type filter state ──
+let activeTypeFilter='all';
+let activeCategoryFilter='all';
+
+// ── PATCH 4: Auto-calculate discount percentage ──
+function calcDiscount(origPrice, salePrice){
+  const orig=parseInt((origPrice||'').toString().replace(/,/g,''));
+  const sale=parseInt((salePrice||'').toString().replace(/,/g,''));
+  if(!orig||!sale||orig<=sale)return 0;
+  return Math.round(((orig-sale)/orig)*100);
+}
+
+// ── PATCH 4: Combined category + type filter ──
+function applyFilters(){
+  const all=getProducts();
+  const list=all.filter(p=>{
+    const catMatch=(activeCategoryFilter==='all')||p.tag.toLowerCase().includes(activeCategoryFilter);
+    const typeMatch=(activeTypeFilter==='all')||(p.type||'unstitched')===activeTypeFilter;
+    return catMatch&&typeMatch;
+  });
+  const grid=document.getElementById('productGrid');
+  if(grid){grid.innerHTML=list.map(buildProductHTML).join('');initCardAnimations();}
+  populateProductSelect();
+  if(typeof populateReviewSelect==='function')populateReviewSelect();
+}
+
+function renderProducts(filter){
+  // PATCH 4b: delegate to applyFilters to respect both category + type
+  if(filter!==undefined) activeCategoryFilter=filter||'all';
+  applyFilters();
 }
 function slideCard(e,id,dir){
   e.preventDefault();e.stopPropagation();
@@ -1372,7 +1565,10 @@ function submitOrder(){
 // ── ADMIN PANEL ──
 const colorOptions=['d1','d2','d3','d4','d5','d6','d7','d8'];
 const colorLabels=['Pink','Gold','Green','Purple','Orange','Blue','Brown','Dark Green'];
-function buildEditItem(p){
+function buildEditItem(p, gender){
+  gender=gender||'women';
+  const isM=(gender==='mens');
+  const itemLabel=isM?'Suit/Kurta':'Dress';
   const imgs=p.images||[null,null,null,null,null,null,null,null];
   const colorSelects=colorOptions.map((c,i)=>`<option value="${c}" ${p.colorClass===c?'selected':''}>${colorLabels[i]}</option>`).join('');
   const slotLabels=['Main','Photo 2','Photo 3','Photo 4','Photo 5','Photo 6','Photo 7','Photo 8'];
@@ -1420,8 +1616,9 @@ function buildEditItem(p){
         <div class="field-group"><label class="field-label">Card Size</label><select class="field-input" data-field="tall"><option value="false" ${!p.tall?'selected':''}>Normal</option><option value="true" ${p.tall?'selected':''}>Tall (2 rows)</option></select></div>
       </div>
       <div class="field-group"><label class="field-label">New Arrival?</label><select class="field-input" data-field="isNew"><option value="false" ${!p.isNew?'selected':''}>No</option><option value="true" ${p.isNew?'selected':''}>Yes — "New" badge</option></select></div>
-      <button class="btn-save-card" onclick="saveCard(${p.id})">✓ Save Changes</button>
-      <button class="btn-delete-card" onclick="deleteCard(${p.id})">✕ Remove Dress</button>
+      <div class="field-group"><label class="field-label">Product Type</label><select class="field-input" data-field="type"><option value="unstitched" ${(p.type||'unstitched')==='unstitched'?'selected':''}>Unstitched</option><option value="stitched" ${p.type==='stitched'?'selected':''}>Stitched</option></select></div>
+      <button class="btn-save-card" onclick="saveCard(${p.id},'${gender}')">✓ Save Changes</button>
+      <button class="btn-delete-card" onclick="deleteCard(${p.id},'${gender}')">✕ Remove ${isM?'Item':'Dress'}</button>
     </div>
   </div>`;
 }
@@ -1466,13 +1663,14 @@ function handleSlotImg(event,id,slotIdx){
   showToast('Image compress ho rahi hai...','');
   compressImage(file, 900, 1200, 0.72).then(dataUrl=>{
     const kb=Math.round(dataUrl.length/1024);
-    const products=getProducts();
+    const isMens=getMensProducts().some(p=>p.id===id);
+    const products=isMens?getMensProducts():getProducts();
     const idx=products.findIndex(p=>p.id===id);
     if(idx<0)return;
     if(!Array.isArray(products[idx].images)||products[idx].images.length<8)
       products[idx].images=[null,null,null,null,null,null,null,null];
     products[idx].images[slotIdx]=dataUrl;
-    const ok=safeSave('zt_products', products);
+    const ok=isMens?saveMensProducts(products):safeSave('zt_products', products);
     if(!ok)return;
     const slot=document.getElementById('slot_'+id+'_'+slotIdx);
     if(slot){
@@ -1491,13 +1689,14 @@ function handleSlotImg(event,id,slotIdx){
 }
 function removeSlotImg(e,id,slotIdx){
   e.stopPropagation();
-  const products=getProducts();
+  const isMensR=getMensProducts().some(p=>p.id===id);
+  const products=isMensR?getMensProducts():getProducts();
   const idx=products.findIndex(p=>p.id===id);
   if(idx>-1){
     if(!Array.isArray(products[idx].images)||products[idx].images.length<8)
       products[idx].images=[null,null,null,null,null,null,null,null];
     products[idx].images[slotIdx]=null;
-    safeSave('zt_products', products);
+    if(isMensR)saveMensProducts(products);else safeSave('zt_products', products);
   }
   const slot=document.getElementById('slot_'+id+'_'+slotIdx);
   if(slot){
@@ -1514,8 +1713,8 @@ function removeSlotImg(e,id,slotIdx){
 }
 // Refresh a single product card in the gallery without rebuilding the whole grid
 function refreshProductCard(id){
-  const products=getProducts();
-  const p=products.find(x=>x.id===id);
+  const allProds=[...getProducts(),...getMensProducts()];
+  const p=allProds.find(x=>x.id===id);
   if(!p)return;
   const existing=document.querySelector(`.product-card[data-id="${id}"]`);
   if(!existing)return;
@@ -1529,6 +1728,9 @@ function refreshProductCard(id){
   }
 }
 function renderEditPanel(){
+  // Render mens cards
+  const mensList=document.getElementById('editMensCardsList');
+  if(mensList) mensList.innerHTML=getMensProducts().map(p=>buildEditItem(p,'mens')).join('');
   // Remember which cards were expanded
   const expanded=new Set([...document.querySelectorAll('.edit-card-item.expanded')].map(el=>el.dataset.editId));
   document.getElementById('editCardsList').innerHTML=getProducts().map(buildEditItem).join('');
@@ -1546,8 +1748,10 @@ function loadSocialIntoPanel(){
   document.getElementById('set_tiktok').value=s.tiktok||'';
 }
 function toggleEditCard(header){header.closest('.edit-card-item').classList.toggle('expanded');}
-function saveCard(id){
-  const products=getProducts();const idx=products.findIndex(p=>p.id===id);if(idx===-1)return;
+function saveCard(id,gender){
+  gender=gender||'women';const isM=(gender==='mens');
+  const products=isM?getMensProducts():getProducts();
+  const idx=products.findIndex(p=>p.id===id);if(idx===-1)return;
   const item=document.querySelector(`.edit-card-item[data-edit-id="${id}"]`);
   item.querySelectorAll('[data-field]').forEach(input=>{
     const field=input.dataset.field;let val=input.value.trim();
@@ -1556,11 +1760,15 @@ function saveCard(id){
     products[idx][field]=val;
   });
   item.querySelector('.edit-card-name').textContent=products[idx].name;
-  saveProducts(products);renderProducts();showToast('Dress update ho gai ✓','success');
+  if(isM){saveMensProducts(products);renderMens();}else{saveProducts(products);renderProducts();}
+  showToast('Update ho gaya ✓','success');
 }
-function deleteCard(id){
-  if(!confirm('Is dress ko list se hatao?'))return;
-  saveProducts(getProducts().filter(p=>p.id!==id));renderProducts();renderEditPanel();showToast('Dress hata di');
+function deleteCard(id,gender){
+  gender=gender||'women';const isM=(gender==='mens');
+  if(!confirm('Is item ko list se hatao?'))return;
+  if(isM){saveMensProducts(getMensProducts().filter(p=>p.id!==id));renderMens();}
+  else{saveProducts(getProducts().filter(p=>p.id!==id));renderProducts();}
+  renderEditPanel();showToast('Item hata diya');
 }
 document.getElementById('btnAddCard').addEventListener('click',()=>{
   const products=getProducts();const newId=Date.now();
@@ -1568,6 +1776,13 @@ document.getElementById('btnAddCard').addEventListener('click',()=>{
   saveProducts(products);renderProducts();renderEditPanel();
   setTimeout(()=>{const el=document.querySelector(`.edit-card-item[data-edit-id="${newId}"]`);if(el){el.classList.add('expanded');el.scrollIntoView({behavior:'smooth',block:'center'});}},50);
   showToast('Nai dress add ho gai — details fill karein');
+});
+document.getElementById('btnAddMensCard').addEventListener('click',()=>{
+  const products=getMensProducts();const newId=Date.now()+1;
+  products.push({id:newId,name:'Naya Shalwar Kameez',nameUrdu:'نیا شلوار قمیض',tag:'Shalwar Kameez · Cotton',fabric:'',price:'2,500',origPrice:'',discount:0,sizes:'S,M,L,XL,XXL',quantity:1,delivery:'Free delivery',tall:false,colorClass:'d8',waText:'Naya Shalwar Kameez',images:[null,null,null,null,null,null,null,null],isNew:true});
+  saveMensProducts(products);renderMens();renderEditPanel();
+  setTimeout(()=>{const el=document.querySelector(`.edit-card-item[data-edit-id="${newId}"]`);if(el){el.classList.add('expanded');el.scrollIntoView({behavior:'smooth',block:'center'});}},50);
+  showToast("Naya men's item add ho gaya — details fill karein");
 });
 
 // ── TOAST ──
@@ -1656,8 +1871,30 @@ function openHeroUploader(){
 }
 
 // ── FILTER ──
-document.querySelectorAll('.filter-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderProducts(btn.dataset.filter);});
+// PATCH 4d: Category filter — updates state then calls applyFilters
+document.querySelectorAll('#womenFilterBar .filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('#womenFilterBar .filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    activeCategoryFilter=btn.dataset.filter||'all';
+    applyFilters();
+  });
+});
+// PATCH 4d: Type filter (Stitched/Unstitched) — event delegation
+document.addEventListener('click',e=>{
+  if(e.target.classList.contains('type-btn')){
+    document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));
+    e.target.classList.add('active');
+    activeTypeFilter=e.target.dataset.type||'all';
+    applyFilters();
+  }
+});
+document.addEventListener('click',e=>{
+  if(e.target.classList.contains('mens-filter')){
+    document.querySelectorAll('.mens-filter').forEach(b=>b.classList.remove('active'));
+    e.target.classList.add('active');
+    renderMens(e.target.dataset.mfilter);
+  }
 });
 
 // ── ANIMATIONS ──
@@ -1691,8 +1928,150 @@ document.getElementById('panelClose').addEventListener('click',()=>{
 document.addEventListener('click',e=>{const panel=document.getElementById('cartPanel');if(panel.classList.contains('open')&&!panel.contains(e.target)&&!e.target.closest('.nav-cart')&&!e.target.closest('.add-cart-btn'))panel.classList.remove('open');});
 document.getElementById('sizeChartModal').addEventListener('click',e=>{if(e.target===document.getElementById('sizeChartModal'))e.target.classList.remove('open');});
 
+
+// ══════════════════════════════════════════════════════
+// LIVE PATCH SYSTEM
+// ══════════════════════════════════════════════════════
+const PATCH_STORAGE_KEY = 'zt_live_patches';
+
+function getLivePatches(){
+  try{ return JSON.parse(localStorage.getItem(PATCH_STORAGE_KEY)||'[]'); }
+  catch(e){ return []; }
+}
+function saveLivePatches(patches){
+  try{ localStorage.setItem(PATCH_STORAGE_KEY, JSON.stringify(patches)); }
+  catch(e){ showPatchStatus('Storage error: '+e.message, false); }
+}
+
+function switchPatchTab(tab, btn){
+  document.querySelectorAll('.patch-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.patch-tab-content').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  const el = document.getElementById('patchTab_'+tab);
+  if(el) el.classList.add('active');
+  if(tab==='history') renderPatchHistory();
+}
+
+function showPatchStatus(msg, ok){
+  const el = document.getElementById('patchStatus');
+  if(!el) return;
+  el.textContent = msg;
+  el.className = 'patch-status ' + (ok ? 'ok' : 'err');
+  setTimeout(()=>{ el.className='patch-status'; }, 5000);
+}
+
+function applyPatch(type){
+  const now = new Date().toLocaleString('en-PK');
+  let code='', target='', label='';
+
+  if(type==='css'){
+    code = document.getElementById('patchCssInput').value.trim();
+    if(!code){ showPatchStatus('CSS khali hai — kuch paste karein', false); return; }
+    try{
+      const style = document.createElement('style');
+      style.textContent = code;
+      style.setAttribute('data-live-patch', Date.now());
+      document.head.appendChild(style);
+      label = 'CSS: ' + code.substring(0,60).split('\n').join(' ') + '...';
+      document.getElementById('patchCssInput').value='';
+      showPatchStatus('✓ CSS apply ho gaya! Changes foran visible hain.', true);
+    } catch(e){ showPatchStatus('CSS Error: '+e.message, false); return; }
+  }
+  else if(type==='js'){
+    code = document.getElementById('patchJsInput').value.trim();
+    if(!code){ showPatchStatus('JavaScript khali hai — kuch paste karein', false); return; }
+    try{
+      const fn = new Function(code);
+      fn();
+      label = 'JS: ' + code.substring(0,60).split('\n').join(' ') + '...';
+      document.getElementById('patchJsInput').value='';
+      showPatchStatus('✓ JavaScript run ho gaya!', true);
+    } catch(e){ showPatchStatus('JS Error: '+e.message, false); return; }
+  }
+  else if(type==='html_replace'||type==='html_append'){
+    target = document.getElementById('patchHtmlTarget').value.trim();
+    code   = document.getElementById('patchHtmlInput').value.trim();
+    if(!target){ showPatchStatus('Target ID dalo (e.g. productGrid)', false); return; }
+    if(!code)  { showPatchStatus('HTML khali hai', false); return; }
+    const el = document.getElementById(target);
+    if(!el){ showPatchStatus('Element #'+target+' nahi mila — ID check karein', false); return; }
+    try{
+      if(type==='html_replace') el.innerHTML = code;
+      else el.innerHTML += code;
+      label = (type==='html_replace'?'HTML replace':'HTML append')+' #'+target+': '+code.substring(0,40)+'...';
+      document.getElementById('patchHtmlTarget').value='';
+      document.getElementById('patchHtmlInput').value='';
+      showPatchStatus('✓ HTML inject ho gaya! #'+target+' update ho gaya.', true);
+    } catch(e){ showPatchStatus('HTML Error: '+e.message, false); return; }
+  }
+
+  // Save to history
+  const patches = getLivePatches();
+  patches.unshift({ id: Date.now(), type, code, target, label, date: now });
+  // Keep max 20 patches in history
+  if(patches.length > 20) patches.splice(20);
+  saveLivePatches(patches);
+  showToast('Patch apply ho gaya ✓', 'success');
+}
+
+function renderPatchHistory(){
+  const patches = getLivePatches();
+  const list = document.getElementById('patchHistoryList');
+  if(!list) return;
+  if(!patches.length){
+    list.innerHTML='<p style="font-family:monospace;font-size:.58rem;color:var(--muted);text-align:center;padding:20px 0;">Koi patch nahi — abhi tak kuch apply nahi kiya</p>';
+    return;
+  }
+  list.innerHTML = patches.map(p=>`
+    <div class="patch-history-item">
+      <span><strong>${p.type.toUpperCase()}</strong> · ${p.date}<br>${p.label||p.code.substring(0,50)}</span>
+      <button class="patch-revert-btn" onclick="revertPatch(${p.id})">Revert</button>
+    </div>`).join('');
+}
+
+function revertPatch(id){
+  // Note: CSS/JS patches can't be truly "reverted" from DOM without page reload
+  // We remove from history and inform user to reload
+  const patches = getLivePatches().filter(p=>p.id!==id);
+  saveLivePatches(patches);
+  renderPatchHistory();
+  showPatchStatus('Patch history se hata diya. CSS/JS revert ke liye page reload karein — stored patches reload par re-apply nahi honge.', true);
+}
+
+function clearAllPatches(){
+  if(!confirm('Sab patches clear karein? Yeh sirf history clear karega — apply hue patches page reload tak active rahenge.')) return;
+  saveLivePatches([]);
+  renderPatchHistory();
+  showPatchStatus('Sab patches clear ho gaye.', true);
+}
+
+// Re-apply saved CSS patches on page load (JS patches are in code, CSS needs re-inject)
+function reApplySavedPatches(){
+  const patches = getLivePatches();
+  patches.filter(p=>p.type==='css').forEach(p=>{
+    try{
+      const style = document.createElement('style');
+      style.textContent = p.code;
+      style.setAttribute('data-live-patch', p.id);
+      document.head.appendChild(style);
+    } catch(e){ console.warn('Patch re-apply failed:', e); }
+  });
+  // For JS patches: they need to be re-run on load if user wants
+  // We show a notification if there are JS patches
+  const jsPatches = patches.filter(p=>p.type==='js');
+  if(jsPatches.length > 0){
+    // Auto re-run JS patches on load
+    jsPatches.forEach(p=>{
+      try{ const fn=new Function(p.code); fn(); }
+      catch(e){ console.warn('JS patch re-run failed:', e); }
+    });
+  }
+}
+
 // ── INIT ──
+reApplySavedPatches();
 renderProducts();
+renderMens();
 renderSocials();
 renderOwnerStrip();
 renderReviews();
