@@ -38,6 +38,10 @@
 .patch-tab.active{color:var(--rose);border-bottom-color:var(--rose);}
 .patch-tab-content{display:none;}
 .patch-tab-content.active{display:block;}
+
+/* ── Hero URL system styles ── */
+.hero-url-row .img-slot-remove{position:static;display:flex;background:rgba(181,85,106,.15);color:var(--rose);border:1px solid rgba(181,85,106,.3);border-radius:3px;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;font-size:.75rem;}
+.hero-url-row .img-slot-remove:hover{background:var(--rose);color:#fff;}
 </style>
 <script id="zt-loader">
 (function(){
@@ -885,11 +889,16 @@ footer{background:var(--deep);color:var(--cream);padding:64px 60px 40px;}
   <div class="panel-body">
 
     <p class="panel-section-title">🖼 Hero Slideshow Images</p>
-    <p style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--muted);line-height:1.6;margin-bottom:10px;">Up to 10 images — yeh hero background mein slide hongi. Best size: 1920×1080px (landscape).</p>
-    <div class="hero-img-grid" id="heroImgGrid">
-      <!-- rendered by JS -->
-    </div>
-    <p style="font-family:'DM Mono',monospace;font-size:.52rem;color:var(--muted);line-height:1.6;margin-top:4px;">Max 5MB per image. Slideshow har 4 seconds mein change hogi.</p>
+    <p style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--muted);line-height:1.7;margin-bottom:4px;">
+      Image URL paste karein (ImgBB, Cloudinary, Google Drive, etc.)<br>
+      URL-based system — GitHub sync ke baad <strong style="color:var(--rose)">sab visitors ko dikhe ga</strong>.
+    </p>
+    <p style="font-family:'DM Mono',monospace;font-size:.52rem;color:var(--gold);line-height:1.6;margin-bottom:12px;">
+      Free hosting: imgbb.com → Upload → "Direct link" copy karein
+    </p>
+    <div id="heroUrlList"></div>
+    <button class="btn-add-card" id="btnAddHeroUrl" onclick="addHeroUrlSlot()">+ Add Image URL</button>
+    <button class="btn-save-set" style="margin-top:8px;" onclick="saveHeroUrls()">💾 Save Hero Images</button>
 
     <p class="panel-section-title">Owner / Shop Details</p>
     <div class="field-group"><label class="field-label">Owner Name</label><input class="field-input" id="own_name" placeholder="e.g. Fatima Zahra" /></div>
@@ -1791,8 +1800,23 @@ function showToast(msg,type){
 }
 
 // ── HERO SLIDESHOW ──
-function getHeroImages(){try{const s=localStorage.getItem('zt_hero_images');return s?JSON.parse(s):[null,null,null,null,null,null,null,null,null,null];}catch(e){return[null,null,null,null,null,null,null,null,null,null];}}
-function saveHeroImages(imgs){return safeSave('zt_hero_images',imgs);}
+function getHeroImages(){
+  // Check new URL-based storage first, fallback to old base64 storage
+  try{
+    const urls=localStorage.getItem('zt_hero_urls');
+    if(urls){
+      const parsed=JSON.parse(urls);
+      if(parsed.length>0) return parsed.filter(Boolean);
+    }
+  }catch(e){}
+  // Fallback: old base64 system (for existing users)
+  try{const s=localStorage.getItem('zt_hero_images');return s?JSON.parse(s).filter(Boolean):[];}
+  catch(e){return[];}
+}
+function saveHeroImages(imgs){
+  // Save to new URL storage
+  return safeSave('zt_hero_urls', imgs.filter(Boolean));
+}
 
 let heroSlideIndex=0;let heroTimer=null;
 function buildHeroSlideshow(){
@@ -1830,16 +1854,65 @@ function goHeroSlide(idx){
 }
 
 function renderHeroImgGrid(){
-  const imgs=getHeroImages();
-  const grid=document.getElementById('heroImgGrid');
-  if(!grid)return;
-  grid.innerHTML=imgs.map((img,i)=>`
-    <div class="hero-img-slot ${img?'filled':''}" id="heroSlot_${i}">
-      ${img?`<img src="${img}" alt="Hero ${i+1}" />`:''}
-      <div class="hero-img-slot-hint"><span>🖼</span><p>Slide ${i+1}</p></div>
-      <input type="file" accept="image/*" onchange="handleHeroImg(event,${i})" />
-      <button class="hero-img-slot-rm" onclick="removeHeroImg(event,${i})">✕</button>
+  // URL-based hero image grid
+  let urls=[];
+  try{const s=localStorage.getItem('zt_hero_urls');if(s)urls=JSON.parse(s);}catch(e){}
+  const list=document.getElementById('heroUrlList');
+  if(!list)return;
+  if(urls.length===0){
+    list.innerHTML='<p style="font-family:monospace;font-size:.58rem;color:var(--muted);padding:10px 0;">Koi image nahi — neeche "+ Add Image URL" dabao</p>';
+    return;
+  }
+  list.innerHTML=urls.map((url,i)=>`
+    <div class="hero-url-row" id="heroUrlRow_${i}" style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+      <div class="hero-url-preview" style="width:60px;height:40px;border-radius:3px;overflow:hidden;flex-shrink:0;background:var(--warm2);border:1px solid var(--warm2);">
+        <img src="${url}" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'" />
+      </div>
+      <input class="field-input" style="flex:1;font-size:.7rem;" value="${url}" 
+        onchange="updateHeroUrl(${i},this.value)" placeholder="https://..." />
+      <button class="img-slot-remove" style="display:flex;width:28px;height:28px;flex-shrink:0;" 
+        onclick="deleteHeroUrl(${i})">✕</button>
     </div>`).join('');
+}
+function addHeroUrlSlot(){
+  let urls=[];
+  try{const s=localStorage.getItem('zt_hero_urls');if(s)urls=JSON.parse(s);}catch(e){}
+  if(urls.length>=10){showToast('Max 10 images allowed','error');return;}
+  urls.push('');
+  safeSave('zt_hero_urls',urls);
+  renderHeroImgGrid();
+  // Focus the new input
+  setTimeout(()=>{
+    const rows=document.querySelectorAll('.hero-url-row input');
+    if(rows.length>0)rows[rows.length-1].focus();
+  },50);
+}
+function updateHeroUrl(idx,val){
+  let urls=[];
+  try{const s=localStorage.getItem('zt_hero_urls');if(s)urls=JSON.parse(s);}catch(e){}
+  urls[idx]=val.trim();
+  safeSave('zt_hero_urls',urls);
+}
+function deleteHeroUrl(idx){
+  let urls=[];
+  try{const s=localStorage.getItem('zt_hero_urls');if(s)urls=JSON.parse(s);}catch(e){}
+  urls.splice(idx,1);
+  safeSave('zt_hero_urls',urls);
+  renderHeroImgGrid();
+  buildHeroSlideshow();
+  showToast('Image URL hata di');
+}
+function saveHeroUrls(){
+  // Collect all current input values
+  const inputs=document.querySelectorAll('.hero-url-row input');
+  const urls=[];
+  inputs.forEach(inp=>{
+    const v=inp.value.trim();
+    if(v) urls.push(v);
+  });
+  safeSave('zt_hero_urls',urls);
+  buildHeroSlideshow();
+  showToast('Hero images save ho gayi ✓ — GitHub sync karein to sab par dikhengi','success');
 }
 function handleHeroImg(event,idx){
   const file=event.target.files[0];if(!file)return;
