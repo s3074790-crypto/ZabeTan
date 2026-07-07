@@ -49,15 +49,19 @@
     .then(function(r){return r.ok?r.json():null;})
     .then(function(d){
       if(!d)return;
-      if(d.products)localStorage.setItem('zt_products',JSON.stringify(d.products));
-      if(d.socials)localStorage.setItem('zt_socials',JSON.stringify(d.socials));
-      if(d.adminPass)localStorage.setItem('zt_adminpass',d.adminPass);
-      if(d.owner)localStorage.setItem('zt_owner',JSON.stringify(d.owner));
-      if(d.reviews)localStorage.setItem('zt_reviews',JSON.stringify(d.reviews));
-      if(typeof renderProducts==='function')renderProducts();
-      if(typeof renderSocials==='function')renderSocials();
-      if(typeof renderOwnerStrip==='function')renderOwnerStrip();
-      if(typeof renderReviews==='function')renderReviews();
+      if(d.products)   localStorage.setItem('zt_products',  JSON.stringify(d.products));
+      if(d.mens)       localStorage.setItem('zt_mens',       JSON.stringify(d.mens));
+      if(d.socials)    localStorage.setItem('zt_socials',    JSON.stringify(d.socials));
+      if(d.adminPass)  localStorage.setItem('zt_adminpass',  d.adminPass);
+      if(d.owner)      localStorage.setItem('zt_owner',      JSON.stringify(d.owner));
+      if(d.reviews)    localStorage.setItem('zt_reviews',    JSON.stringify(d.reviews));
+      if(d.heroUrls)   localStorage.setItem('zt_hero_urls',  JSON.stringify(d.heroUrls));
+      if(typeof renderProducts==='function')     renderProducts();
+      if(typeof renderMens==='function')         renderMens();
+      if(typeof renderSocials==='function')      renderSocials();
+      if(typeof renderOwnerStrip==='function')   renderOwnerStrip();
+      if(typeof renderReviews==='function')      renderReviews();
+      if(typeof buildHeroSlideshow==='function') buildHeroSlideshow();
     }).catch(function(){});
 }());
 </script>
@@ -1521,7 +1525,19 @@ async function syncToGithub(){
     if(rc.status===403)throw new Error('Token ko permission nahi.');
     if(rc.status===404)throw new Error(`Repo nahi mili: "${s.user}/${s.repo}"`);
     setSyncStatus('Data save ho raha hai...', true);
-    const data={products:getProducts(),socials:getSocials(),adminPass:getAdminPass(),owner:getOwner(),reviews:getReviews(),updatedAt:ts};
+    // Collect hero URLs
+    let heroUrls=[];
+    try{const hu=localStorage.getItem('zt_hero_urls');if(hu)heroUrls=JSON.parse(hu);}catch(e){}
+    const data={
+      products:  getProducts(),
+      mens:      getMensProducts(),
+      socials:   getSocials(),
+      adminPass: getAdminPass(),
+      owner:     getOwner(),
+      reviews:   getReviews(),
+      heroUrls:  heroUrls,
+      updatedAt: ts
+    };
     const dataStr=JSON.stringify(data);
     const kb=Math.round(new TextEncoder().encode(dataStr).length/1024);
     if(kb>8000)throw new Error(`Data ${kb}KB hai — images compress karo.`);
