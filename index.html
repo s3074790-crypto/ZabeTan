@@ -42,6 +42,10 @@
 /* ── Hero URL system styles ── */
 .hero-url-row .img-slot-remove{position:static;display:flex;background:rgba(181,85,106,.15);color:var(--rose);border:1px solid rgba(181,85,106,.3);border-radius:3px;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;font-size:.75rem;}
 .hero-url-row .img-slot-remove:hover{background:var(--rose);color:#fff;}
+
+/* ── Mens filter buttons — same style as women filter-btn ── */
+.mens-filter{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.14em;padding:8px 18px;border:1px solid currentColor;background:none;cursor:pointer;text-transform:uppercase;color:var(--muted);transition:all .2s;border-radius:20px;}
+.mens-filter.active,.mens-filter:hover{background:var(--rose);color:#fff;border-color:var(--rose);}
 </style>
 <script id="zt-loader">
 (function(){
@@ -658,17 +662,18 @@ footer{background:var(--deep);color:var(--cream);padding:64px 60px 40px;}
       <div>
         <p class="section-label">Men's Collection · مردانہ کلیکشن</p>
         <h2 class="section-title">Men's <em>Wear</em></h2>
+        <p class="sec-title-ur" style="font-family:'GandharaSuls',serif;font-size:1rem;color:var(--muted);margin-top:4px;direction:rtl;">مردانہ کلیکشن</p>
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;">
         <button class="order-btn" style="background:none;border:1px solid rgba(181,85,106,.4);color:var(--rose);padding:8px 16px;border-radius:20px;font-size:.56rem;" onclick="document.getElementById('sizeChartModal').classList.add('open')">
           📏 Size Chart
         </button>
         <div class="filter-bar" id="mensFilterBar">
-          <button class="mens-filter active" data-mfilter="all">All</button>
-          <button class="mens-filter" data-mfilter="shalwar">Shalwar Kameez</button>
-          <button class="mens-filter" data-mfilter="kurta">Kurta</button>
-          <button class="mens-filter" data-mfilter="waistcoat">Waistcoat</button>
-          <button class="mens-filter" data-mfilter="sherwani">Sherwani</button>
+          <button class="filter-btn mens-filter active" data-mfilter="all">All</button>
+          <button class="filter-btn mens-filter" data-mfilter="shalwar">Shalwar Kameez</button>
+          <button class="filter-btn mens-filter" data-mfilter="kurta">Kurta</button>
+          <button class="filter-btn mens-filter" data-mfilter="waistcoat">Waistcoat</button>
+          <button class="filter-btn mens-filter" data-mfilter="sherwani">Sherwani</button>
         </div>
       </div>
     </div>
@@ -1262,8 +1267,9 @@ function renderMens(filter){
   if(!grid)return;
   grid.innerHTML=list.map(buildProductHTML).join('');
   initCardAnimations();
-  // populate selects for mens in order form
-  populateMensSelect();
+  // Keep order form and review dropdowns in sync
+  if(typeof populateProductSelect==='function') populateProductSelect();
+  if(typeof populateReviewSelect==='function')  populateReviewSelect();
 }
 function populateMensSelect(){
   const mens=getMensProducts();
@@ -1326,10 +1332,14 @@ function goSlide(e,id,idx){
   [...card.querySelectorAll('.slide-dot')].forEach((d,i)=>d.classList.toggle('active',i===idx));
 }
 function populateProductSelect(){
-  const sel=document.getElementById('orderProduct');
-  if(!sel)return;
-  sel.innerHTML='<option value="">Dress select karein...</option>'+
-    getProducts().map(p=>`<option value="${p.name}">${p.name} — Rs. ${p.price}</option>`).join('');
+  // Combine women + mens products for order form dropdown
+  const all=[...getProducts(),...getMensProducts()];
+  const opts='<option value="">Select item...</option>'+
+    all.map(p=>`<option value="${p.name}">${p.name} — Rs. ${p.price}</option>`).join('');
+  const sel=document.getElementById('orderDress');
+  if(sel) sel.innerHTML=opts;
+  // Also update review dropdown
+  if(typeof populateReviewSelect==='function') populateReviewSelect();
 }
 function populateReviewSelect(){
   const sel=document.getElementById('rvProduct');
