@@ -1080,6 +1080,13 @@ footer{background:var(--deep);color:var(--cream);padding:64px 60px 40px;}
   </div>
   <div class="panel-body">
 
+    <p class="panel-section-title">💾 Storage</p>
+    <p style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--muted);line-height:1.7;margin-bottom:8px;">
+      Photos ab IndexedDB mein save hoti hain (localStorage nahi) — is se "storage full" wala masla khatam ho jata hai, chahe kitni bhi color variant photos upload karein.
+    </p>
+    <div id="storageStatusLine" style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--sage);margin-bottom:8px;">Checking storage...</div>
+    <button class="btn-save-set" onclick="runManualMigration()">🧹 Free Up Storage Now</button>
+
     <p class="panel-section-title">🖼 Hero Slideshow Images</p>
     <p style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--muted);line-height:1.7;margin-bottom:4px;">
       Image URL paste karein (ImgBB, Cloudinary, Google Drive, etc.)<br>
@@ -1218,6 +1225,183 @@ footer{background:var(--deep);color:var(--cream);padding:64px 60px 40px;}
 const WA_NUMBER   = '923085738857';
 const OWNER_EMAIL = 's3074790@gmail.com';
 function getAdminPass(){return localStorage.getItem('zt_adminpass')||'zabetan2025';}
+
+// ══════════════════════════════════════════════════════════════════
+// ── IMAGE STORAGE (IndexedDB) — FIXES THE "STORAGE FULL" PROBLEM ──
+// localStorage has a hard ~5-10MB cap shared by the WHOLE site, and every
+// base64 photo we used to stuff directly into product JSON ate into that
+// same tiny budget — that's why it filled up after ~9 variant photos.
+// IndexedDB is a completely separate, much larger store (typically a big
+// share of free disk space — effectively "unlimited" for this use case).
+// From now on: actual photo bytes live in IndexedDB; localStorage only
+// ever stores a short reference key like "idb:img_172..._x7f2" pointing
+// at that photo. imgCache keeps resolved data URLs in memory so the rest
+// of the app can keep reading/rendering images synchronously as before.
+// ══════════════════════════════════════════════════════════════════
+const IDB_NAME='zabetan_images_db', IDB_STORE='images';
+const idbAvailable = (typeof indexedDB!=='undefined');
+let idbPromise = idbAvailable ? new Promise(function(resolve,reject){
+  const req=indexedDB.open(IDB_NAME,1);
+  req.onupgradeneeded=function(e){ e.target.result.createObjectStore(IDB_STORE); };
+  req.onsuccess=function(e){ resolve(e.target.result); };
+  req.onerror=function(e){ reject(e); };
+}).catch(function(){ return null; }) : Promise.resolve(null);
+function idbPut(key, value){
+  return idbPromise.then(function(db){
+    if(!db) return false;
+    return new Promise(function(resolve){
+      const tx=db.transaction(IDB_STORE,'readwrite');
+      tx.objectStore(IDB_STORE).put(value,key);
+      tx.oncomplete=function(){resolve(true);};
+      tx.onerror=function(){resolve(false);};
+    });
+  });
+}
+function idbGet(key){
+  return idbPromise.then(function(db){
+    if(!db) return null;
+    return new Promise(function(resolve){
+      const tx=db.transaction(IDB_STORE,'readonly');
+      const req=tx.objectStore(IDB_STORE).get(key);
+      req.onsuccess=function(){resolve(req.result||null);};
+      req.onerror=function(){resolve(null);};
+    });
+  });
+}
+function idbDelete(key){
+  return idbPromise.then(function(db){
+    if(!db) return false;
+    return new Promise(function(resolve){
+      const tx=db.transaction(IDB_STORE,'readwrite');
+      tx.objectStore(IDB_STORE).delete(key);
+      tx.oncomplete=function(){resolve(true);};
+      tx.onerror=function(){resolve(false);};
+    });
+  });
+}
+// In-memory cache so the (async) IndexedDB store can back the app's mostly-synchronous
+// rendering code. Hydrated at startup for every "idb:" key already referenced by saved
+// products, and updated immediately whenever a new photo is uploaded.
+let imgCache = {};
+function isIdbRef(ref){ return typeof ref==='string' && ref.indexOf('idb:')===0; }
+// The ONE place every consumer should resolve an image reference through — handles both
+// the new "idb:xxx" keys AND old inline base64 data URLs (pre-migration / no-IndexedDB fallback).
+function resolveImgSrc(ref){
+  if(!ref) return null;
+  if(isIdbRef(ref)) return imgCache[ref] || '';
+  return ref; // legacy raw base64 (or a plain URL) — used as-is
+}
+function resolveImgList(list){ return (list||[]).map(resolveImgSrc).filter(Boolean); }
+// Compress + persist a new photo into IndexedDB, returning the reference key to store on
+// the product. Falls back to storing the raw data URL inline if IndexedDB isn't available
+// at all (very old browsers) so uploads still work, just without the quota fix.
+async function storeImageAsync(dataUrl){
+  if(!idbAvailable) return dataUrl; // no IndexedDB support — old behavior
+  const key = 'idb:img_'+Date.now()+'_'+Math.random().toString(36).slice(2,9);
+  const ok = await idbPut(key, dataUrl);
+  if(!ok) return dataUrl; // IndexedDB write failed for some reason — fall back safely
+  imgCache[key] = dataUrl;
+  return key;
+}
+async function deleteStoredImage(ref){
+  if(isIdbRef(ref)){ delete imgCache[ref]; await idbDelete(ref); }
+}
+// Scans every product for "idb:" keys and pre-loads them into imgCache before first render.
+async function hydrateImageCache(){
+  if(!idbAvailable) return;
+  const all=[...getProducts(),...getMensProducts()];
+  const keys=new Set();
+  all.forEach(function(p){
+    (p.images||[]).forEach(function(ref){ if(isIdbRef(ref)) keys.add(ref); });
+    (p.colorVariants||[]).forEach(function(v){
+      if(!v) return;
+      if(isIdbRef(v.image)) keys.add(v.image);
+      if(isIdbRef(v.primaryImage)) keys.add(v.primaryImage);
+      (v.images||[]).forEach(function(ref){ if(isIdbRef(ref)) keys.add(ref); });
+    });
+  });
+  await Promise.all([...keys].map(async function(k){
+    const v = await idbGet(k);
+    if(v) imgCache[k]=v;
+  }));
+}
+// ── ONE-TIME MIGRATION: moves any already-uploaded inline base64 photos out of
+// localStorage and into IndexedDB, freeing up the quota that's currently full.
+// Safe to re-run: anything already migrated (an "idb:" ref) is left untouched.
+async function migrateImagesToIndexedDB(showReport){
+  if(!idbAvailable){ if(showReport) showToast('Yeh browser IndexedDB support nahi karta','error'); return; }
+  let movedCount=0, freedBytes=0;
+  async function migrateArray(arr){
+    if(!Array.isArray(arr)) return;
+    for(let i=0;i<arr.length;i++){
+      const val=arr[i];
+      if(typeof val==='string' && val.indexOf('data:')===0){ // raw base64 still inline
+        freedBytes+=val.length;
+        arr[i]=await storeImageAsync(val);
+        movedCount++;
+      }
+    }
+  }
+  async function migrateProductList(list, saveFn){
+    let changed=false;
+    for(const p of list){
+      const before=JSON.stringify(p);
+      await migrateArray(p.images);
+      if(Array.isArray(p.colorVariants)){
+        for(const v of p.colorVariants){
+          if(!v) continue;
+          if(typeof v.image==='string' && v.image.indexOf('data:')===0){
+            freedBytes+=v.image.length; v.image=await storeImageAsync(v.image); movedCount++;
+          }
+          await migrateArray(v.images);
+          if(v.primaryImage && typeof v.primaryImage==='string' && v.primaryImage.indexOf('data:')===0){
+            // primaryImage should already point at an entry inside images[] which just got migrated —
+            // if it's still raw here, migrate it directly too
+            freedBytes+=v.primaryImage.length; v.primaryImage=await storeImageAsync(v.primaryImage); movedCount++;
+          }
+        }
+      }
+      if(JSON.stringify(p)!==before) changed=true;
+    }
+    if(changed) saveFn(list);
+  }
+  await migrateProductList(getProducts(), saveProducts);
+  await migrateProductList(getMensProducts(), saveMensProducts);
+  localStorage.setItem('zt_idb_migrated','1');
+  if(movedCount>0){
+    renderProducts(); renderMens();
+    if(showReport) showToast(`${movedCount} photos storage se free ho gayi ✓ (~${Math.round(freedBytes/1024)}KB)`,'success');
+  } else if(showReport){
+    showToast('Kuch migrate karne ko nahi mila — sab pehle se optimized hai','success');
+  }
+  updateStorageStatusLine();
+}
+// Manual trigger for the "🧹 Free Up Storage Now" admin button
+async function runManualMigration(){
+  showToast('Storage free ki ja rahi hai...','');
+  await migrateImagesToIndexedDB(true);
+}
+// Shows current localStorage usage (the small, easily-filled quota) vs IndexedDB usage
+// (the near-unlimited store photos now live in) in the admin panel.
+async function updateStorageStatusLine(){
+  const el=document.getElementById('storageStatusLine');
+  if(!el) return;
+  let lsBytes=0;
+  try{ for(const k in localStorage){ if(localStorage.hasOwnProperty(k)) lsBytes+=(localStorage[k]||'').length; } }catch(e){}
+  const lsKB=Math.round(lsBytes/1024);
+  let line = `localStorage: ~${lsKB}KB used`;
+  if(idbAvailable && navigator.storage && navigator.storage.estimate){
+    try{
+      const est = await navigator.storage.estimate();
+      const usedMB=((est.usage||0)/1024/1024).toFixed(1);
+      const quotaMB=((est.quota||0)/1024/1024).toFixed(0);
+      line += ` · Photos (IndexedDB): ~${usedMB}MB of ~${quotaMB}MB available`;
+    }catch(e){}
+  } else if(!idbAvailable){
+    line += ' · IndexedDB not supported by this browser';
+  }
+  el.textContent = line;
+}
 
 // ── DEFAULT DATA ──
 const defaultProducts=[
@@ -1407,6 +1591,10 @@ const VARIANT_SIZE_OPTIONS=['XS','S','M','L','XL','XXL'];
 function getUsableVariants(p){
   return (p.colorVariants||[]).map(function(v,i){ return (v&&(v.hex||v.image||(v.images&&v.images.length)))?{v:v,i:i}:null; }).filter(Boolean);
 }
+// Resolved main product gallery (handles both legacy inline base64 and new "idb:" refs)
+function getProductImages(p){
+  return resolveImgList(p.images||[]);
+}
 function getVariantObj(p, variantIdx){
   if(variantIdx==null||variantIdx<0) return null;
   return (p.colorVariants||[])[variantIdx]||null;
@@ -1458,20 +1646,28 @@ function isVariantSoldOut(p, variantIdx){
   return sizes.every(function(s){ return s.stock!==null && s.stock<=0; });
 }
 // All images for a variant (supports multi-image variant.images[], falls back to legacy variant.image)
-function getVariantImages(p, variantIdx){
+// Raw = unresolved references (may be "idb:" keys) — used internally for index-based admin
+// operations (move/remove/set-primary) so indices always match the stored array exactly.
+function getVariantImagesRaw(p, variantIdx){
   const variant=getVariantObj(p, variantIdx);
   if(!variant) return [];
   if(Array.isArray(variant.images) && variant.images.filter(Boolean).length) return variant.images.filter(Boolean);
   if(variant.image) return [variant.image];
   return [];
 }
+function getVariantImages(p, variantIdx){
+  return resolveImgList(getVariantImagesRaw(p, variantIdx));
+}
+function getVariantPrimaryImageRaw(p, variantIdx){
+  const variant=getVariantObj(p, variantIdx);
+  const imgsRaw=getVariantImagesRaw(p, variantIdx);
+  if(variant && variant.primaryImage && imgsRaw.indexOf(variant.primaryImage)>-1) return variant.primaryImage;
+  if(imgsRaw.length) return imgsRaw[0];
+  return (p.images&&p.images[0])||null;
+}
 // Primary image for a variant, falling back through images[]/image/product images
 function getVariantPrimaryImage(p, variantIdx){
-  const variant=getVariantObj(p, variantIdx);
-  const imgs=getVariantImages(p, variantIdx);
-  if(variant && variant.primaryImage && imgs.indexOf(variant.primaryImage)>-1) return variant.primaryImage;
-  if(imgs.length) return imgs[0];
-  return (p.images&&p.images[0])||null;
+  return resolveImgSrc(getVariantPrimaryImageRaw(p, variantIdx));
 }
 // Legacy alias kept because other code/back-compat may reference it
 function getVariantImage(p, variantIdx){ return getVariantPrimaryImage(p, variantIdx); }
@@ -1548,7 +1744,7 @@ function getSelectedProductState(id){
   return {
     p:p, card:card, hasVariants:hasVariants, variantIdx:hasVariants?variantIdx:-1, variant:variant,
     size:size,
-    image:(hasVariants?getVariantPrimaryImage(p, variantIdx):null)||(p.images&&p.images[0])||null,
+    image:(hasVariants?getVariantPrimaryImage(p, variantIdx):null)||resolveImgSrc(p.images&&p.images[0])||null,
     price:priceInfo.price, regularPrice:priceInfo.regularPrice, onSale:priceInfo.onSale,
     stock:hasVariants?getVariantStock(p, variantIdx, size):null,
     sku:hasVariants?getVariantSKU(p, variantIdx, size):''
@@ -1557,7 +1753,7 @@ function getSelectedProductState(id){
 
 // ── RENDER PRODUCTS ──
 function buildProductHTML(p, initialVariantIdx){
-  const imgs=p.images||[null,null,null,null,null,null,null,null];
+  const imgs=getProductImages(p);
   const reviews=getReviews().filter(r=>r.product===p.name);
   const avg=reviews.length?reviews.reduce((s,r)=>s+r.rating,0)/reviews.length:0;
   const isSoldOut=parseInt(p.quantity||0)===0;
@@ -2114,16 +2310,18 @@ function buildEditItem(p, gender){
   const imgs=p.images||[null,null,null,null,null,null,null,null];
   const colorSelects=colorOptions.map((c,i)=>`<option value="${c}" ${p.colorClass===c?'selected':''}>${colorLabels[i]}</option>`).join('');
   const slotLabels=['Main','Photo 2','Photo 3','Photo 4','Photo 5','Photo 6','Photo 7','Photo 8'];
-  const slotsHTML=imgs.map((img,i)=>`
+  const slotsHTML=imgs.map((img,i)=>{
+    const resolved=resolveImgSrc(img); // img itself stays the RAW ref so slotIdx keeps lining up with handleSlotImg/removeSlotImg
+    return `
     <div>
       <div class="img-slot${img?' has-img':''}" id="slot_${p.id}_${i}">
-        <img src="${img||''}" alt="photo ${i+1}" />
+        <img src="${resolved||''}" alt="photo ${i+1}" />
         <div class="img-slot-hint"><span style="font-size:1rem">📷</span>${slotLabels[i]}</div>
         <input class="img-slot-input" type="file" accept="image/*" onchange="handleSlotImg(event,${p.id},${i})" />
         <button class="img-slot-remove" onclick="removeSlotImg(event,${p.id},${i})">✕</button>
       </div>
       <div class="img-slot-label">${slotLabels[i]}</div>
-    </div>`).join('');
+    </div>`;}).join('');
   return `
   <div class="edit-card-item" data-edit-id="${p.id}">
     <div class="edit-card-header" onclick="toggleEditCard(this)">
@@ -2204,11 +2402,14 @@ function safeSave(key, value){
     return false;
   }
 }
-function handleSlotImg(event,id,slotIdx){
+async function handleSlotImg(event,id,slotIdx){
   const file=event.target.files[0];
   if(!file)return;
+  if(!file.type || !file.type.startsWith('image/')){ showToast('Sirf image files allowed hain','error'); event.target.value=''; return; }
+  if(file.size>MAX_UPLOAD_BYTES){ showToast('Image bohot bari hai — 8MB se kam istemal karein','error'); event.target.value=''; return; }
   showToast('Image compress ho rahi hai...','');
-  compressImage(file, 900, 1200, 0.72).then(dataUrl=>{
+  try{
+    const dataUrl = await compressImage(file, 900, 1200, 0.72);
     const kb=Math.round(dataUrl.length/1024);
     const isMens=getMensProducts().some(p=>p.id===id);
     const products=isMens?getMensProducts():getProducts();
@@ -2216,9 +2417,14 @@ function handleSlotImg(event,id,slotIdx){
     if(idx<0)return;
     if(!Array.isArray(products[idx].images)||products[idx].images.length<8)
       products[idx].images=[null,null,null,null,null,null,null,null];
-    products[idx].images[slotIdx]=dataUrl;
+    const oldRef=products[idx].images[slotIdx];
+    // Store the actual photo bytes in IndexedDB (near-unlimited quota) — only a short
+    // reference key is kept in the localStorage-backed product JSON.
+    const ref = await storeImageAsync(dataUrl);
+    products[idx].images[slotIdx]=ref;
     const ok=isMens?saveMensProducts(products):safeSave('zt_products', products);
     if(!ok)return;
+    if(isIdbRef(oldRef) && oldRef!==ref) deleteStoredImage(oldRef); // replaced — free the old photo
     const slot=document.getElementById('slot_'+id+'_'+slotIdx);
     if(slot){
       let img=slot.querySelector('img');
@@ -2232,9 +2438,9 @@ function handleSlotImg(event,id,slotIdx){
     }
     refreshProductCard(id);
     showToast('Photo '+(slotIdx+1)+' upload ho gai ✓ ('+kb+'KB compressed)','success');
-  }).catch(()=>showToast('Image process nahi hui — dobara try karein','error'));
+  }catch(err){ showToast('Image process nahi hui — dobara try karein','error'); }
 }
-function removeSlotImg(e,id,slotIdx){
+async function removeSlotImg(e,id,slotIdx){
   e.stopPropagation();
   const isMensR=getMensProducts().some(p=>p.id===id);
   const products=isMensR?getMensProducts():getProducts();
@@ -2242,8 +2448,10 @@ function removeSlotImg(e,id,slotIdx){
   if(idx>-1){
     if(!Array.isArray(products[idx].images)||products[idx].images.length<8)
       products[idx].images=[null,null,null,null,null,null,null,null];
+    const oldRef=products[idx].images[slotIdx];
     products[idx].images[slotIdx]=null;
     if(isMensR)saveMensProducts(products);else safeSave('zt_products', products);
+    if(isIdbRef(oldRef)) deleteStoredImage(oldRef);
   }
   const slot=document.getElementById('slot_'+id+'_'+slotIdx);
   if(slot){
@@ -2546,6 +2754,7 @@ function attemptLogin(){
     document.body.classList.add('admin-active');
     renderEditPanel();
     renderHeroImgGrid();
+    updateStorageStatusLine();
   }
   else{document.getElementById('loginError').style.display='block';pw.value='';pw.focus();pw.style.borderColor='var(--rose)';setTimeout(()=>pw.style.borderColor='',1000);}
 }
@@ -2884,20 +3093,23 @@ function refreshColorVarList(id, p){
 
 // ── Admin: multi-image strip for one variant (add / remove / reorder / set primary) ──
 function buildVariantImageStrip(p, i, v){
-  const images = getVariantImages(p, i);
-  const primary = getVariantPrimaryImage(p, i);
+  // Iterate the RAW (unresolved) array so indices always match what moveVariantImage /
+  // removeCVImg / setVariantPrimaryImage operate on — then resolve each image only for display.
+  const rawImages = getVariantImagesRaw(p, i);
+  const primaryRaw = getVariantPrimaryImageRaw(p, i);
   let html = '<div class="cv-img-strip">';
-  images.forEach(function(img, imgIdx){
-    const isPrimary = img===primary;
+  rawImages.forEach(function(rawImg, imgIdx){
+    const isPrimary = rawImg===primaryRaw;
+    const src = resolveImgSrc(rawImg);
     html += '<div class="cv-img-thumb-wrap">'+
       '<div class="cv-img-thumb'+(isPrimary?' primary':'')+'">'+
-        '<img src="'+img+'" />'+
+        '<img src="'+(src||'')+'" />'+
         (isPrimary?'<span class="cv-img-thumb-badge">Primary</span>':'')+
       '</div>'+
       '<div class="cv-img-thumb-actions">'+
         (imgIdx>0?'<button type="button" class="cv-img-mini-btn" title="Move left" onclick="moveVariantImage('+p.id+','+i+','+imgIdx+',-1)">◀</button>':'')+
         '<button type="button" class="cv-img-mini-btn star'+(isPrimary?' is-primary':'')+'" title="Set as primary" onclick="setVariantPrimaryImage('+p.id+','+i+','+imgIdx+')">★</button>'+
-        (imgIdx<images.length-1?'<button type="button" class="cv-img-mini-btn" title="Move right" onclick="moveVariantImage('+p.id+','+i+','+imgIdx+',1)">▶</button>':'')+
+        (imgIdx<rawImages.length-1?'<button type="button" class="cv-img-mini-btn" title="Move right" onclick="moveVariantImage('+p.id+','+i+','+imgIdx+',1)">▶</button>':'')+
         '<button type="button" class="cv-img-mini-btn" title="Remove" onclick="removeCVImg(event,'+p.id+','+i+','+imgIdx+')">✕</button>'+
       '</div>'+
     '</div>';
@@ -3000,7 +3212,7 @@ function getPreviewImagesForCard(card, p){
   const variantIdx = card.dataset.selectedVariant!==undefined ? parseInt(card.dataset.selectedVariant) : -1;
   const variantImgs = getVariantImages(p, variantIdx);
   if(variantImgs.length) return variantImgs;
-  return (p.images||[]).filter(Boolean);
+  return getProductImages(p);
 }
 // Make product cards open preview on image click
 document.addEventListener('click', function(e){
@@ -3034,13 +3246,14 @@ document.addEventListener('click', function(e){
 
 // ── Color Variant Image Upload (multi-image per variant) ──
 const MAX_UPLOAD_BYTES = 8*1024*1024; // 8MB raw upload ceiling before compression
-function handleCVImg(event, productId, variantIdx){
+async function handleCVImg(event, productId, variantIdx){
   const file = event.target.files[0];
   if(!file) return;
   if(!file.type || !file.type.startsWith('image/')){ showToast('Sirf image files allowed hain','error'); event.target.value=''; return; }
   if(file.size>MAX_UPLOAD_BYTES){ showToast('Image bohot bari hai — 8MB se kam istemal karein','error'); event.target.value=''; return; }
   showToast('Compressing...','');
-  compressImage(file, 900, 1200, 0.78).then(function(dataUrl){
+  try{
+    const dataUrl = await compressImage(file, 900, 1200, 0.78);
     const p = getProductById(productId);
     if(!p) return;
     if(!p.colorVariants) p.colorVariants = [];
@@ -3048,14 +3261,18 @@ function handleCVImg(event, productId, variantIdx){
     const v = p.colorVariants[variantIdx];
     // Migrate a legacy single .image into the new .images[] array before appending
     if(!Array.isArray(v.images)) v.images = v.image ? [v.image] : [];
-    v.images.push(dataUrl);
+    // Store the actual photo bytes in IndexedDB (near-unlimited quota) — only a short
+    // reference key ("idb:...") is kept in the localStorage-backed product JSON. This is
+    // what fixes "storage full" after a handful of variant photos.
+    const ref = await storeImageAsync(dataUrl);
+    v.images.push(ref);
     if(!v.primaryImage) v.primaryImage = v.images[0]; // first image becomes primary by default
     delete v.image; // superseded by images[]
     const ok = saveProductById(productId, p);
     if(!ok) return;
     refreshColorVarList(productId, p);
     showToast('Color variant photo upload ho gai ✓','success');
-  }).catch(function(){ showToast('Image process nahi hui — dobara try karein','error'); });
+  }catch(err){ showToast('Image process nahi hui — dobara try karein','error'); }
 }
 function removeCVImg(e, productId, variantIdx, imgIdx){
   if(e) e.stopPropagation();
@@ -3066,6 +3283,7 @@ function removeCVImg(e, productId, variantIdx, imgIdx){
   const removed = v.images.splice(imgIdx,1)[0];
   if(v.primaryImage===removed) v.primaryImage = v.images[0]||null;
   saveProductById(productId, p);
+  if(isIdbRef(removed)) deleteStoredImage(removed); // free the IndexedDB entry too
   refreshColorVarList(productId, p);
   showToast('Photo hata di');
 }
@@ -3134,7 +3352,7 @@ function selectColorVariant(e, productId, variantIdx){
   // 4. Rebuild the ENTIRE slideshow with only this variant's images (never mixed with another
   //    color's photos), falling back to the main product gallery only if the variant has none.
   const variantImgs = getVariantImages(p, variantIdx);
-  const galleryImgs = variantImgs.length ? variantImgs : (p.images||[]).filter(Boolean);
+  const galleryImgs = variantImgs.length ? variantImgs : getProductImages(p);
   let ss = card.querySelector('.card-slideshow');
   const placeholder = card.querySelector('.color-placeholder');
   if(galleryImgs.length){
@@ -3168,14 +3386,23 @@ function selectColorVariant(e, productId, variantIdx){
   card.querySelectorAll('.add-cart-btn,.buy-now-btn').forEach(function(btn){ btn.disabled=false; });
 }
 // ── INIT ──
-reApplySavedPatches();
-renderProducts();
-renderMens();
-renderSocials();
-renderOwnerStrip();
-renderReviews();
-renderCartPanel();
-buildHeroSlideshow();
+// Image cache must be hydrated (and any already-uploaded photos migrated out of
+// localStorage into IndexedDB) BEFORE the first render, so cards don't flash broken
+// images while the async IndexedDB reads are still in flight.
+(async function initApp(){
+  reApplySavedPatches();
+  await hydrateImageCache();
+  if(idbAvailable && localStorage.getItem('zt_idb_migrated')!=='1'){
+    await migrateImagesToIndexedDB(false); // silent first-run migration — frees up existing full storage
+  }
+  renderProducts();
+  renderMens();
+  renderSocials();
+  renderOwnerStrip();
+  renderReviews();
+  renderCartPanel();
+  buildHeroSlideshow();
+})();
 </script>
 
 <!-- IMAGE PREVIEW MODAL -->
