@@ -1260,59 +1260,82 @@ let wishlist=[];
 function priceNum(str){return parseInt((str||'0').replace(/,/g,''))||0;}
 function addToCart(id, selectedSize){
   const allProds = [...getProducts(), ...getMensProducts()];
-  const p = allProds.find(x=>x.id===id);
+  const p = allProds.find(function(x){ return x.id===id; });
   if(!p) return;
 
-  // Check if a color variant is active on this card
+  // Get active variant from card
   const card = document.querySelector('[data-id="'+id+'"]');
-  let variantImg   = null;
-  let variantName  = null;
-  let variantSizes = null;
-  let variantIdx   = -1;
+  let variantImg  = null;
+  let variantName = null;
+  let variantIdx  = -1;
+  let sizeEntry   = null;
 
   if(card && card.dataset.activeVariant !== undefined){
     variantIdx = parseInt(card.dataset.activeVariant);
     const variant = (p.colorVariants||[])[variantIdx];
     if(variant){
-      variantImg   = variant.image || null;
-      variantName  = variant.name  || null;
-      // Normalize sizes to array
-      const normSizes = normalizeCVSizes(variant);
-      variantSizes = normSizes.length ? normSizes.map(function(s){ return s.size; }).join(',') : null;
+      variantName = variant.name || null;
+      // Get first available variant image
+      const vImgs = Array.isArray(variant.images) ? variant.images.filter(Boolean) : [];
+      variantImg = vImgs[0] || variant.image || null;
+      // Get size-specific pricing if available
+      if(selectedSize){
+        const normSizes = normalizeCVSizes(variant);
+        sizeEntry = normSizes.find(function(s){ return s.size === selectedSize; }) || null;
+      }
     }
   }
 
-  // Size validation — use variant sizes if defined
-  const effectiveSizes = variantSizes
-    ? variantSizes.split(',').map(s=>s.trim()).filter(Boolean)
-    : (p.sizes||'').split(',').map(s=>s.trim()).filter(Boolean);
-
+  // Determine effective sizes for validation
+  let effectiveSizes = [];
+  if(variantIdx >= 0){
+    const variant = (p.colorVariants||[])[variantIdx];
+    if(variant){
+      const ns = normalizeCVSizes(variant);
+      effectiveSizes = ns.map(function(s){ return s.size; });
+    }
+  }
+  if(!effectiveSizes.length){
+    effectiveSizes = (p.sizes||'').split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+  }
   if(effectiveSizes.length > 0 && !selectedSize){
     showToast('Pehle size select karein','error');
     return;
   }
 
-  const cartKey = id + '_' + (variantIdx >= 0 ? 'v'+variantIdx : '') + '_' + (selectedSize||'');
-  const ex = cart.find(x=>x.cartKey===cartKey);
+  // Determine price — use size-specific price if available
+  let itemPrice = p.price;
+  if(sizeEntry && sizeEntry.price) itemPrice = sizeEntry.price;
+
+  // Build unique cart key
+  const cartKey = id+'_'+(variantIdx>=0?'v'+variantIdx:'')+'_'+(selectedSize||'');
+  const ex = cart.find(function(x){ return x.cartKey===cartKey; });
+
+  // Check stock if available
+  if(sizeEntry && sizeEntry.stock !== undefined && sizeEntry.stock <= 0){
+    showToast('Is size mein stock nahi hai','error');
+    return;
+  }
+
   if(ex){ ex.qty++; }
   else{
     cart.push({
       cartKey:     cartKey,
       id:          id,
-      title:       p.name + (variantName ? ' — '+variantName : ''),
+      title:       p.name + (variantName ? ' – '+variantName : ''),
       nameUrdu:    p.nameUrdu || '',
       size:        selectedSize || '',
-      price:       p.price,
+      price:       itemPrice,
       qty:         1,
-      // Use variant image if selected, otherwise first product image
       img:         variantImg || (p.images && p.images.find(Boolean)) || null,
       variantName: variantName,
-      variantIdx:  variantIdx
+      variantIdx:  variantIdx,
+      sku:         sizeEntry ? (sizeEntry.sku||'') : ''
     });
   }
   updateCartUI();
   renderCartPanel();
-  showToast((variantName||p.name)+' — cart mein add ho gaya ✓','success');
+  showToast((variantName ? variantName+' — ' : '')+p.name+' cart mein add ✓','success');
 }
 function removeFromCart(key){cart=cart.filter(x=>x.key!==key);updateCartUI();renderCartPanel();}
 function changeQty(key,delta){
@@ -1438,7 +1461,9 @@ function buildProductHTML(p){
       ${p.type?`<span class="card-type-badge">${p.type}</span>`:''}
       <h3 class="card-title">${p.name}</h3>
       ${(()=>{const vv=(p.colorVariants||[]).filter(v=>v&&v.hex);if(!vv.length)return '';return '<div class="color-variants">'+vv.map((v,i)=>{
-          const thumb = v.image || null;
+          // Get first available image from variant (check all slots)
+          const vImgs = Array.isArray(v.images) ? v.images : [];
+          const thumb = vImgs.find(function(img){ return !!img; }) || v.image || null;
           if(thumb){
             return '<div class="cv-thumb'+(i===0?' active':'')+'" onclick="selectColorVariant(event,'+p.id+','+i+')" title="'+(v.name||'')+'" style="width:44px;height:44px;border-radius:6px;overflow:hidden;cursor:pointer;border:2.5px solid '+(i===0?'var(--ink)':'transparent')+';transition:all .18s;flex-shrink:0;box-shadow:0 1px 6px rgba(0,0,0,.15);">'+
               '<img src="'+thumb+'" style="width:100%;height:100%;object-fit:cover;display:block;" alt="'+(v.name||'')+'" />'+
@@ -1777,9 +1802,30 @@ async function syncToGithub(){
     // Collect hero URLs
     let heroUrls=[];
     try{const hu=localStorage.getItem('zt_hero_urls');if(hu)heroUrls=JSON.parse(hu);}catch(e){}
+    // Strip base64 images from variants to keep sync small
+    // Variant images are stored locally — only metadata syncs
+    function stripVariantImages(prods){
+      return prods.map(function(p){
+        const pc = JSON.parse(JSON.stringify(p));
+        if(pc.colorVariants){
+          pc.colorVariants = pc.colorVariants.map(function(v){
+            const vc = Object.assign({}, v);
+            // Keep URL images (http/https) but strip base64
+            if(vc.image && vc.image.startsWith('data:')) vc.image = null;
+            if(Array.isArray(vc.images)){
+              vc.images = vc.images.map(function(img){
+                return (img && !img.startsWith('data:')) ? img : null;
+              });
+            }
+            return vc;
+          });
+        }
+        return pc;
+      });
+    }
     const data={
-      products:  getProducts(),
-      mens:      getMensProducts(),
+      products:  stripVariantImages(getProducts()),
+      mens:      stripVariantImages(getMensProducts()),
       socials:   getSocials(),
       adminPass: getAdminPass(),
       owner:     getOwner(),
@@ -2523,21 +2569,27 @@ function selectColorVariant(e, productId, variantIdx){
   const label = document.getElementById('cvLabel_'+productId);
   if(label) label.textContent = variant.name || variant.hex || '';
 
-  // Swap main card slide image to variant image
-  if(variant.image){
-    // Try active slide first
-    const activeSlide = card.querySelector('.slide-img.active');
-    if(activeSlide){
-      // Save original src if not already saved
-      if(!activeSlide.dataset.originalSrc) activeSlide.dataset.originalSrc = activeSlide.src;
-      activeSlide.src = variant.image;
+  // Get all available images from this variant
+  const vImgArr = Array.isArray(variant.images) ? variant.images.filter(Boolean) : [];
+  if(!variant.image && vImgArr.length) variant.image = vImgArr[0];
+  const firstVImg = vImgArr[0] || variant.image || null;
+
+  // Swap main card slide to show variant image
+  const slideshow = card.querySelector('.card-slideshow');
+  if(firstVImg && slideshow){
+    // Build variant slides in the slideshow
+    const track = slideshow.querySelector('.slideshow-track') || slideshow.querySelector('[class*="track"]');
+    const existingSlides = card.querySelectorAll('.slide-img');
+    if(existingSlides.length > 0){
+      // Replace active slide src
+      const active = card.querySelector('.slide-img.active') || existingSlides[0];
+      if(!active.dataset.originalSrc) active.dataset.originalSrc = active.src;
+      active.src = firstVImg;
     }
-  } else {
-    // Restore original image if no variant image
-    const activeSlide = card.querySelector('.slide-img.active');
-    if(activeSlide && activeSlide.dataset.originalSrc){
-      activeSlide.src = activeSlide.dataset.originalSrc;
-    }
+  } else if(!firstVImg) {
+    // Restore original
+    const active = card.querySelector('.slide-img.active');
+    if(active && active.dataset.originalSrc) active.src = active.dataset.originalSrc;
   }
 
   // Update variant-specific sizes if defined
@@ -2557,12 +2609,25 @@ function getProductById(id){
   return getProducts().find(p=>p.id===id) || getMensProducts().find(p=>p.id===id);
 }
 function saveProductById(id, updated){
+  // Women's products
   const women = getProducts();
-  const wi = women.findIndex(p=>p.id===id);
-  if(wi>-1){ women[wi]=updated; saveProducts(women); return; }
+  const wi = women.findIndex(function(p){ return p.id===id; });
+  if(wi > -1){
+    women[wi] = updated;
+    const ok = safeSave('zt_products', women);
+    if(!ok) return false;
+    return true;
+  }
+  // Men's products
   const mens = getMensProducts();
-  const mi = mens.findIndex(p=>p.id===id);
-  if(mi>-1){ mens[mi]=updated; saveMensProducts(mens); }
+  const mi = mens.findIndex(function(p){ return p.id===id; });
+  if(mi > -1){
+    mens[mi] = updated;
+    const ok = safeSave('zt_mens', mens);
+    if(!ok) return false;
+    return true;
+  }
+  return false;
 }
 // addColorVariant replaced by new system above
 
@@ -2641,14 +2706,19 @@ document.addEventListener('click', function(e){
     const pid = parseInt(card.dataset.id);
     const p = [...getProducts(),...getMensProducts()].find(x=>x.id===pid);
     if(!p) return;
-    // If a variant is active, show its image FIRST in preview
+    // Build image list: variant images first, then product images
     let imgs = [];
     if(card.dataset.activeVariant !== undefined){
       const vIdx = parseInt(card.dataset.activeVariant);
       const variant = (p.colorVariants||[])[vIdx];
-      if(variant && variant.image) imgs.push(variant.image);
+      if(variant){
+        // Add all variant images
+        const vImgs = Array.isArray(variant.images) ? variant.images.filter(Boolean) : [];
+        if(vImgs.length) vImgs.forEach(function(img){ imgs.push(img); });
+        else if(variant.image) imgs.push(variant.image);
+      }
     }
-    // Then add rest of product images (deduplicated)
+    // Add product main images (deduplicated)
     (p.images||[]).filter(Boolean).forEach(function(img){
       if(!imgs.includes(img)) imgs.push(img);
     });
@@ -2995,23 +3065,29 @@ function setPrimaryVariant(id, idx){
 function handleCVImgNew(event, pid, variantIdx, slotIdx){
   const file = event.target.files[0];
   if(!file) return;
-  showToast('Compressing...','');
-  compressImage(file, 700, 900, 0.78).then(function(dataUrl){
+  showToast('Uploading...','');
+  // Compress aggressively: 500x500 max, quality 0.65
+  // This keeps each image ~40-80KB so sync stays under limit
+  compressImage(file, 500, 600, 0.65).then(function(dataUrl){
     const p = getProductById(pid);
     if(!p || !p.colorVariants || !p.colorVariants[variantIdx]) return;
     const v = p.colorVariants[variantIdx];
     if(!Array.isArray(v.images)) v.images = [null,null,null,null];
     while(v.images.length < 4) v.images.push(null);
     v.images[slotIdx] = dataUrl;
-    // Also keep legacy v.image = first image for backward compat
     if(slotIdx === 0 || !v.image) v.image = dataUrl;
-    saveProductById(pid, p);
-    // Update slot in place — no re-render
+    const ok = saveProductById(pid, p);
+    if(ok === false){ showToast('Storage full — clear kuch images','error'); return; }
+    // Update slot DOM in-place (no re-render)
     const slot = document.getElementById('cvs_'+pid+'_'+variantIdx+'_'+slotIdx);
     if(slot){
       slot.classList.add('filled');
       let img = slot.querySelector('img');
-      if(!img){ img = document.createElement('img'); slot.insertBefore(img, slot.firstChild); }
+      if(!img){
+        img = document.createElement('img');
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+        slot.insertBefore(img, slot.firstChild);
+      }
       img.src = dataUrl;
       const hint = slot.querySelector('.cv-img-slot-hint-sm');
       if(hint) hint.style.display = 'none';
@@ -3019,8 +3095,12 @@ function handleCVImgNew(event, pid, variantIdx, slotIdx){
       if(rmBtn) rmBtn.style.display = 'flex';
     }
     refreshProductCard(pid);
-    showToast('Photo upload ho gai ✓ (Slot '+(slotIdx+1)+')','success');
-  }).catch(function(){ showToast('Upload failed — try again','error'); });
+    const kb = Math.round(dataUrl.length * 0.75 / 1024);
+    showToast('Photo upload ✓ ('+kb+'KB) — Slot '+(slotIdx+1),'success');
+  }).catch(function(e){
+    console.error('CV upload error:', e);
+    showToast('Upload fail — dobara try karein','error');
+  });
 }
 
 function removeCVImgNew(event, pid, variantIdx, slotIdx){
@@ -3028,9 +3108,12 @@ function removeCVImgNew(event, pid, variantIdx, slotIdx){
   const p = getProductById(pid);
   if(!p || !p.colorVariants || !p.colorVariants[variantIdx]) return;
   const v = p.colorVariants[variantIdx];
-  if(Array.isArray(v.images)) v.images[slotIdx] = null;
-  if(slotIdx === 0) v.image = (v.images || []).find(Boolean) || null;
+  if(!Array.isArray(v.images)) v.images = [null,null,null,null];
+  v.images[slotIdx] = null;
+  // Update legacy v.image to next available
+  v.image = v.images.find(function(img){ return !!img; }) || null;
   saveProductById(pid, p);
+  // Update slot DOM in-place
   const slot = document.getElementById('cvs_'+pid+'_'+variantIdx+'_'+slotIdx);
   if(slot){
     slot.classList.remove('filled');
