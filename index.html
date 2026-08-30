@@ -102,6 +102,56 @@
 .btn-add-color:hover{background:rgba(192,57,43,.06);border-style:solid;}
 .btn-rm-color{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.8rem;padding:2px 6px;transition:color .15s;}
 .btn-rm-color:hover{color:var(--rose);}
+/* ── Variant editor card (admin) ── */
+.cv-row-card{display:flex;gap:10px;align-items:flex-start;padding:10px;background:var(--cream);border:1px solid var(--warm2,rgba(181,85,106,.18));border-radius:8px;margin-bottom:8px;max-width:100%;box-sizing:border-box;}
+.cv-row-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:7px;}
+.cv-row-top{display:flex;gap:6px;align-items:center;}
+.cv-row-top input[type="text"]{flex:1;min-width:0;}
+.cv-row-top input[type="color"]{width:34px;height:30px;flex-shrink:0;padding:1px 2px;border:1px solid var(--warm2,#e8dcc8);border-radius:4px;cursor:pointer;}
+.cv-size-block-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+.cv-size-row{display:flex;gap:5px;flex-wrap:wrap;}
+.cv-size-chip{font-family:'DM Mono',monospace;font-size:.55rem;padding:4px 9px;border:1px solid rgba(181,85,106,.3);background:#fff;border-radius:4px;cursor:pointer;color:var(--muted);transition:all .15s;user-select:none;}
+.cv-size-chip:hover{border-color:var(--rose);color:var(--rose);}
+.cv-size-chip.active{background:var(--rose);border-color:var(--rose);color:#fff;}
+/* ── Per-size price/stock/SKU editor rows ── */
+.cv-size-detail-list{display:flex;flex-direction:column;gap:6px;margin-top:4px;}
+.cv-size-detail-row{display:grid;grid-template-columns:34px repeat(4,1fr);gap:5px;align-items:center;background:#fff;border:1px solid rgba(181,85,106,.15);border-radius:5px;padding:5px 6px;}
+.cv-size-detail-row .cv-sz-tag{font-family:'DM Mono',monospace;font-size:.6rem;font-weight:600;color:var(--ink);text-align:center;}
+.cv-size-detail-row input{width:100%;box-sizing:border-box;font-family:'DM Mono',monospace;font-size:.55rem;padding:4px 5px;border:1px solid var(--warm2,#e8dcc8);border-radius:3px;}
+.cv-size-detail-row .cv-sz-field-label{font-family:'DM Mono',monospace;font-size:.42rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:1px;}
+.cv-size-detail-head{display:grid;grid-template-columns:34px repeat(4,1fr);gap:5px;font-family:'DM Mono',monospace;font-size:.42rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;padding:0 6px;margin-top:6px;}
+/* ── Multi-image strip for a variant ── */
+.cv-img-strip{display:flex;gap:6px;flex-wrap:wrap;align-items:flex-start;}
+.cv-img-thumb-wrap{position:relative;width:52px;flex-shrink:0;}
+.cv-img-thumb{width:52px;height:52px;border-radius:6px;overflow:hidden;border:2px solid transparent;position:relative;background:var(--cream);}
+.cv-img-thumb.primary{border-color:var(--gold);}
+.cv-img-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.cv-img-thumb-badge{position:absolute;bottom:1px;left:1px;background:rgba(0,0,0,.55);color:#fff;font-size:.4rem;padding:1px 3px;border-radius:2px;font-family:'DM Mono',monospace;}
+.cv-img-thumb-actions{display:flex;gap:2px;margin-top:3px;justify-content:center;flex-wrap:wrap;}
+.cv-img-mini-btn{background:none;border:1px solid rgba(181,85,106,.3);color:var(--muted);font-size:.5rem;line-height:1;padding:2px 4px;border-radius:3px;cursor:pointer;}
+.cv-img-mini-btn:hover{border-color:var(--rose);color:var(--rose);}
+.cv-img-mini-btn.star.is-primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+.cv-add-img-slot{width:52px;height:52px;border-radius:6px;border:2px dashed rgba(181,85,106,.35);display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;flex-shrink:0;background:var(--cream);font-size:1.1rem;color:var(--rose);}
+.cv-add-img-slot input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.btn-duplicate-color{background:none;border:1px dashed rgba(122,140,110,.5);color:var(--sage);padding:4px 10px;border-radius:4px;font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;}
+.btn-duplicate-color:hover{background:rgba(122,140,110,.08);}
+.cv-row-footer{display:flex;gap:8px;margin-top:4px;}
+/* ── Customer-facing: out-of-stock size / sold-out color ── */
+.size-btn.out-of-stock{opacity:.4;text-decoration:line-through;cursor:not-allowed;}
+.size-btn.out-of-stock:hover{border-color:var(--warm);color:var(--muted);background:none;}
+.cv-thumb.sold-out-variant,.color-swatch.sold-out-variant{opacity:.35;cursor:not-allowed;filter:grayscale(60%);}
+.cv-thumb.sold-out-variant::after{content:'✕';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.9rem;text-shadow:0 0 3px rgba(0,0,0,.8);}
+.selected-variant-line{font-family:'DM Mono',monospace;font-size:.52rem;color:var(--muted);letter-spacing:.06em;margin-top:4px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+.selected-variant-line b{color:var(--ink);font-weight:600;}
+.reset-selection-link{font-family:'DM Mono',monospace;font-size:.5rem;color:var(--rose);text-decoration:underline;cursor:pointer;background:none;border:none;padding:0;letter-spacing:.05em;}
+.buy-now-btn{background:var(--gold);color:#fff;flex:1;}
+.buy-now-btn:hover{background:#a97b2e;transform:scale(1.02);}
+@media(max-width:480px){
+  .cv-row-card{flex-wrap:wrap;}
+  .cv-img-slot{width:52px;height:52px;}
+  .cv-size-detail-row,.cv-size-detail-head{grid-template-columns:28px 1fr 1fr;grid-auto-rows:auto;}
+  .cv-size-detail-row .cv-sz-field:nth-child(4),.cv-size-detail-row .cv-sz-field:nth-child(5){grid-column:span 1;}
+}
 
 /* ── Image Preview Modal ── */
 .img-preview-modal{display:none;position:fixed;inset:0;z-index:2000;background:rgba(10,5,5,0.92);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;}
@@ -138,64 +188,57 @@
 .cv-thumb:hover{transform:scale(1.1);box-shadow:0 3px 12px rgba(0,0,0,.22);}
 .cv-thumb.active{border-color:var(--ink);transform:scale(1.1);}
 .cv-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
-
-/* ══ COLOR VARIANT ADMIN UI ══ */
-.cv-admin-wrap{margin-top:6px;}
-.cv-variant-card{background:#fff;border:1.5px solid #e8dcc8;border-radius:8px;padding:14px;margin-bottom:12px;position:relative;}
-.cv-variant-card.is-primary{border-color:var(--gold,#c9a84c);}
-.cv-primary-badge{position:absolute;top:-1px;left:12px;background:var(--gold,#c9a84c);color:#1a0a0a;font-family:monospace;font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;padding:2px 9px;border-radius:0 0 5px 5px;font-weight:600;}
-
-/* Multi-image strip per variant */
-.cv-img-strip{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;}
-.cv-img-slot-sm{width:58px;height:58px;border-radius:6px;border:1.5px dashed rgba(181,85,106,.35);overflow:hidden;position:relative;cursor:pointer;background:#f9f6f2;flex-shrink:0;}
-.cv-img-slot-sm.filled{border-style:solid;border-color:#7a8c6e;}
-.cv-img-slot-sm img{width:100%;height:100%;object-fit:cover;display:block;}
-.cv-img-slot-sm input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
-.cv-img-slot-hint-sm{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;font-size:.95rem;}
-.cv-img-slot-hint-sm span{font-family:monospace;font-size:.42rem;color:#8a6f6f;margin-top:1px;text-transform:uppercase;}
-.cv-img-slot-sm.filled .cv-img-slot-hint-sm{display:none;}
-.cv-slot-rm{position:absolute;top:2px;right:2px;width:16px;height:16px;background:rgba(181,85,106,.85);color:#fff;border:none;border-radius:50%;font-size:.55rem;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:3;line-height:1;}
-.cv-img-slot-sm.filled .cv-slot-rm{display:flex;}
-
-/* Name + color row */
-.cv-name-row{display:flex;gap:8px;align-items:center;margin-bottom:8px;}
-.cv-name-row input[type=text]{flex:1;padding:7px 10px;border:1px solid #e8dcc8;border-radius:4px;font-family:'Cormorant Garamond',serif;font-size:.95rem;color:#1a0a0a;background:#faf7f2;outline:none;}
-.cv-name-row input[type=text]:focus{border-color:var(--rose,#c0392b);}
-.cv-name-row input[type=color]{width:38px;height:34px;padding:1px 2px;border:1px solid #e8dcc8;border-radius:4px;cursor:pointer;flex-shrink:0;}
-
-/* Size toggle pills */
-.cv-size-label{font-family:monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:#8a6f6f;margin-bottom:5px;}
-.cv-size-pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;}
-.cv-size-pill{padding:5px 12px;border:1.5px solid #e8dcc8;border-radius:20px;font-family:monospace;font-size:.58rem;letter-spacing:.08em;cursor:pointer;background:#faf7f2;color:#8a6f6f;transition:all .15s;user-select:none;}
-.cv-size-pill.active{background:var(--rose,#c0392b);color:#fff;border-color:var(--rose,#c0392b);}
-
-/* Per-size table */
-.cv-size-table{width:100%;border-collapse:collapse;margin-bottom:8px;}
-.cv-size-table th{font-family:monospace;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:#8a6f6f;text-align:left;padding:4px 6px;border-bottom:1px solid #e8dcc8;}
-.cv-size-table td{padding:4px 5px;}
-.cv-size-table input{width:100%;padding:5px 7px;border:1px solid #e8dcc8;border-radius:3px;font-family:monospace;font-size:.72rem;color:#1a0a0a;background:#faf7f2;outline:none;}
-.cv-size-table input:focus{border-color:var(--rose,#c0392b);}
-
-/* Bottom action row */
-.cv-action-row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
-.cv-btn-dup{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;background:#faf7f2;border:1.5px solid #e8dcc8;border-radius:6px;font-family:monospace;font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:#3d1515;transition:all .18s;}
-.cv-btn-dup:hover{border-color:var(--rose,#c0392b);color:var(--rose,#c0392b);}
-.cv-btn-rm{display:inline-flex;align-items:center;gap:5px;background:none;border:none;font-family:monospace;font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:#8a6f6f;transition:color .18s;padding:6px 8px;}
-.cv-btn-rm:hover{color:var(--rose,#c0392b);}
-.cv-btn-primary{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;background:none;border:1.5px solid #c9a84c;border-radius:6px;font-family:monospace;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;color:#c9a84c;margin-left:auto;transition:all .18s;}
-.cv-btn-primary:hover,.cv-btn-primary.active{background:#c9a84c;color:#1a0a0a;}
-
-/* Add variant card */
-.cv-add-card{border:2px dashed rgba(181,85,106,.3);border-radius:8px;padding:20px;text-align:center;cursor:pointer;transition:all .2s;margin-top:4px;color:var(--rose,#c0392b);font-family:monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;}
-.cv-add-card:hover{background:rgba(192,57,43,.04);border-color:var(--rose,#c0392b);}
-.cv-add-card-icon{font-size:1.8rem;display:block;margin-bottom:4px;}
 </style>
 <script id="zt-loader">
 (function(){
+  // Waits (briefly) for the main app script to finish defining its IndexedDB helpers,
+  // since this loader's fetch can resolve before or after that script has run.
+  function waitFor(fnName, timeoutMs){
+    return new Promise(function(resolve){
+      const start=Date.now();
+      (function poll(){
+        if(typeof window[fnName]==='function') return resolve(true);
+        if(Date.now()-start>timeoutMs) return resolve(false);
+        setTimeout(poll, 30);
+      })();
+    });
+  }
+  // The fetched zt-data.json is the site's real "database" and must stay fully
+  // self-contained (real base64 photos), so multi-device sync keeps working. But we still
+  // don't want to dump all that base64 straight into this device's localStorage (that's
+  // what filled the quota before) — so we move it into IndexedDB right after receiving it,
+  // exactly like the admin's own uploads do, and only keep small reference keys.
+  async function migrateIncomingData(d){
+    const ready = await waitFor('storeImageAsync', 3000);
+    if(!ready) return d; // main script never loaded (shouldn't happen) — fall back to raw data
+    function isRaw(v){ return typeof v==='string' && v.indexOf('data:')===0; }
+    async function migrateImgArray(arr){
+      if(!Array.isArray(arr)) return;
+      for(let i=0;i<arr.length;i++){ if(isRaw(arr[i])) arr[i]=await window.storeImageAsync(arr[i]); }
+    }
+    async function migrateList(list){
+      if(!Array.isArray(list)) return;
+      for(const p of list){
+        await migrateImgArray(p.images);
+        if(Array.isArray(p.colorVariants)){
+          for(const v of p.colorVariants){
+            if(!v) continue;
+            if(isRaw(v.image)) v.image=await window.storeImageAsync(v.image);
+            await migrateImgArray(v.images);
+            if(isRaw(v.primaryImage)) v.primaryImage=await window.storeImageAsync(v.primaryImage);
+          }
+        }
+      }
+    }
+    await migrateList(d.products);
+    await migrateList(d.mens);
+    return d;
+  }
   fetch('zt-data.json?v='+Date.now())
     .then(function(r){return r.ok?r.json():null;})
-    .then(function(d){
+    .then(async function(d){
       if(!d)return;
+      d = await migrateIncomingData(d);
       if(d.products)   localStorage.setItem('zt_products',  JSON.stringify(d.products));
       if(d.mens)       localStorage.setItem('zt_mens',       JSON.stringify(d.mens));
       if(d.socials)    localStorage.setItem('zt_socials',    JSON.stringify(d.socials));
@@ -1081,6 +1124,13 @@ footer{background:var(--deep);color:var(--cream);padding:64px 60px 40px;}
   </div>
   <div class="panel-body">
 
+    <p class="panel-section-title">💾 Storage</p>
+    <p style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--muted);line-height:1.7;margin-bottom:8px;">
+      Photos ab IndexedDB mein save hoti hain (localStorage nahi) — is se "storage full" wala masla khatam ho jata hai, chahe kitni bhi color variant photos upload karein.
+    </p>
+    <div id="storageStatusLine" style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--sage);margin-bottom:8px;">Checking storage...</div>
+    <button class="btn-save-set" onclick="runManualMigration()">🧹 Free Up Storage Now</button>
+
     <p class="panel-section-title">🖼 Hero Slideshow Images</p>
     <p style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--muted);line-height:1.7;margin-bottom:4px;">
       Image URL paste karein (ImgBB, Cloudinary, Google Drive, etc.)<br>
@@ -1220,6 +1270,183 @@ const WA_NUMBER   = '923085738857';
 const OWNER_EMAIL = 's3074790@gmail.com';
 function getAdminPass(){return localStorage.getItem('zt_adminpass')||'zabetan2025';}
 
+// ══════════════════════════════════════════════════════════════════
+// ── IMAGE STORAGE (IndexedDB) — FIXES THE "STORAGE FULL" PROBLEM ──
+// localStorage has a hard ~5-10MB cap shared by the WHOLE site, and every
+// base64 photo we used to stuff directly into product JSON ate into that
+// same tiny budget — that's why it filled up after ~9 variant photos.
+// IndexedDB is a completely separate, much larger store (typically a big
+// share of free disk space — effectively "unlimited" for this use case).
+// From now on: actual photo bytes live in IndexedDB; localStorage only
+// ever stores a short reference key like "idb:img_172..._x7f2" pointing
+// at that photo. imgCache keeps resolved data URLs in memory so the rest
+// of the app can keep reading/rendering images synchronously as before.
+// ══════════════════════════════════════════════════════════════════
+const IDB_NAME='zabetan_images_db', IDB_STORE='images';
+const idbAvailable = (typeof indexedDB!=='undefined');
+let idbPromise = idbAvailable ? new Promise(function(resolve,reject){
+  const req=indexedDB.open(IDB_NAME,1);
+  req.onupgradeneeded=function(e){ e.target.result.createObjectStore(IDB_STORE); };
+  req.onsuccess=function(e){ resolve(e.target.result); };
+  req.onerror=function(e){ reject(e); };
+}).catch(function(){ return null; }) : Promise.resolve(null);
+function idbPut(key, value){
+  return idbPromise.then(function(db){
+    if(!db) return false;
+    return new Promise(function(resolve){
+      const tx=db.transaction(IDB_STORE,'readwrite');
+      tx.objectStore(IDB_STORE).put(value,key);
+      tx.oncomplete=function(){resolve(true);};
+      tx.onerror=function(){resolve(false);};
+    });
+  });
+}
+function idbGet(key){
+  return idbPromise.then(function(db){
+    if(!db) return null;
+    return new Promise(function(resolve){
+      const tx=db.transaction(IDB_STORE,'readonly');
+      const req=tx.objectStore(IDB_STORE).get(key);
+      req.onsuccess=function(){resolve(req.result||null);};
+      req.onerror=function(){resolve(null);};
+    });
+  });
+}
+function idbDelete(key){
+  return idbPromise.then(function(db){
+    if(!db) return false;
+    return new Promise(function(resolve){
+      const tx=db.transaction(IDB_STORE,'readwrite');
+      tx.objectStore(IDB_STORE).delete(key);
+      tx.oncomplete=function(){resolve(true);};
+      tx.onerror=function(){resolve(false);};
+    });
+  });
+}
+// In-memory cache so the (async) IndexedDB store can back the app's mostly-synchronous
+// rendering code. Hydrated at startup for every "idb:" key already referenced by saved
+// products, and updated immediately whenever a new photo is uploaded.
+let imgCache = {};
+function isIdbRef(ref){ return typeof ref==='string' && ref.indexOf('idb:')===0; }
+// The ONE place every consumer should resolve an image reference through — handles both
+// the new "idb:xxx" keys AND old inline base64 data URLs (pre-migration / no-IndexedDB fallback).
+function resolveImgSrc(ref){
+  if(!ref) return null;
+  if(isIdbRef(ref)) return imgCache[ref] || '';
+  return ref; // legacy raw base64 (or a plain URL) — used as-is
+}
+function resolveImgList(list){ return (list||[]).map(resolveImgSrc).filter(Boolean); }
+// Compress + persist a new photo into IndexedDB, returning the reference key to store on
+// the product. Falls back to storing the raw data URL inline if IndexedDB isn't available
+// at all (very old browsers) so uploads still work, just without the quota fix.
+async function storeImageAsync(dataUrl){
+  if(!idbAvailable) return dataUrl; // no IndexedDB support — old behavior
+  const key = 'idb:img_'+Date.now()+'_'+Math.random().toString(36).slice(2,9);
+  const ok = await idbPut(key, dataUrl);
+  if(!ok) return dataUrl; // IndexedDB write failed for some reason — fall back safely
+  imgCache[key] = dataUrl;
+  return key;
+}
+async function deleteStoredImage(ref){
+  if(isIdbRef(ref)){ delete imgCache[ref]; await idbDelete(ref); }
+}
+// Scans every product for "idb:" keys and pre-loads them into imgCache before first render.
+async function hydrateImageCache(){
+  if(!idbAvailable) return;
+  const all=[...getProducts(),...getMensProducts()];
+  const keys=new Set();
+  all.forEach(function(p){
+    (p.images||[]).forEach(function(ref){ if(isIdbRef(ref)) keys.add(ref); });
+    (p.colorVariants||[]).forEach(function(v){
+      if(!v) return;
+      if(isIdbRef(v.image)) keys.add(v.image);
+      if(isIdbRef(v.primaryImage)) keys.add(v.primaryImage);
+      (v.images||[]).forEach(function(ref){ if(isIdbRef(ref)) keys.add(ref); });
+    });
+  });
+  await Promise.all([...keys].map(async function(k){
+    const v = await idbGet(k);
+    if(v) imgCache[k]=v;
+  }));
+}
+// ── ONE-TIME MIGRATION: moves any already-uploaded inline base64 photos out of
+// localStorage and into IndexedDB, freeing up the quota that's currently full.
+// Safe to re-run: anything already migrated (an "idb:" ref) is left untouched.
+async function migrateImagesToIndexedDB(showReport){
+  if(!idbAvailable){ if(showReport) showToast('Yeh browser IndexedDB support nahi karta','error'); return; }
+  let movedCount=0, freedBytes=0;
+  async function migrateArray(arr){
+    if(!Array.isArray(arr)) return;
+    for(let i=0;i<arr.length;i++){
+      const val=arr[i];
+      if(typeof val==='string' && val.indexOf('data:')===0){ // raw base64 still inline
+        freedBytes+=val.length;
+        arr[i]=await storeImageAsync(val);
+        movedCount++;
+      }
+    }
+  }
+  async function migrateProductList(list, saveFn){
+    let changed=false;
+    for(const p of list){
+      const before=JSON.stringify(p);
+      await migrateArray(p.images);
+      if(Array.isArray(p.colorVariants)){
+        for(const v of p.colorVariants){
+          if(!v) continue;
+          if(typeof v.image==='string' && v.image.indexOf('data:')===0){
+            freedBytes+=v.image.length; v.image=await storeImageAsync(v.image); movedCount++;
+          }
+          await migrateArray(v.images);
+          if(v.primaryImage && typeof v.primaryImage==='string' && v.primaryImage.indexOf('data:')===0){
+            // primaryImage should already point at an entry inside images[] which just got migrated —
+            // if it's still raw here, migrate it directly too
+            freedBytes+=v.primaryImage.length; v.primaryImage=await storeImageAsync(v.primaryImage); movedCount++;
+          }
+        }
+      }
+      if(JSON.stringify(p)!==before) changed=true;
+    }
+    if(changed) saveFn(list);
+  }
+  await migrateProductList(getProducts(), saveProducts);
+  await migrateProductList(getMensProducts(), saveMensProducts);
+  localStorage.setItem('zt_idb_migrated','1');
+  if(movedCount>0){
+    renderProducts(); renderMens();
+    if(showReport) showToast(`${movedCount} photos storage se free ho gayi ✓ (~${Math.round(freedBytes/1024)}KB)`,'success');
+  } else if(showReport){
+    showToast('Kuch migrate karne ko nahi mila — sab pehle se optimized hai','success');
+  }
+  updateStorageStatusLine();
+}
+// Manual trigger for the "🧹 Free Up Storage Now" admin button
+async function runManualMigration(){
+  showToast('Storage free ki ja rahi hai...','');
+  await migrateImagesToIndexedDB(true);
+}
+// Shows current localStorage usage (the small, easily-filled quota) vs IndexedDB usage
+// (the near-unlimited store photos now live in) in the admin panel.
+async function updateStorageStatusLine(){
+  const el=document.getElementById('storageStatusLine');
+  if(!el) return;
+  let lsBytes=0;
+  try{ for(const k in localStorage){ if(localStorage.hasOwnProperty(k)) lsBytes+=(localStorage[k]||'').length; } }catch(e){}
+  const lsKB=Math.round(lsBytes/1024);
+  let line = `localStorage: ~${lsKB}KB used`;
+  if(idbAvailable && navigator.storage && navigator.storage.estimate){
+    try{
+      const est = await navigator.storage.estimate();
+      const usedMB=((est.usage||0)/1024/1024).toFixed(1);
+      const quotaMB=((est.quota||0)/1024/1024).toFixed(0);
+      line += ` · Photos (IndexedDB): ~${usedMB}MB of ~${quotaMB}MB available`;
+    }catch(e){}
+  } else if(!idbAvailable){
+    line += ' · IndexedDB not supported by this browser';
+  }
+  el.textContent = line;
+}
+
 // ── DEFAULT DATA ──
 const defaultProducts=[
   {id:1,name:'Gulabi Lawn',nameUrdu:'گلابی لان',tag:'Lawn · 3-Piece',fabric:'Premium Lawn',price:'3,500',origPrice:'4,500',discount:22,sizes:'XS,S,M,L,XL,XXL',quantity:8,delivery:'Free delivery',tall:true,colorClass:'d1',waText:'Gulabi Lawn',images:[null,null,null,null,null,null,null,null],type:'unstitched',isNew:false},
@@ -1257,91 +1484,74 @@ function saveReviews(d){localStorage.setItem('zt_reviews',JSON.stringify(d));}
 // ── CART ──
 let cart=[];
 let wishlist=[];
-function priceNum(str){return parseInt((str||'0').replace(/,/g,''))||0;}
-function addToCart(id, selectedSize){
-  const allProds = [...getProducts(), ...getMensProducts()];
-  const p = allProds.find(function(x){ return x.id===id; });
-  if(!p) return;
-
-  // Get active variant from card
-  const card = document.querySelector('[data-id="'+id+'"]');
-  let variantImg  = null;
-  let variantName = null;
-  let variantIdx  = -1;
-  let sizeEntry   = null;
-
-  if(card && card.dataset.activeVariant !== undefined){
-    variantIdx = parseInt(card.dataset.activeVariant);
-    const variant = (p.colorVariants||[])[variantIdx];
-    if(variant){
-      variantName = variant.name || null;
-      // Get first available variant image
-      const vImgs = Array.isArray(variant.images) ? variant.images.filter(Boolean) : [];
-      variantImg = vImgs[0] || variant.image || null;
-      // Get size-specific pricing if available
-      if(selectedSize){
-        const normSizes = normalizeCVSizes(variant);
-        sizeEntry = normSizes.find(function(s){ return s.size === selectedSize; }) || null;
-      }
-    }
+function priceNum(str){return parseInt((str||'0').toString().replace(/,/g,''))||0;}
+// Resolves everything needed for cart/order from the CURRENTLY SELECTED state on the card —
+// this is the shared path used by addToCart and buyNow so they never disagree.
+function resolveCartLine(id){
+  const state=getSelectedProductState(id);
+  if(!state) return null;
+  const sizesFull = state.hasVariants ? getVariantSizesFull(state.p, state.variantIdx) : getVariantSizesFull(state.p, -1);
+  if(sizesFull.length>0 && !state.size){ showToast('Please select a size first','error'); return null; }
+  if(state.size){
+    const entry=sizesFull.find(function(s){return s.size===state.size;});
+    if(entry && entry.outOfStock){ showToast('This size is currently out of stock.','error'); return null; }
   }
-
-  // Determine effective sizes for validation
-  let effectiveSizes = [];
-  if(variantIdx >= 0){
-    const variant = (p.colorVariants||[])[variantIdx];
-    if(variant){
-      const ns = normalizeCVSizes(variant);
-      effectiveSizes = ns.map(function(s){ return s.size; });
-    }
+  const variantKeyPart=state.hasVariants?state.variantIdx:'none';
+  const key=`${id}_${variantKeyPart}_${state.size||''}`;
+  return {state:state, key:key};
+}
+function addToCart(id, qtyToAdd){
+  qtyToAdd = qtyToAdd||1;
+  const resolved=resolveCartLine(id);
+  if(!resolved) return;
+  const {state,key}=resolved;
+  const p=state.p;
+  const ex=cart.find(x=>x.key===key);
+  const currentQty = ex?ex.qty:0;
+  if(state.stock!==null){
+    const remaining = state.stock - currentQty;
+    if(remaining<=0){ showToast(`Only ${state.stock} available.`,'error'); return; }
+    if(qtyToAdd>remaining){ qtyToAdd=remaining; showToast(`Only ${state.stock} available — quantity capped.`,'error'); }
   }
-  if(!effectiveSizes.length){
-    effectiveSizes = (p.sizes||'').split(',').map(function(s){ return s.trim(); }).filter(Boolean);
-  }
-  if(effectiveSizes.length > 0 && !selectedSize){
-    showToast('Pehle size select karein','error');
-    return;
-  }
-
-  // Determine price — use size-specific price if available
-  let itemPrice = p.price;
-  if(sizeEntry && sizeEntry.price) itemPrice = sizeEntry.price;
-
-  // Build unique cart key
-  const cartKey = id+'_'+(variantIdx>=0?'v'+variantIdx:'')+'_'+(selectedSize||'');
-  const ex = cart.find(function(x){ return x.cartKey===cartKey; });
-
-  // Check stock if available
-  if(sizeEntry && sizeEntry.stock !== undefined && sizeEntry.stock <= 0){
-    showToast('Is size mein stock nahi hai','error');
-    return;
-  }
-
-  if(ex){ ex.qty++; }
-  else{
-    cart.push({
-      cartKey:     cartKey,
-      id:          id,
-      title:       p.name + (variantName ? ' – '+variantName : ''),
-      nameUrdu:    p.nameUrdu || '',
-      size:        selectedSize || '',
-      price:       itemPrice,
-      qty:         1,
-      img:         variantImg || (p.images && p.images.find(Boolean)) || null,
-      variantName: variantName,
-      variantIdx:  variantIdx,
-      sku:         sizeEntry ? (sizeEntry.sku||'') : ''
-    });
-  }
-  updateCartUI();
-  renderCartPanel();
-  showToast((variantName ? variantName+' — ' : '')+p.name+' cart mein add ✓','success');
+  if(ex) ex.qty+=qtyToAdd;
+  else cart.push({
+    key,id,
+    title:p.name,nameUrdu:p.nameUrdu,
+    size:state.size,
+    price:state.price, // resolved via central getVariantPriceInfo — never the raw product price when a variant/size price exists
+    qty:qtyToAdd,
+    stock:state.stock,
+    sku:state.sku,
+    img:state.image,
+    variantIndex:state.hasVariants?state.variantIdx:null,
+    variantName:state.variant?(state.variant.name||state.variant.hex||''):null
+  });
+  updateCartUI();renderCartPanel();
+  const variantSuffix=state.variant?` (${state.variant.name||state.variant.hex}${state.size?', '+state.size:''})`:(state.size?` (${state.size})`:'');
+  showToast(`${p.name}${variantSuffix} — cart mein add hua ✓`,'success');
+}
+// Buy Now: uses the exact same resolved selection as Add to Cart, but goes straight to
+// WhatsApp for just this one item instead of touching the shared cart.
+function buyNow(id){
+  const resolved=resolveCartLine(id);
+  if(!resolved) return;
+  const {state}=resolved;
+  const p=state.p;
+  let msg=`Assalam o Alaikum! Main yeh order karna chahta/chahti hoon:\n\nProduct: ${p.name}`;
+  if(state.variant) msg+=`\nColor: ${state.variant.name||state.variant.hex||''}`;
+  if(state.size) msg+=`\nSize: ${state.size}`;
+  if(state.sku) msg+=`\nSKU: ${state.sku}`;
+  msg+=`\nPrice: Rs. ${state.price.toLocaleString('en-PK')}\nQuantity: 1`;
+  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 function removeFromCart(key){cart=cart.filter(x=>x.key!==key);updateCartUI();renderCartPanel();}
 function changeQty(key,delta){
   const item=cart.find(x=>x.key===key);
   if(!item)return;
-  item.qty=Math.max(1,item.qty+delta);
+  const next=item.qty+delta;
+  if(next<1) return;
+  if(delta>0 && item.stock!==null && next>item.stock){ showToast(`Only ${item.stock} available.`,'error'); return; }
+  item.qty=next;
   updateCartUI();renderCartPanel();
 }
 function updateCartUI(){
@@ -1363,8 +1573,9 @@ function renderCartPanel(){
       ${item.img?`<img class="cart-item-img" src="${item.img}" alt="${item.title}" />`:`<div class="cart-item-img" style="background:var(--blush);display:flex;align-items:center;justify-content:center;font-size:1.4rem;">👗</div>`}
       <div class="cart-item-info">
         <div class="cart-item-name">${item.title}</div>
-        <div class="cart-item-meta">${item.size?'Size: '+item.size:''}</div>
-        <div class="cart-item-price">Rs. ${item.price}</div>
+        <div class="cart-item-meta">${item.variantName?'Color: '+item.variantName+(item.size?' · Size: '+item.size:''):(item.size?'Size: '+item.size:'')}${item.sku?' · SKU: '+item.sku:''}</div>
+        <div class="cart-item-price">Rs. ${priceNum(item.price).toLocaleString('en-PK')}</div>
+        ${item.stock!==null&&item.stock!==undefined?`<div class="cart-item-meta" style="color:${item.qty>=item.stock?'var(--rose)':'var(--muted)'}">${item.qty>=item.stock?'Max stock reached':'Stock: '+item.stock}</div>`:''}
         <div class="cart-item-qty">
           <button class="qty-btn" onclick="changeQty('${item.key}',-1)">−</button>
           <span class="qty-num">${item.qty}</span>
@@ -1377,9 +1588,16 @@ function renderCartPanel(){
   const totalEl=document.getElementById('cartTotalPrice');
   if(totalEl)totalEl.textContent='Rs. '+total.toLocaleString('en-PK');
 }
+function cartItemVariantSizeLabel(x){
+  const parts=[];
+  if(x.variantName) parts.push(x.variantName);
+  if(x.size) parts.push(x.size);
+  if(x.sku) parts.push('SKU: '+x.sku);
+  return parts.length?' ('+parts.join(', ')+')':'';
+}
 function cartCheckout(){
   if(!cart.length)return;
-  const items=cart.map(x=>`${x.title}${x.size?' ('+x.size+')':''} x${x.qty} = Rs.${x.price}`).join('\n');
+  const items=cart.map(x=>`${x.title}${cartItemVariantSizeLabel(x)} x${x.qty} = Rs.${priceNum(x.price).toLocaleString('en-PK')}`).join('\n');
   const total=cart.reduce((s,x)=>s+priceNum(x.price)*x.qty,0);
   const sub=encodeURIComponent(`Cart Order — ZabeTan`);
   const body=encodeURIComponent(`ZabeTan Order:\n\n${items}\n\nTotal: Rs. ${total.toLocaleString('en-PK')}\n\nPlease confirm and send payment details.\n\n--- zabetan.netlify.app ---`);
@@ -1387,7 +1605,7 @@ function cartCheckout(){
 }
 function cartWhatsapp(){
   if(!cart.length)return;
-  const items=cart.map(x=>`• ${x.title}${x.size?' ('+x.size+')':''} x${x.qty}`).join('%0A');
+  const items=cart.map(x=>`• ${x.title}${cartItemVariantSizeLabel(x)} x${x.qty}`).join('%0A');
   const total=cart.reduce((s,x)=>s+priceNum(x.price)*x.qty,0);
   window.open(`https://wa.me/${WA_NUMBER}?text=Assalam%20o%20Alaikum!%20ZabeTan%20se%20order%20karna%20hai%3A%0A%0A${items}%0A%0ATotal%3A%20Rs.%20${total.toLocaleString()}%0A%0APlease%20confirm%20karen.`,'_blank');
 }
@@ -1406,25 +1624,207 @@ function starsHTML(rating,total){
   return `<span class="stars-visual">${s}</span>${total!==undefined?`<span class="stars-count">(${total})</span>`:''}`;
 }
 
+// ══════════════════════════════════════════════════════════════════
+// ── CENTRAL VARIANT HELPERS — single source of truth for image/price/
+//    stock/SKU. Every consumer (card, preview, cart, Buy Now, WhatsApp,
+//    Email) must resolve through these — never duplicate this logic.
+// ══════════════════════════════════════════════════════════════════
+const VARIANT_SIZE_OPTIONS=['XS','S','M','L','XL','XXL'];
+
+// Returns [{v,i}] — usable colorVariants with ORIGINAL indices preserved (never re-index)
+function getUsableVariants(p){
+  return (p.colorVariants||[]).map(function(v,i){ return (v&&(v.hex||v.image||(v.images&&v.images.length)))?{v:v,i:i}:null; }).filter(Boolean);
+}
+// Resolved main product gallery (handles both legacy inline base64 and new "idb:" refs)
+function getProductImages(p){
+  return resolveImgList(p.images||[]);
+}
+function getVariantObj(p, variantIdx){
+  if(variantIdx==null||variantIdx<0) return null;
+  return (p.colorVariants||[])[variantIdx]||null;
+}
+// Backward-compatible: old data may have variant.sizes as an array of strings (or nothing at all).
+// New data stores variant.sizes as a map: { "S": {stock,sku,price,salePrice}, ... }
+function getVariantSizeMap(p, variantIdx){
+  const variant=getVariantObj(p, variantIdx);
+  if(!variant) return null;
+  if(variant.sizes && !Array.isArray(variant.sizes) && typeof variant.sizes==='object') return variant.sizes;
+  if(Array.isArray(variant.sizes) && variant.sizes.length){
+    const map={};
+    variant.sizes.forEach(function(s){ map[s]={stock:null,sku:'',price:null,salePrice:null}; });
+    return map;
+  }
+  return null;
+}
+// Full per-size data for the given variant, falling back to the product's plain sizes string
+// when the variant has no size-specific data at all (backward compatibility).
+function getVariantSizesFull(p, variantIdx){
+  const sizeMap=getVariantSizeMap(p, variantIdx);
+  if(sizeMap){
+    return Object.keys(sizeMap).map(function(s){
+      const d=sizeMap[s]||{};
+      const stock=(d.stock===undefined||d.stock===null||d.stock==='')?null:parseInt(d.stock);
+      return {
+        size:s,
+        stock:stock, // null = not tracked / unlimited (never treat missing stock as zero)
+        outOfStock: stock!==null && stock<=0,
+        sku:d.sku||'',
+        price:(d.price!=null&&d.price!=='')?priceNum(d.price):null,
+        salePrice:(d.salePrice!=null&&d.salePrice!=='')?priceNum(d.salePrice):null
+      };
+    });
+  }
+  return (p.sizes||'').split(',').map(function(s){return s.trim();}).filter(Boolean).map(function(s){
+    return {size:s,stock:null,outOfStock:false,sku:'',price:null,salePrice:null};
+  });
+}
+function getVariantSizeEntry(p, variantIdx, size){
+  if(!size) return null;
+  return getVariantSizesFull(p, variantIdx).find(function(x){ return x.size===size; }) || null;
+}
+// A color variant is fully sold out only when EVERY one of its defined sizes has tracked stock === 0.
+// (If stock isn't tracked at all for any size, the variant is never considered sold out.)
+function isVariantSoldOut(p, variantIdx){
+  const sizes=getVariantSizesFull(p, variantIdx);
+  if(!sizes.length) return false;
+  return sizes.every(function(s){ return s.stock!==null && s.stock<=0; });
+}
+// All images for a variant (supports multi-image variant.images[], falls back to legacy variant.image)
+// Raw = unresolved references (may be "idb:" keys) — used internally for index-based admin
+// operations (move/remove/set-primary) so indices always match the stored array exactly.
+function getVariantImagesRaw(p, variantIdx){
+  const variant=getVariantObj(p, variantIdx);
+  if(!variant) return [];
+  if(Array.isArray(variant.images) && variant.images.filter(Boolean).length) return variant.images.filter(Boolean);
+  if(variant.image) return [variant.image];
+  return [];
+}
+function getVariantImages(p, variantIdx){
+  return resolveImgList(getVariantImagesRaw(p, variantIdx));
+}
+function getVariantPrimaryImageRaw(p, variantIdx){
+  const variant=getVariantObj(p, variantIdx);
+  const imgsRaw=getVariantImagesRaw(p, variantIdx);
+  if(variant && variant.primaryImage && imgsRaw.indexOf(variant.primaryImage)>-1) return variant.primaryImage;
+  if(imgsRaw.length) return imgsRaw[0];
+  return (p.images&&p.images[0])||null;
+}
+// Primary image for a variant, falling back through images[]/image/product images
+function getVariantPrimaryImage(p, variantIdx){
+  return resolveImgSrc(getVariantPrimaryImageRaw(p, variantIdx));
+}
+// Legacy alias kept because other code/back-compat may reference it
+function getVariantImage(p, variantIdx){ return getVariantPrimaryImage(p, variantIdx); }
+
+// ── CENTRAL PRICE RESOLUTION — the ONLY place price is calculated ──
+// Priority: variant+size sale price → variant+size regular price → main product price
+function getVariantPriceInfo(p, variantIdx, size){
+  const entry=getVariantSizeEntry(p, variantIdx, size);
+  if(entry && (entry.price!=null || entry.salePrice!=null)){
+    const regular = entry.price!=null ? entry.price : (entry.salePrice!=null?entry.salePrice:priceNum(p.price));
+    const final = entry.salePrice!=null ? entry.salePrice : regular;
+    return {price:final, regularPrice:regular, onSale: entry.salePrice!=null && entry.salePrice<regular};
+  }
+  // fall back to the main product price (respecting its own orig/discount pricing)
+  const regular = p.origPrice ? priceNum(p.origPrice) : priceNum(p.price);
+  const final = priceNum(p.price);
+  return {price:final, regularPrice:regular, onSale: !!(p.origPrice && priceNum(p.origPrice)>final)};
+}
+function getVariantStock(p, variantIdx, size){
+  const entry=getVariantSizeEntry(p, variantIdx, size);
+  return entry ? entry.stock : null; // null = untracked/unlimited
+}
+function slugify(str){ return (str||'').toString().toLowerCase().replace(/[^a-z0-9]+/g,'').slice(0,6).toUpperCase()||'VAR'; }
+function getVariantSKU(p, variantIdx, size){
+  const entry=getVariantSizeEntry(p, variantIdx, size);
+  if(entry && entry.sku) return entry.sku;
+  const variant=getVariantObj(p, variantIdx);
+  const colorPart = variant ? slugify(variant.name||variant.hex) : 'DEF';
+  return `ZBT-${p.id}-${colorPart}${size?('-'+size):''}`;
+}
+// Min/max effective price across every variant+size combo (or just the product price if no variants).
+// Used for the "From Rs. X" display before a size is picked.
+function computePriceRange(p){
+  const usable=getUsableVariants(p);
+  if(!usable.length){
+    const base=priceNum(p.price);
+    return {min:base,max:base,hasRange:false};
+  }
+  let min=Infinity, max=-Infinity;
+  usable.forEach(function(entry){
+    const sizes=getVariantSizesFull(p, entry.i);
+    if(!sizes.length){
+      const info=getVariantPriceInfo(p, entry.i, null);
+      min=Math.min(min,info.price); max=Math.max(max,info.price);
+    } else {
+      sizes.forEach(function(s){
+        const info=getVariantPriceInfo(p, entry.i, s.size);
+        min=Math.min(min,info.price); max=Math.max(max,info.price);
+      });
+    }
+  });
+  if(!isFinite(min)){ const base=priceNum(p.price); return {min:base,max:base,hasRange:false}; }
+  return {min:min,max:max,hasRange:min!==max};
+}
+// Builds the size-button row HTML with out-of-stock sizes shown disabled (not hidden)
+function sizeButtonsHTML(id, sizesFull, activeSize){
+  if(!sizesFull.length) return '';
+  return `<span class="size-label">Size:</span>` + sizesFull.map(function(s){
+    const disabled = s.outOfStock;
+    return `<button class="size-btn${activeSize===s.size?' active':''}${disabled?' out-of-stock':''}" data-size="${s.size}" ${disabled?'title="Out of stock" onclick="event.stopPropagation();showToast(\'Yeh size out of stock hai\',\'error\')"':`onclick="selectSize(event,${id},'${s.size}')"`}>${s.size}</button>`;
+  }).join('');
+}
+// Full resolved state for a card's current selection — the "single source of truth" object
+// that every downstream consumer (cart/preview/WA/email/Buy Now) should read from.
+function getSelectedProductState(id){
+  const p=[...getProducts(),...getMensProducts()].find(function(x){return x.id===id;});
+  if(!p) return null;
+  const card=document.querySelector(`.product-card[data-id="${id}"]`);
+  const hasVariants=getUsableVariants(p).length>0;
+  const variantIdx=(hasVariants&&card&&card.dataset.selectedVariant!==undefined)?parseInt(card.dataset.selectedVariant):-1;
+  const variant=getVariantObj(p, variantIdx);
+  const size=getSelectedSize(id);
+  const priceInfo=getVariantPriceInfo(p, variantIdx, size);
+  return {
+    p:p, card:card, hasVariants:hasVariants, variantIdx:hasVariants?variantIdx:-1, variant:variant,
+    size:size,
+    image:(hasVariants?getVariantPrimaryImage(p, variantIdx):null)||resolveImgSrc(p.images&&p.images[0])||null,
+    price:priceInfo.price, regularPrice:priceInfo.regularPrice, onSale:priceInfo.onSale,
+    stock:hasVariants?getVariantStock(p, variantIdx, size):null,
+    sku:hasVariants?getVariantSKU(p, variantIdx, size):''
+  };
+}
+
 // ── RENDER PRODUCTS ──
-function buildProductHTML(p){
-  const imgs=p.images||[null,null,null,null,null,null,null,null];
-  const hasImgs=imgs.some(x=>x);
+function buildProductHTML(p, initialVariantIdx){
+  const imgs=getProductImages(p);
   const reviews=getReviews().filter(r=>r.product===p.name);
   const avg=reviews.length?reviews.reduce((s,r)=>s+r.rating,0)/reviews.length:0;
   const isSoldOut=parseInt(p.quantity||0)===0;
   // PATCH 4c: auto-calculate discount from prices
   const discPct=calcDiscount(p.origPrice,p.price)||parseInt(p.discount||0);
-  const sizes=(p.sizes||'').split(',').map(s=>s.trim()).filter(Boolean);
+
+  const usableVariants=getUsableVariants(p);
+  const hasVariants=usableVariants.length>0;
+  // default to first non-sold-out variant when variants exist, unless caller specified a valid one
+  const firstAvailable = usableVariants.find(function(e){return !isVariantSoldOut(p,e.i);}) || usableVariants[0];
+  let selVariantIdx = (initialVariantIdx!=null && initialVariantIdx>-1 && p.colorVariants && p.colorVariants[initialVariantIdx]) ? initialVariantIdx : (hasVariants?firstAvailable.i:-1);
+
+  const sizesFull=getVariantSizesFull(p, selVariantIdx);
+  const variantIsSoldOut = hasVariants && isVariantSoldOut(p, selVariantIdx);
+
+  // Images: prefer the selected variant's own photos, fall back to the product's main gallery
+  const variantImgs = hasVariants ? getVariantImages(p, selVariantIdx) : [];
+  const galleryImgs = (variantImgs.length ? variantImgs : imgs.filter(Boolean));
+  const hasImgs = galleryImgs.length>0;
 
   let slideHTML='';
   if(hasImgs){
-    const valid=imgs.filter(x=>x);
     slideHTML=`<div class="card-slideshow">`;
-    valid.forEach((img,i)=>{slideHTML+=`<img class="slide-img${i===0?' active':''}" src="${img}" alt="${p.name}" />`;});
-    if(valid.length>1){
+    galleryImgs.forEach((img,i)=>{slideHTML+=`<img class="slide-img${i===0?' active':''}" src="${img}" alt="${p.name}" />`;});
+    if(galleryImgs.length>1){
       slideHTML+=`<div class="slide-arrows"><button class="slide-arr" onclick="slideCard(event,${p.id},-1)">‹</button><button class="slide-arr" onclick="slideCard(event,${p.id},1)">›</button></div>`;
-      slideHTML+=`<div class="slide-dots">${valid.map((_,i)=>`<div class="slide-dot${i===0?' active':''}" onclick="goSlide(event,${p.id},${i})"></div>`).join('')}</div>`;
+      slideHTML+=`<div class="slide-dots">${galleryImgs.map((_,i)=>`<div class="slide-dot${i===0?' active':''}" onclick="goSlide(event,${p.id},${i})"></div>`).join('')}</div>`;
     }
     slideHTML+=`</div>`;
   } else {
@@ -1432,27 +1832,37 @@ function buildProductHTML(p){
   }
 
   let badgesHTML='<div class="card-badges">';
-  if(isSoldOut) badgesHTML+=`<span class="badge badge-sold">Sold Out</span>`;
+  if(isSoldOut||variantIsSoldOut) badgesHTML+=`<span class="badge badge-sold">Sold Out</span>`;
   if(discPct>0) badgesHTML+=`<span class="badge badge-discount">${discPct}% OFF</span>`;
   if(p.isNew&&!isSoldOut) badgesHTML+=`<span class="badge badge-new">New</span>`;
   badgesHTML+='</div>';
-
-  let priceHTML=`<div class="price-row"><span class="card-price-current">Rs. ${p.price}</span>`;
-  if(discPct>0&&p.origPrice) priceHTML+=`<span class="card-price-original">Rs. ${p.origPrice}</span><span class="card-price-saved">Save ${discPct}%</span>`;
-  priceHTML+=`</div>`;
 
   const qty=parseInt(p.quantity||0);
   const qtyClass=qty===0?'card-qty out':qty<=3?'card-qty low':'card-qty';
   const qtyText=qty===0?'Out of stock':qty<=3?`⚠ Sirf ${qty} bacha!`:`${qty} available`;
 
-  const sizePickerHTML=sizes.length>0?`
-    <div class="size-selector" id="sizes_${p.id}">
-      <span class="size-label">Size:</span>
-      ${sizes.map(s=>`<button class="size-btn" data-size="${s}" onclick="selectSize(event,${p.id},'${s}')">${s}</button>`).join('')}
-    </div>`:'';
+  const sizePickerHTML=`<div class="size-selector" id="sizes_${p.id}">${sizeButtonsHTML(p.id, sizesFull, '')}</div>`;
+  const priceHTML=`<div class="price-row" id="price_${p.id}">${priceRowHTML(p, selVariantIdx, null)}</div>`;
+  const selectedLineHTML=`<div class="selected-variant-line" id="selLine_${p.id}" style="display:${hasVariants?'flex':'none'}">${selectedLineInner(p, selVariantIdx, null)}</div>`;
+
+  const colorVariantsHTML = hasVariants ? (
+    '<div class="color-variants">'+usableVariants.map(function(entry){
+      const v=entry.v, i=entry.i;
+      const isActive = i===selVariantIdx;
+      const soldOut = isVariantSoldOut(p, i);
+      const thumb = getVariantPrimaryImage(p, i) || v.image || null;
+      const clickAttr = soldOut ? `onclick="event.stopPropagation();showToast('${(v.name||'Yeh color').replace(/'/g,"")} abhi out of stock hai','error')"` : `onclick="selectColorVariant(event,${p.id},${i})"`;
+      if(thumb){
+        return '<div class="cv-thumb'+(isActive?' active':'')+(soldOut?' sold-out-variant':'')+'" data-variant-idx="'+i+'" '+clickAttr+' title="'+(v.name||'')+(soldOut?' — Out of stock':'')+'">'+
+          '<img src="'+thumb+'" alt="'+(v.name||'')+'" />'+
+        '</div>';
+      }
+      return '<span class="color-swatch'+(isActive?' active':'')+(soldOut?' sold-out-variant':'')+'" data-variant-idx="'+i+'" style="background:'+(v.hex||'#ccc')+'" title="'+(v.name||v.hex||'')+(soldOut?' — Out of stock':'')+'" '+clickAttr+'></span>';
+    }).join('')+'<span class="color-variant-label" id="cvLabel_'+p.id+'">'+((p.colorVariants||[])[selVariantIdx]?(p.colorVariants[selVariantIdx].name||''):'')+'</span></div>'
+  ) : '';
 
   return `
-  <div class="product-card${p.tall?' tall':''}${isSoldOut?' sold-out':''}" data-id="${p.id}" data-tag="${p.tag.toLowerCase()}">
+  <div class="product-card${p.tall?' tall':''}${isSoldOut?' sold-out':''}" data-id="${p.id}" data-tag="${p.tag.toLowerCase()}" data-selected-variant="${selVariantIdx}">
     ${badgesHTML}
     <button class="wishlist-btn ${wishlist.includes(p.id)?'liked':''}" onclick="toggleWishlist(${p.id},this)">${wishlist.includes(p.id)?'♥':'♡'}</button>
     ${slideHTML}
@@ -1460,19 +1870,7 @@ function buildProductHTML(p){
       <p class="card-tag">${p.tag}</p>
       ${p.type?`<span class="card-type-badge">${p.type}</span>`:''}
       <h3 class="card-title">${p.name}</h3>
-      ${(()=>{const vv=(p.colorVariants||[]).filter(v=>v&&v.hex);if(!vv.length)return '';return '<div class="color-variants">'+vv.map((v,i)=>{
-          // Get first available image from variant (check all slots)
-          const vImgs = Array.isArray(v.images) ? v.images : [];
-          const thumb = vImgs.find(function(img){ return !!img; }) || v.image || null;
-          if(thumb){
-            return '<div class="cv-thumb'+(i===0?' active':'')+'" onclick="selectColorVariant(event,'+p.id+','+i+')" title="'+(v.name||'')+'" style="width:44px;height:44px;border-radius:6px;overflow:hidden;cursor:pointer;border:2.5px solid '+(i===0?'var(--ink)':'transparent')+';transition:all .18s;flex-shrink:0;box-shadow:0 1px 6px rgba(0,0,0,.15);">'+
-              '<img src="'+thumb+'" style="width:100%;height:100%;object-fit:cover;display:block;" alt="'+(v.name||'')+'" />'+
-            '</div>';
-          } else {
-            // fallback: color circle if no image
-            return '<span class="color-swatch'+(i===0?' active':'')+'" style="background:'+(v.hex||'#ccc')+'" title="'+(v.name||v.hex||'')+'" onclick="selectColorVariant(event,'+p.id+','+i+')"></span>';
-          }
-        }).join('')+'<span class="color-variant-label" id="cvLabel_'+p.id+'">'+(vv[0]?vv[0].name||'':'')+'</span></div>';})()}
+      ${colorVariantsHTML}
       ${p.nameUrdu?`<div class="card-title-urdu">${p.nameUrdu}</div>`:''}
       <div class="card-size-fabric">
         ${p.fabric?`<span class="card-pill">🧵 ${p.fabric}</span>`:''}
@@ -1480,32 +1878,91 @@ function buildProductHTML(p){
       </div>
       ${sizePickerHTML}
       ${priceHTML}
+      ${selectedLineHTML}
       <div class="card-meta">
         <span class="${qtyClass}">${qtyText}</span>
         ${reviews.length>0?`<div class="card-stars">${starsHTML(avg,reviews.length)}</div>`:''}
       </div>
       <div class="card-actions">
-        <button class="order-btn add-cart-btn" onclick="addToCart(${p.id},getSelectedSize(${p.id}))" ${isSoldOut?'disabled':''}>
+        <button class="order-btn add-cart-btn" onclick="addToCart(${p.id})" ${(isSoldOut||variantIsSoldOut)?'disabled':''}>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           Add to Cart
         </button>
-        <a class="order-btn wa-btn" href="https://wa.me/${WA_NUMBER}?text=Assalam%20o%20Alaikum!%20${encodeURIComponent(p.name)}%20dress%20ka%20order%20karna%20hai." target="_blank">
+        <button class="order-btn buy-now-btn" onclick="buyNow(${p.id})" ${(isSoldOut||variantIsSoldOut)?'disabled':''}>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          Buy Now
+        </button>
+      </div>
+      <div class="card-actions">
+        <a class="order-btn wa-btn" href="#" onclick="orderViaWhatsapp(event,${p.id});return false;">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
           WA
         </a>
-        <a class="order-btn email-btn" href="#order" onclick="prefillOrder('${p.name}')">
+        <a class="order-btn email-btn" href="#order" onclick="orderViaEmail(event,'${p.name.replace(/'/g,"\\'")}',${p.id})">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           Email
         </a>
+        ${hasVariants?`<button class="reset-selection-link" onclick="resetSelection(event,${p.id})" title="Reset color/size selection">↺ Reset</button>`:''}
       </div>
     </div>
   </div>`;
 }
+// Renders the price row HTML for a given variant+size selection (used both at initial
+// render and whenever selectColorVariant/selectSize update the price in place).
+function priceRowHTML(p, variantIdx, size){
+  const hasVariants=getUsableVariants(p).length>0;
+  if(size){
+    const info=getVariantPriceInfo(p, variantIdx, size);
+    let html=`<span class="card-price-current">Rs. ${info.price.toLocaleString('en-PK')}</span>`;
+    if(info.onSale && info.regularPrice>info.price){
+      const pct=Math.round(((info.regularPrice-info.price)/info.regularPrice)*100);
+      html+=`<span class="card-price-original">Rs. ${info.regularPrice.toLocaleString('en-PK')}</span><span class="card-price-saved">Save ${pct}%</span>`;
+    }
+    return html;
+  }
+  // No size chosen yet — show a price range ("From Rs. X") if prices vary, else the flat price
+  const range = hasVariants ? (function(){
+    const sizes=getVariantSizesFull(p, variantIdx);
+    if(!sizes.length){ const info=getVariantPriceInfo(p, variantIdx, null); return {min:info.price,max:info.price,hasRange:false}; }
+    let min=Infinity,max=-Infinity;
+    sizes.forEach(function(s){ const info=getVariantPriceInfo(p, variantIdx, s.size); min=Math.min(min,info.price); max=Math.max(max,info.price); });
+    return {min:min,max:max,hasRange:min!==max};
+  })() : computePriceRange(p);
+  if(range.hasRange) return `<span class="card-price-current">From Rs. ${range.min.toLocaleString('en-PK')}</span>`;
+  const info=getVariantPriceInfo(p, variantIdx, null);
+  let html=`<span class="card-price-current">Rs. ${info.price.toLocaleString('en-PK')}</span>`;
+  if(info.onSale && info.regularPrice>info.price){
+    const pct=Math.round(((info.regularPrice-info.price)/info.regularPrice)*100);
+    html+=`<span class="card-price-original">Rs. ${info.regularPrice.toLocaleString('en-PK')}</span><span class="card-price-saved">Save ${pct}%</span>`;
+  }
+  return html;
+}
+// Renders "Color: X · Size: Y · Rs. Z" line reflecting the exact current selection
+function selectedLineInner(p, variantIdx, size){
+  const variant=getVariantObj(p, variantIdx);
+  if(!variant) return '';
+  const parts=[`Color: <b>${variant.name||variant.hex||''}</b>`];
+  if(size) parts.push(`Size: <b>${size}</b>`);
+  if(size){
+    const info=getVariantPriceInfo(p, variantIdx, size);
+    parts.push(`<b>Rs. ${info.price.toLocaleString('en-PK')}</b>`);
+  }
+  return parts.join(' &nbsp;·&nbsp; ');
+}
 function selectSize(e,id,size){
-  e.stopPropagation();
+  if(e) e.stopPropagation();
   const container=document.getElementById(`sizes_${id}`);
   if(!container)return;
   container.querySelectorAll('.size-btn').forEach(b=>{b.classList.toggle('active',b.dataset.size===size);});
+  const card=document.querySelector(`.product-card[data-id="${id}"]`);
+  if(card) card.dataset.selectedSize=size;
+  const p=[...getProducts(),...getMensProducts()].find(x=>x.id===id);
+  if(!p) return;
+  const variantIdx=card&&card.dataset.selectedVariant!==undefined?parseInt(card.dataset.selectedVariant):-1;
+  const priceEl=document.getElementById('price_'+id);
+  if(priceEl) priceEl.innerHTML=priceRowHTML(p, variantIdx, size);
+  const lineEl=document.getElementById('selLine_'+id);
+  if(lineEl) lineEl.innerHTML=selectedLineInner(p, variantIdx, size);
 }
 function getSelectedSize(id){
   const container=document.getElementById(`sizes_${id}`);
@@ -1513,23 +1970,19 @@ function getSelectedSize(id){
   const active=container.querySelector('.size-btn.active');
   return active?active.dataset.size:'';
 }
+// "↺ Reset" — clears variant/size selection back to the product's default state
+function resetSelection(e, id){
+  if(e) e.stopPropagation();
+  refreshProductCard(id, true);
+}
 // ── SECTION SWITCH ──
 let currentSection='women';
-function switchSection(sec, btn){
-  currentSection=sec;
-  document.querySelectorAll('.section-tab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  const ws=document.getElementById('womenSection');
-  const ms=document.getElementById('mensSection');
-  if(sec==='women'){ws.style.display='block';ms.style.display='none';renderProducts();}
-  else{ws.style.display='none';ms.style.display='block';renderMens();}
-}
 function renderMens(filter){
   const all=getMensProducts();
   const list=(!filter||filter==='all')?all:all.filter(p=>p.tag.toLowerCase().includes(filter));
   const grid=document.getElementById('mensGrid');
   if(!grid)return;
-  grid.innerHTML=list.map(buildProductHTML).join('');
+  grid.innerHTML=list.map(p=>buildProductHTML(p)).join('');
   initCardAnimations();
   // Keep order form and review dropdowns in sync
   if(typeof populateProductSelect==='function') populateProductSelect();
@@ -1566,7 +2019,7 @@ function applyFilters(){
     return catMatch&&typeMatch;
   });
   const grid=document.getElementById('productGrid');
-  if(grid){grid.innerHTML=list.map(buildProductHTML).join('');initCardAnimations();}
+  if(grid){grid.innerHTML=list.map(p=>buildProductHTML(p)).join('');initCardAnimations();}
   populateProductSelect();
   if(typeof populateReviewSelect==='function')populateReviewSelect();
 }
@@ -1701,7 +2154,7 @@ function renderReviews(){
       <div class="rating-bar-row">
         <span class="rating-bar-label">${x.n}</span>
         <div class="rating-bar-track"><div class="rating-bar-fill" style="width:${reviews.length?Math.round(x.c/reviews.length*100):0}%"></div></div>
-        <span style="font-family:monospace,monospace;font-size:.5rem;color:var(--muted);width:16px;">${x.c}</span>
+        <span style="font-family:'DM Mono',monospace;font-size:.5rem;color:var(--muted);width:16px;">${x.c}</span>
       </div>`).join('')}</div>`;
 }
 function submitReview(){
@@ -1784,6 +2237,37 @@ async function ghPutFile(url,hdrs,content,sha,msg){
   if(!r.ok){const t=await r.text();throw new Error(`Upload failed (${r.status}): ${t.slice(0,120)}`);}
   return await r.json();
 }
+// GitHub sync must push a FULLY SELF-CONTAINED zt-data.json (real photo bytes, not
+// "idb:" reference keys) — that file IS the site's cross-device database. Every other
+// visitor's browser has its own separate, empty IndexedDB, so a reference key with no
+// matching entry there is a broken image. This resolves every idb: ref back to its real
+// base64 data (from the local IndexedDB cache) right before building the export payload.
+async function resolveListForExport(list){
+  const clone = JSON.parse(JSON.stringify(list||[]));
+  let unresolved=0;
+  async function resolve(ref){
+    if(!isIdbRef(ref)) return ref;
+    const val = imgCache[ref] || (await idbGet(ref));
+    if(!val) unresolved++;
+    return val || null;
+  }
+  for(const p of clone){
+    if(Array.isArray(p.images)){
+      for(let i=0;i<p.images.length;i++) p.images[i]=await resolve(p.images[i]);
+    }
+    if(Array.isArray(p.colorVariants)){
+      for(const v of p.colorVariants){
+        if(!v) continue;
+        v.image = await resolve(v.image);
+        v.primaryImage = await resolve(v.primaryImage);
+        if(Array.isArray(v.images)){
+          for(let j=0;j<v.images.length;j++) v.images[j]=await resolve(v.images[j]);
+        }
+      }
+    }
+  }
+  return {clone, unresolved};
+}
 async function syncToGithub(){
   const s=getGithubSettings();
   if(!s){showToast('Pehle GitHub settings save karo','error');return;}
@@ -1798,34 +2282,16 @@ async function syncToGithub(){
     if(rc.status===401)throw new Error('Token galat ya expire — naya classic token banao.');
     if(rc.status===403)throw new Error('Token ko permission nahi.');
     if(rc.status===404)throw new Error(`Repo nahi mili: "${s.user}/${s.repo}"`);
-    setSyncStatus('Data save ho raha hai...', true);
+    setSyncStatus('Photos resolve ho rahi hain...', true);
     // Collect hero URLs
     let heroUrls=[];
     try{const hu=localStorage.getItem('zt_hero_urls');if(hu)heroUrls=JSON.parse(hu);}catch(e){}
-    // Strip base64 images from variants to keep sync small
-    // Variant images are stored locally — only metadata syncs
-    function stripVariantImages(prods){
-      return prods.map(function(p){
-        const pc = JSON.parse(JSON.stringify(p));
-        if(pc.colorVariants){
-          pc.colorVariants = pc.colorVariants.map(function(v){
-            const vc = Object.assign({}, v);
-            // Keep URL images (http/https) but strip base64
-            if(vc.image && vc.image.startsWith('data:')) vc.image = null;
-            if(Array.isArray(vc.images)){
-              vc.images = vc.images.map(function(img){
-                return (img && !img.startsWith('data:')) ? img : null;
-              });
-            }
-            return vc;
-          });
-        }
-        return pc;
-      });
-    }
+    const productsResolved = await resolveListForExport(getProducts());
+    const mensResolved = await resolveListForExport(getMensProducts());
+    const totalUnresolved = productsResolved.unresolved + mensResolved.unresolved;
     const data={
-      products:  stripVariantImages(getProducts()),
-      mens:      stripVariantImages(getMensProducts()),
+      products:  productsResolved.clone,
+      mens:      mensResolved.clone,
       socials:   getSocials(),
       adminPass: getAdminPass(),
       owner:     getOwner(),
@@ -1833,13 +2299,19 @@ async function syncToGithub(){
       heroUrls:  heroUrls,
       updatedAt: ts
     };
+    setSyncStatus('Data save ho raha hai...', true);
     const dataStr=JSON.stringify(data);
     const kb=Math.round(new TextEncoder().encode(dataStr).length/1024);
     if(kb>8000)throw new Error(`Data ${kb}KB hai — images compress karo.`);
     const sha=await ghGetSHA(base+'zt-data.json',hdrs);
     await ghPutFile(base+'zt-data.json',hdrs,toBase64(dataStr),sha,`ZabeTan update — ${ts}`);
-    setSyncStatus(`✓ Sync kamyab! (${kb}KB)\nNetlify 1-2 min mein live ho jaega.`, true);
-    showToast('GitHub sync complete ✓','success');
+    if(totalUnresolved>0){
+      setSyncStatus(`⚠ Sync hui (${kb}KB) lekin ${totalUnresolved} photo(s) is device par nahi milin — woh device kholein jahan yeh photos upload hui thin aur dobara sync karein.`, false);
+      showToast(`Sync ho gaya, lekin ${totalUnresolved} photo(s) missing — dobara check karein`,'error');
+    } else {
+      setSyncStatus(`✓ Sync kamyab! (${kb}KB)\nNetlify 1-2 min mein live ho jaega.`, true);
+      showToast('GitHub sync complete ✓','success');
+    }
   }catch(err){
     console.error(err);setSyncStatus('✗ '+err.message, false);showToast('Sync failed','error');
   }finally{btn.textContent='↑ Sync to GitHub Now';btn.disabled=false;}
@@ -1854,10 +2326,37 @@ function changePassword(){
 }
 
 // ── ORDER FORM ──
+let orderVariantContext={name:'',size:'',sku:''}; // holds selected color/size when user jumps here via a product card's Email button
 function prefillOrder(name){
   const sel=document.getElementById('orderProduct');
   if(sel)for(let o of sel.options)if(o.value===name){sel.value=o.value;break;}
   document.getElementById('order').scrollIntoView({behavior:'smooth'});
+}
+// WhatsApp order button on a product card — includes the selected color, size, SKU and resolved price
+function orderViaWhatsapp(e,id){
+  if(e)e.preventDefault();
+  const state=getSelectedProductState(id);
+  if(!state||!state.p)return;
+  const p=state.p;
+  let msg=`Assalam o Alaikum! ${p.name} dress ka order karna hai.`;
+  if(state.variant) msg+=`\nColor: ${state.variant.name||state.variant.hex||''}`;
+  if(state.size) msg+=`\nSize: ${state.size}`;
+  if(state.hasVariants&&state.sku) msg+=`\nSKU: ${state.sku}`;
+  msg+=`\nPrice: Rs. ${state.price.toLocaleString('en-PK')}`;
+  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+// Email order button on a product card — jumps to the order form, prefilled with product + color + size
+function orderViaEmail(e,name,id){
+  if(e)e.preventDefault();
+  const state=getSelectedProductState(id);
+  orderVariantContext={
+    name: state&&state.variant?(state.variant.name||state.variant.hex||''):'',
+    size: state?state.size||'':'',
+    sku: state&&state.hasVariants?state.sku||'':''
+  };
+  prefillOrder(name);
+  const sizeSel=document.getElementById('orderSize');
+  if(sizeSel&&orderVariantContext.size){for(let o of sizeSel.options)if(o.value===orderVariantContext.size){sizeSel.value=orderVariantContext.size;break;}}
 }
 function submitOrder(){
   const name=document.getElementById('orderName').value.trim();
@@ -1869,11 +2368,14 @@ function submitOrder(){
   const message=document.getElementById('orderMessage').value.trim();
   if(!name||!email){showToast('Naam aur email zaroori hain','error');return;}
   if(!/\S+@\S+\.\S+/.test(email)){showToast('Valid email address daalen','error');return;}
+  const colorLine=orderVariantContext.name?`Color: ${orderVariantContext.name}\n`:'';
+  const skuLine=orderVariantContext.sku?`SKU: ${orderVariantContext.sku}\n`:'';
   const sub=encodeURIComponent(`Order — ${product||'Dress'} — ZabeTan`);
-  const body=encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone||'—'}\nDress: ${product||'—'}\nSize: ${size||'—'}\nCity: ${city||'—'}\n\n${message||''}\n\n--- ZabeTan Website ---`);
+  const body=encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone||'—'}\nDress: ${product||'—'}\n${colorLine}Size: ${size||'—'}\n${skuLine}City: ${city||'—'}\n\n${message||''}\n\n--- ZabeTan Website ---`);
   window.location.href=`mailto:${OWNER_EMAIL}?subject=${sub}&body=${body}`;
   document.getElementById('orderForm').style.display='none';
   document.getElementById('orderSuccess').classList.add('show');
+  orderVariantContext={name:'',size:'',sku:''};
   setTimeout(()=>{
     document.getElementById('orderSuccess').classList.remove('show');
     document.getElementById('orderForm').style.display='flex';
@@ -1892,16 +2394,18 @@ function buildEditItem(p, gender){
   const imgs=p.images||[null,null,null,null,null,null,null,null];
   const colorSelects=colorOptions.map((c,i)=>`<option value="${c}" ${p.colorClass===c?'selected':''}>${colorLabels[i]}</option>`).join('');
   const slotLabels=['Main','Photo 2','Photo 3','Photo 4','Photo 5','Photo 6','Photo 7','Photo 8'];
-  const slotsHTML=imgs.map((img,i)=>`
+  const slotsHTML=imgs.map((img,i)=>{
+    const resolved=resolveImgSrc(img); // img itself stays the RAW ref so slotIdx keeps lining up with handleSlotImg/removeSlotImg
+    return `
     <div>
       <div class="img-slot${img?' has-img':''}" id="slot_${p.id}_${i}">
-        <img src="${img||''}" alt="photo ${i+1}" />
+        <img src="${resolved||''}" alt="photo ${i+1}" />
         <div class="img-slot-hint"><span style="font-size:1rem">📷</span>${slotLabels[i]}</div>
         <input class="img-slot-input" type="file" accept="image/*" onchange="handleSlotImg(event,${p.id},${i})" />
         <button class="img-slot-remove" onclick="removeSlotImg(event,${p.id},${i})">✕</button>
       </div>
       <div class="img-slot-label">${slotLabels[i]}</div>
-    </div>`).join('');
+    </div>`;}).join('');
   return `
   <div class="edit-card-item" data-edit-id="${p.id}">
     <div class="edit-card-header" onclick="toggleEditCard(this)">
@@ -1982,11 +2486,14 @@ function safeSave(key, value){
     return false;
   }
 }
-function handleSlotImg(event,id,slotIdx){
+async function handleSlotImg(event,id,slotIdx){
   const file=event.target.files[0];
   if(!file)return;
+  if(!file.type || !file.type.startsWith('image/')){ showToast('Sirf image files allowed hain','error'); event.target.value=''; return; }
+  if(file.size>MAX_UPLOAD_BYTES){ showToast('Image bohot bari hai — 8MB se kam istemal karein','error'); event.target.value=''; return; }
   showToast('Image compress ho rahi hai...','');
-  compressImage(file, 900, 1200, 0.72).then(dataUrl=>{
+  try{
+    const dataUrl = await compressImage(file, 900, 1200, 0.72);
     const kb=Math.round(dataUrl.length/1024);
     const isMens=getMensProducts().some(p=>p.id===id);
     const products=isMens?getMensProducts():getProducts();
@@ -1994,9 +2501,14 @@ function handleSlotImg(event,id,slotIdx){
     if(idx<0)return;
     if(!Array.isArray(products[idx].images)||products[idx].images.length<8)
       products[idx].images=[null,null,null,null,null,null,null,null];
-    products[idx].images[slotIdx]=dataUrl;
+    const oldRef=products[idx].images[slotIdx];
+    // Store the actual photo bytes in IndexedDB (near-unlimited quota) — only a short
+    // reference key is kept in the localStorage-backed product JSON.
+    const ref = await storeImageAsync(dataUrl);
+    products[idx].images[slotIdx]=ref;
     const ok=isMens?saveMensProducts(products):safeSave('zt_products', products);
     if(!ok)return;
+    if(isIdbRef(oldRef) && oldRef!==ref) deleteStoredImage(oldRef); // replaced — free the old photo
     const slot=document.getElementById('slot_'+id+'_'+slotIdx);
     if(slot){
       let img=slot.querySelector('img');
@@ -2010,9 +2522,9 @@ function handleSlotImg(event,id,slotIdx){
     }
     refreshProductCard(id);
     showToast('Photo '+(slotIdx+1)+' upload ho gai ✓ ('+kb+'KB compressed)','success');
-  }).catch(()=>showToast('Image process nahi hui — dobara try karein','error'));
+  }catch(err){ showToast('Image process nahi hui — dobara try karein','error'); }
 }
-function removeSlotImg(e,id,slotIdx){
+async function removeSlotImg(e,id,slotIdx){
   e.stopPropagation();
   const isMensR=getMensProducts().some(p=>p.id===id);
   const products=isMensR?getMensProducts():getProducts();
@@ -2020,8 +2532,10 @@ function removeSlotImg(e,id,slotIdx){
   if(idx>-1){
     if(!Array.isArray(products[idx].images)||products[idx].images.length<8)
       products[idx].images=[null,null,null,null,null,null,null,null];
+    const oldRef=products[idx].images[slotIdx];
     products[idx].images[slotIdx]=null;
     if(isMensR)saveMensProducts(products);else safeSave('zt_products', products);
+    if(isIdbRef(oldRef)) deleteStoredImage(oldRef);
   }
   const slot=document.getElementById('slot_'+id+'_'+slotIdx);
   if(slot){
@@ -2037,21 +2551,40 @@ function removeSlotImg(e,id,slotIdx){
   showToast('Photo hata di');
 }
 // Refresh a single product card in the gallery without rebuilding the whole grid
-function refreshProductCard(id){
+function refreshProductCard(id, forceReset){
   const allProds=[...getProducts(),...getMensProducts()];
   const p=allProds.find(x=>x.id===id);
   if(!p)return;
   const existing=document.querySelector(`.product-card[data-id="${id}"]`);
   if(!existing)return;
+  // Preserve the user's current variant + size selection across the rebuild
+  // (unless forceReset — used by the "↺ Reset" link to go back to the product's default state)
+  const prevVariantIdx=(!forceReset && existing.dataset.selectedVariant!==undefined)?parseInt(existing.dataset.selectedVariant):-1;
+  const prevSizeBtn=forceReset?null:existing.querySelector(`#sizes_${id} .size-btn.active`);
+  const prevSize=prevSizeBtn?prevSizeBtn.dataset.size:'';
   const tmp=document.createElement('div');
-  tmp.innerHTML=buildProductHTML(p);
+  tmp.innerHTML=buildProductHTML(p, prevVariantIdx);
   const newCard=tmp.firstElementChild;
   if(newCard){
     newCard.style.opacity=existing.style.opacity||'1';
     newCard.style.transform='translateY(0)';
     existing.replaceWith(newCard);
+    // Restore selected size if it's still valid for the (preserved) variant
+    if(prevSize){
+      const btn=newCard.querySelector(`#sizes_${id} .size-btn[data-size="${prevSize}"]`);
+      if(btn && !btn.classList.contains('out-of-stock')){
+        btn.classList.add('active');
+        newCard.dataset.selectedSize=prevSize;
+        const priceEl=newCard.querySelector('#price_'+id);
+        const variantIdxNow=newCard.dataset.selectedVariant!==undefined?parseInt(newCard.dataset.selectedVariant):-1;
+        if(priceEl) priceEl.innerHTML=priceRowHTML(p, variantIdxNow, prevSize);
+        const lineEl=newCard.querySelector('#selLine_'+id);
+        if(lineEl) lineEl.innerHTML=selectedLineInner(p, variantIdxNow, prevSize);
+      }
+    }
   }
 }
+
 function renderEditPanel(){
   // Render mens cards
   const mensList=document.getElementById('editMensCardsList');
@@ -2305,6 +2838,7 @@ function attemptLogin(){
     document.body.classList.add('admin-active');
     renderEditPanel();
     renderHeroImgGrid();
+    updateStorageStatusLine();
   }
   else{document.getElementById('loginError').style.display='block';pw.value='';pw.focus();pw.style.borderColor='var(--rose)';setTimeout(()=>pw.style.borderColor='',1000);}
 }
@@ -2542,95 +3076,49 @@ function switchSection(sec, btn){
 }
 
 
-function selectColorVariant(e, productId, variantIdx){
-  e.stopPropagation();
-  const card = e.target.closest('[data-id]') || e.target.closest('.product-card');
-  if(!card) return;
-
-  // Store active variant index on the card element
-  card.dataset.activeVariant = variantIdx;
-
-  // Update visual active states
-  card.querySelectorAll('.color-swatch').forEach(function(s,i){
-    s.classList.toggle('active', i===variantIdx);
-  });
-  card.querySelectorAll('.cv-thumb').forEach(function(s,i){
-    s.classList.toggle('active', i===variantIdx);
-    s.style.borderColor = (i===variantIdx) ? 'var(--ink)' : 'transparent';
-  });
-
-  const allProds = [...getProducts(), ...getMensProducts()];
-  const p = allProds.find(function(x){ return x.id===productId; });
-  if(!p) return;
-  const variant = (p.colorVariants||[])[variantIdx];
-  if(!variant) return;
-
-  // Update label
-  const label = document.getElementById('cvLabel_'+productId);
-  if(label) label.textContent = variant.name || variant.hex || '';
-
-  // Get all available images from this variant
-  const vImgArr = Array.isArray(variant.images) ? variant.images.filter(Boolean) : [];
-  if(!variant.image && vImgArr.length) variant.image = vImgArr[0];
-  const firstVImg = vImgArr[0] || variant.image || null;
-
-  // Swap main card slide to show variant image
-  const slideshow = card.querySelector('.card-slideshow');
-  if(firstVImg && slideshow){
-    // Build variant slides in the slideshow
-    const track = slideshow.querySelector('.slideshow-track') || slideshow.querySelector('[class*="track"]');
-    const existingSlides = card.querySelectorAll('.slide-img');
-    if(existingSlides.length > 0){
-      // Replace active slide src
-      const active = card.querySelector('.slide-img.active') || existingSlides[0];
-      if(!active.dataset.originalSrc) active.dataset.originalSrc = active.src;
-      active.src = firstVImg;
-    }
-  } else if(!firstVImg) {
-    // Restore original
-    const active = card.querySelector('.slide-img.active');
-    if(active && active.dataset.originalSrc) active.src = active.dataset.originalSrc;
-  }
-
-  // Update variant-specific sizes if defined
-  const varSizes = normalizeCVSizes(variant);
-  if(varSizes.length > 0){
-    const sizeBar = card.querySelector('.size-options');
-    if(sizeBar){
-      sizeBar.innerHTML = varSizes.map(function(s,si){
-        return '<button class="size-opt'+(si===0?' selected':'')+'" onclick="selectSize(event,'+productId+',this)">'+s.size+'</button>';
-      }).join('');
-    }
-  }
-}
-
 // ── Color Variant Management ──
 function getProductById(id){
   return getProducts().find(p=>p.id===id) || getMensProducts().find(p=>p.id===id);
 }
 function saveProductById(id, updated){
-  // Women's products
+  // Never wipe all products if one save fails — validate before writing back
+  if(!updated || typeof updated!=='object'){ showToast('Save nahi hua — invalid data','error'); return false; }
   const women = getProducts();
-  const wi = women.findIndex(function(p){ return p.id===id; });
-  if(wi > -1){
-    women[wi] = updated;
-    const ok = safeSave('zt_products', women);
-    if(!ok) return false;
-    return true;
-  }
-  // Men's products
+  const wi = women.findIndex(p=>p.id===id);
+  if(wi>-1){ women[wi]=updated; return saveProducts(women); }
   const mens = getMensProducts();
-  const mi = mens.findIndex(function(p){ return p.id===id; });
-  if(mi > -1){
-    mens[mi] = updated;
-    const ok = safeSave('zt_mens', mens);
-    if(!ok) return false;
-    return true;
-  }
+  const mi = mens.findIndex(p=>p.id===id);
+  if(mi>-1){ mens[mi]=updated; return saveMensProducts(mens); }
   return false;
 }
-// addColorVariant replaced by new system above
-
+function addColorVariant(id){
+  const p = getProductById(id);
+  if(!p) return;
+  if(!p.colorVariants) p.colorVariants=[];
+  p.colorVariants.push({hex:'#c0392b', name:'New Color', images:[], primaryImage:null, sizes:{}});
+  saveProductById(id, p);
+  refreshColorVarList(id, p);
+}
+// Duplicate an existing variant (images, sizes, prices, stock) with SKUs cleared so
+// getVariantSKU() auto-generates fresh, conflict-free SKUs for the copy.
+function duplicateVariant(id, idx){
+  const p = getProductById(id);
+  if(!p||!p.colorVariants||!p.colorVariants[idx]) return;
+  const original = p.colorVariants[idx];
+  const clone = JSON.parse(JSON.stringify(original));
+  clone.name = (original.name||original.hex||'Color') + ' Copy';
+  const sizeMap = getVariantSizeMap(p, idx); // normalizes legacy array format too
+  clone.sizes = {};
+  if(sizeMap){
+    Object.keys(sizeMap).forEach(function(s){
+      clone.sizes[s] = Object.assign({}, sizeMap[s], {sku:''}); // clear SKU to avoid duplicates
+    });
+  }
+  p.colorVariants.splice(idx+1, 0, clone);
+  saveProductById(id, p);
+  refreshColorVarList(id, p);
+  showToast('Variant duplicate ho gaya ✓','success');
+}
 function removeColorVariant(id, idx){
   const p = getProductById(id);
   if(!p||!p.colorVariants) return;
@@ -2643,19 +3131,125 @@ function updateColorVariant(id, idx, field, val){
   if(!p||!p.colorVariants||!p.colorVariants[idx]) return;
   p.colorVariants[idx][field] = val;
   saveProductById(id, p);
+  // Keep the label/swatch on the live product card in sync (name/hex changes)
+  refreshProductCard(id);
 }
+// Ensures variant.sizes is a plain rich-object map, migrating a legacy array-of-strings if found
+function ensureVariantSizeMap(v){
+  if(v.sizes && !Array.isArray(v.sizes) && typeof v.sizes==='object') return v.sizes;
+  const map={};
+  if(Array.isArray(v.sizes)) v.sizes.forEach(function(s){ map[s]={price:null,salePrice:null,stock:null,sku:''}; });
+  v.sizes = map;
+  return map;
+}
+// Toggle whether a size (S/M/L/XL...) belongs to this color variant at all
+function toggleVariantSize(id, idx, size){
+  const p = getProductById(id);
+  if(!p||!p.colorVariants||!p.colorVariants[idx]) return;
+  const v = p.colorVariants[idx];
+  const map = ensureVariantSizeMap(v);
+  if(map[size]) delete map[size];
+  else map[size] = {price:null, salePrice:null, stock:null, sku:''};
+  saveProductById(id, p);
+  refreshColorVarList(id, p);
+}
+// Edit one field (price / salePrice / stock / sku) of one size within one variant —
+// only re-renders after save; the row layout itself doesn't need to change.
+function updateVariantSizeField(id, idx, size, field, val){
+  const p = getProductById(id);
+  if(!p||!p.colorVariants||!p.colorVariants[idx]) return;
+  const map = ensureVariantSizeMap(p.colorVariants[idx]);
+  if(!map[size]) map[size]={price:null,salePrice:null,stock:null,sku:''};
+  map[size][field] = (val===''?null:val);
+  saveProductById(id, p);
+  refreshProductCard(id); // keep price/stock shown on the live card accurate
+}
+// Single authoritative renderer for the admin color-variant list. Always builds the
+// full image+name+hex+sizes editor row so uploading one variant's photo never removes
+// the upload controls for any other variant.
 function refreshColorVarList(id, p){
   const list = document.getElementById('colorVarList_'+id);
   if(!list) return;
-  // Use buildColorVarAdmin so image slots + size fields stay intact
   list.innerHTML = buildColorVarAdmin(p);
+  // Also refresh the live product card on the page so shoppers see the change immediately
   refreshProductCard(id);
 }
 
-// ── Build color variant admin HTML (image + size per variant) ──
-// buildColorVarAdmin defined in new variant system above
-function buildColorVarAdmin_OLD(){}
-
+// ── Admin: multi-image strip for one variant (add / remove / reorder / set primary) ──
+function buildVariantImageStrip(p, i, v){
+  // Iterate the RAW (unresolved) array so indices always match what moveVariantImage /
+  // removeCVImg / setVariantPrimaryImage operate on — then resolve each image only for display.
+  const rawImages = getVariantImagesRaw(p, i);
+  const primaryRaw = getVariantPrimaryImageRaw(p, i);
+  let html = '<div class="cv-img-strip">';
+  rawImages.forEach(function(rawImg, imgIdx){
+    const isPrimary = rawImg===primaryRaw;
+    const src = resolveImgSrc(rawImg);
+    html += '<div class="cv-img-thumb-wrap">'+
+      '<div class="cv-img-thumb'+(isPrimary?' primary':'')+'">'+
+        '<img src="'+(src||'')+'" />'+
+        (isPrimary?'<span class="cv-img-thumb-badge">Primary</span>':'')+
+      '</div>'+
+      '<div class="cv-img-thumb-actions">'+
+        (imgIdx>0?'<button type="button" class="cv-img-mini-btn" title="Move left" onclick="moveVariantImage('+p.id+','+i+','+imgIdx+',-1)">◀</button>':'')+
+        '<button type="button" class="cv-img-mini-btn star'+(isPrimary?' is-primary':'')+'" title="Set as primary" onclick="setVariantPrimaryImage('+p.id+','+i+','+imgIdx+')">★</button>'+
+        (imgIdx<rawImages.length-1?'<button type="button" class="cv-img-mini-btn" title="Move right" onclick="moveVariantImage('+p.id+','+i+','+imgIdx+',1)">▶</button>':'')+
+        '<button type="button" class="cv-img-mini-btn" title="Remove" onclick="removeCVImg(event,'+p.id+','+i+','+imgIdx+')">✕</button>'+
+      '</div>'+
+    '</div>';
+  });
+  html += '<div class="cv-add-img-slot" title="Add image">+'+
+    '<input type="file" accept="image/*" onchange="handleCVImg(event,'+p.id+','+i+')" />'+
+  '</div></div>';
+  return html;
+}
+// ── Admin: per-size price/sale/stock/SKU editor rows for one variant ──
+function buildVariantSizeEditor(p, i, v){
+  const map = ensureVariantSizeMap(v);
+  const chips = VARIANT_SIZE_OPTIONS.map(function(s){
+    return '<span class="cv-size-chip'+(map[s]?' active':'')+'" onclick="toggleVariantSize('+p.id+','+i+',\''+s+'\')">'+s+'</span>';
+  }).join('');
+  const presentSizes = Object.keys(map);
+  let detailHTML='';
+  if(presentSizes.length){
+    detailHTML='<div class="cv-size-detail-head"><span></span><span>Price</span><span>Sale Price</span><span>Stock</span><span>SKU</span></div>'+
+      '<div class="cv-size-detail-list">'+presentSizes.map(function(s){
+        const d=map[s]||{};
+        return '<div class="cv-size-detail-row">'+
+          '<span class="cv-sz-tag">'+s+'</span>'+
+          '<input type="number" min="0" placeholder="Rs." value="'+(d.price!=null?d.price:'')+'" onchange="updateVariantSizeField('+p.id+','+i+',\''+s+'\',\'price\',this.value)" />'+
+          '<input type="number" min="0" placeholder="Optional" value="'+(d.salePrice!=null?d.salePrice:'')+'" onchange="updateVariantSizeField('+p.id+','+i+',\''+s+'\',\'salePrice\',this.value)" />'+
+          '<input type="number" min="0" placeholder="Unlimited" value="'+(d.stock!=null?d.stock:'')+'" onchange="updateVariantSizeField('+p.id+','+i+',\''+s+'\',\'stock\',this.value)" />'+
+          '<input type="text" placeholder="'+getVariantSKU(p,i,s)+'" value="'+(d.sku||'')+'" onchange="updateVariantSizeField('+p.id+','+i+',\''+s+'\',\'sku\',this.value)" />'+
+        '</div>';
+      }).join('')+'</div>';
+  }
+  return '<div class="cv-size-block-label">Sizes for this color (tap to add/remove)</div>'+
+    '<div class="cv-size-row">'+chips+'</div>'+detailHTML;
+}
+// ── Build color variant admin HTML (multi-image + name + hex + per-size price/stock/SKU) ──
+// This is the ONE authoritative builder for the variant editor rows — do not duplicate.
+function buildColorVarAdmin(p){
+  const vv = p.colorVariants||[];
+  if(!vv.length) return '<p style="font-family:monospace;font-size:.55rem;color:var(--muted)">Koi color variant nahi — neeche Add dabao</p>';
+  return vv.map(function(v,i){
+    if(!v) return '';
+    return '<div class="cv-row-card" id="cvRow_'+p.id+'_'+i+'" style="flex-direction:column;align-items:stretch;">'+
+      buildVariantImageStrip(p, i, v)+
+      '<div class="cv-row-main" style="margin-top:8px;">'+
+        '<div class="cv-row-top">'+
+          '<input type="text" class="field-input" value="'+(v.name||'').replace(/"/g,'&quot;')+'" placeholder="Color/variant name (e.g. Navy Blue)" onchange="updateColorVariant('+p.id+','+i+',\'name\',this.value)" style="font-size:.82rem;" />'+
+          '<input type="color" value="'+(v.hex||'#c0392b')+'" title="Swatch color" onchange="updateColorVariant('+p.id+','+i+',\'hex\',this.value)" />'+
+        '</div>'+
+        buildVariantSizeEditor(p, i, v)+
+      '</div>'+
+      '<div class="cv-row-footer">'+
+        '<button type="button" class="btn-duplicate-color" onclick="duplicateVariant('+p.id+','+i+')">⧉ Duplicate Variant</button>'+
+        '<button type="button" class="btn-rm-color" style="font-size:.9rem;" onclick="removeColorVariant('+p.id+','+i+')">🗑 Remove</button>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
 
 // ── Image Preview Modal ──
 let previewImages = [];
@@ -2695,6 +3289,15 @@ function previewKeyHandler(e){
   if(e.key === 'ArrowLeft')  shiftPreview(-1);
 }
 
+// Preview priority: selected color-variant image(s) first, then fall back to the
+// product's normal photo gallery. Never let the preview independently look at
+// product.images[0] without first checking what variant is currently selected.
+function getPreviewImagesForCard(card, p){
+  const variantIdx = card.dataset.selectedVariant!==undefined ? parseInt(card.dataset.selectedVariant) : -1;
+  const variantImgs = getVariantImages(p, variantIdx);
+  if(variantImgs.length) return variantImgs;
+  return getProductImages(p);
+}
 // Make product cards open preview on image click
 document.addEventListener('click', function(e){
   // Click on slide image
@@ -2706,23 +3309,7 @@ document.addEventListener('click', function(e){
     const pid = parseInt(card.dataset.id);
     const p = [...getProducts(),...getMensProducts()].find(x=>x.id===pid);
     if(!p) return;
-    // Build image list: variant images first, then product images
-    let imgs = [];
-    if(card.dataset.activeVariant !== undefined){
-      const vIdx = parseInt(card.dataset.activeVariant);
-      const variant = (p.colorVariants||[])[vIdx];
-      if(variant){
-        // Add all variant images
-        const vImgs = Array.isArray(variant.images) ? variant.images.filter(Boolean) : [];
-        if(vImgs.length) vImgs.forEach(function(img){ imgs.push(img); });
-        else if(variant.image) imgs.push(variant.image);
-      }
-    }
-    // Add product main images (deduplicated)
-    (p.images||[]).filter(Boolean).forEach(function(img){
-      if(!imgs.includes(img)) imgs.push(img);
-    });
-    // Start from clicked image
+    const imgs = getPreviewImagesForCard(card, p);
     const clickedSrc = slideImg.src;
     const startIdx = imgs.indexOf(clickedSrc) !== -1 ? imgs.indexOf(clickedSrc) : 0;
     openImgPreview(imgs, startIdx);
@@ -2736,496 +3323,170 @@ document.addEventListener('click', function(e){
     const pid = parseInt(card.dataset.id);
     const p = [...getProducts(),...getMensProducts()].find(x=>x.id===pid);
     if(!p) return;
-
-    // If a color variant is selected and has its own image, show that first
-    let imgs = (p.images||[]).filter(Boolean);
-    if(card.dataset.activeVariant !== undefined){
-      const vIdx = parseInt(card.dataset.activeVariant);
-      const variant = (p.colorVariants||[])[vIdx];
-      if(variant && variant.image){
-        // Put variant image at front
-        imgs = [variant.image, ...imgs.filter(x=>x!==variant.image)];
-      }
-    }
+    const imgs = getPreviewImagesForCard(card, p);
     if(imgs.length) openImgPreview(imgs, 0);
   }
 });
 
-// ── Color Variant Image Upload ──
-function handleCVImg(event, productId, variantIdx){
+// ── Color Variant Image Upload (multi-image per variant) ──
+const MAX_UPLOAD_BYTES = 8*1024*1024; // 8MB raw upload ceiling before compression
+async function handleCVImg(event, productId, variantIdx){
   const file = event.target.files[0];
   if(!file) return;
+  if(!file.type || !file.type.startsWith('image/')){ showToast('Sirf image files allowed hain','error'); event.target.value=''; return; }
+  if(file.size>MAX_UPLOAD_BYTES){ showToast('Image bohot bari hai — 8MB se kam istemal karein','error'); event.target.value=''; return; }
   showToast('Compressing...','');
-  compressImage(file, 600, 800, 0.78).then(function(dataUrl){
-    // 1. Save to storage
+  try{
+    const dataUrl = await compressImage(file, 900, 1200, 0.78);
     const p = getProductById(productId);
     if(!p) return;
     if(!p.colorVariants) p.colorVariants = [];
-    if(!p.colorVariants[variantIdx]) p.colorVariants[variantIdx] = {};
-    p.colorVariants[variantIdx].image = dataUrl;
-    saveProductById(productId, p);
-
-    // 2. Update ONLY the image slot — do NOT rebuild the whole list
-    const slot = document.getElementById('cvSlot_'+productId+'_'+variantIdx);
-    if(slot){
-      // Update or insert preview image
-      let img = slot.querySelector('img.cv-preview-img');
-      if(!img){
-        img = document.createElement('img');
-        img.className = 'cv-preview-img';
-        img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;';
-        slot.insertBefore(img, slot.firstChild);
-      }
-      img.src = dataUrl;
-      slot.classList.add('has-img');
-      // Show remove btn
-      let rmBtn = slot.querySelector('.cv-rm-btn');
-      if(rmBtn) rmBtn.style.display = 'flex';
-      // Hide hint
-      let hint = slot.querySelector('.cv-img-slot-hint');
-      if(hint) hint.style.display = 'none';
-    }
-
-    // 3. Refresh product card thumbnail only
-    refreshProductCard(productId);
+    if(!p.colorVariants[variantIdx]) p.colorVariants[variantIdx] = {hex:'#c0392b',name:'New Color'};
+    const v = p.colorVariants[variantIdx];
+    // Migrate a legacy single .image into the new .images[] array before appending
+    if(!Array.isArray(v.images)) v.images = v.image ? [v.image] : [];
+    // Store the actual photo bytes in IndexedDB (near-unlimited quota) — only a short
+    // reference key ("idb:...") is kept in the localStorage-backed product JSON. This is
+    // what fixes "storage full" after a handful of variant photos.
+    const ref = await storeImageAsync(dataUrl);
+    v.images.push(ref);
+    if(!v.primaryImage) v.primaryImage = v.images[0]; // first image becomes primary by default
+    delete v.image; // superseded by images[]
+    const ok = saveProductById(productId, p);
+    if(!ok) return;
+    refreshColorVarList(productId, p);
     showToast('Color variant photo upload ho gai ✓','success');
-  }).catch(function(){ showToast('Image process nahi hui — dobara try karein','error'); });
+  }catch(err){ showToast('Image process nahi hui — dobara try karein','error'); }
 }
-function removeCVImg(e, productId, variantIdx){
-  e.stopPropagation();
+function removeCVImg(e, productId, variantIdx, imgIdx){
+  if(e) e.stopPropagation();
   const p = getProductById(productId);
-  if(!p || !p.colorVariants || !p.colorVariants[variantIdx]) return;
-  delete p.colorVariants[variantIdx].image;
+  if(!p||!p.colorVariants||!p.colorVariants[variantIdx]) return;
+  const v = p.colorVariants[variantIdx];
+  if(!Array.isArray(v.images)) v.images = v.image ? [v.image] : [];
+  const removed = v.images.splice(imgIdx,1)[0];
+  if(v.primaryImage===removed) v.primaryImage = v.images[0]||null;
   saveProductById(productId, p);
-
-  // Update slot in place
-  const slot = document.getElementById('cvSlot_'+productId+'_'+variantIdx);
-  if(slot){
-    const img = slot.querySelector('img.cv-preview-img');
-    if(img) img.remove();
-    slot.classList.remove('has-img');
-    const rmBtn = slot.querySelector('.cv-rm-btn');
-    if(rmBtn) rmBtn.style.display = 'none';
-    const hint = slot.querySelector('.cv-img-slot-hint');
-    if(hint) hint.style.display = 'flex';
-  }
-  refreshProductCard(productId);
+  if(isIdbRef(removed)) deleteStoredImage(removed); // free the IndexedDB entry too
+  refreshColorVarList(productId, p);
   showToast('Photo hata di');
 }
+// Move an image left/right within its variant's image order. The FIRST image becomes
+// the primary image unless the admin has explicitly chosen a different one.
+function moveVariantImage(id, idx, imgIdx, dir){
+  const p = getProductById(id);
+  if(!p||!p.colorVariants||!p.colorVariants[idx]) return;
+  const v = p.colorVariants[idx];
+  if(!Array.isArray(v.images)) return;
+  const target = imgIdx+dir;
+  if(target<0||target>=v.images.length) return;
+  const tmp=v.images[imgIdx]; v.images[imgIdx]=v.images[target]; v.images[target]=tmp;
+  saveProductById(id, p);
+  refreshColorVarList(id, p);
+}
+function setVariantPrimaryImage(id, idx, imgIdx){
+  const p = getProductById(id);
+  if(!p||!p.colorVariants||!p.colorVariants[idx]) return;
+  const v = p.colorVariants[idx];
+  if(!Array.isArray(v.images)||!v.images[imgIdx]) return;
+  v.primaryImage = v.images[imgIdx];
+  saveProductById(id, p);
+  refreshColorVarList(id, p);
+}
 
-// ── Update selectColorVariant to swap product main image ──
+// ── selectColorVariant: the single authoritative "select a color" state change ──
+// This is the ONE implementation of this function. Selecting a variant updates:
+// card state (data-selected-variant), active thumbnail/swatch, the ENTIRE slideshow
+// (variant-specific images only — never mixed with another color's photos), the color
+// label, price, the "Color/Size/Price" summary line, and the available sizes (clearing
+// an invalid previously-picked size). Everything downstream (preview, Add to Cart,
+// Buy Now, WhatsApp, Email) reads the card's selected-variant/selected-size at click
+// time, so it all stays in sync automatically.
 function selectColorVariant(e, productId, variantIdx){
-  e.stopPropagation();
-  const card = e.target.closest('[data-id]') || e.target.closest('.product-card');
+  if(e) e.stopPropagation();
+  const card = (e&&e.target.closest('.product-card')) || document.querySelector(`.product-card[data-id="${productId}"]`);
   if(!card) return;
-
-  // Store active variant on card so addToCart can read it
-  card.dataset.activeVariant = variantIdx;
-
-  // Update active state — thumbnails and swatches
-  card.querySelectorAll('.color-swatch').forEach(function(s,i){
-    s.classList.toggle('active', i===variantIdx);
-  });
-  card.querySelectorAll('.cv-thumb').forEach(function(s,i){
-    s.classList.toggle('active', i===variantIdx);
-    s.style.borderColor = (i===variantIdx) ? 'var(--ink)' : 'transparent';
-  });
 
   const p = [...getProducts(),...getMensProducts()].find(function(x){ return x.id===productId; });
   if(!p) return;
   const variant = (p.colorVariants||[])[variantIdx];
   if(!variant) return;
+  if(isVariantSoldOut(p, variantIdx)){ showToast('Yeh color abhi out of stock hai','error'); return; }
 
-  // Update label
-  const label = document.getElementById('cvLabel_'+productId);
+  // 1. Store the selected variant index as the source of truth on the card, clear any
+  //    previously selected size (it may not exist on the new color)
+  card.dataset.selectedVariant = variantIdx;
+  delete card.dataset.selectedSize;
+
+  // 2. Update active thumbnail / swatch
+  card.querySelectorAll('.color-swatch').forEach(function(s){
+    const i = parseInt(s.dataset.variantIdx);
+    s.classList.toggle('active', i===variantIdx);
+  });
+  card.querySelectorAll('.cv-thumb').forEach(function(s){
+    const i = parseInt(s.dataset.variantIdx);
+    s.classList.toggle('active', i===variantIdx);
+    s.style.borderColor = (i===variantIdx) ? 'var(--ink)' : 'transparent';
+  });
+
+  // 3. Update color label
+  const label = card.querySelector('#cvLabel_'+productId) || document.getElementById('cvLabel_'+productId);
   if(label) label.textContent = variant.name||variant.hex||'';
 
-  // Swap main slide to show variant image
-  if(variant.image){
-    // Try active slide first
-    let activeSlide = card.querySelector('.slide-img.active');
-    if(activeSlide){
-      activeSlide.src = variant.image;
-    } else {
-      // Create a slide
-      const ss = card.querySelector('.card-slideshow');
-      if(ss){
-        const img = document.createElement('img');
-        img.className = 'slide-img active';
-        img.src = variant.image;
-        img.style.cssText = 'width:100%;object-fit:cover;display:block;';
-        ss.prepend(img);
-      }
+  // 4. Rebuild the ENTIRE slideshow with only this variant's images (never mixed with another
+  //    color's photos), falling back to the main product gallery only if the variant has none.
+  const variantImgs = getVariantImages(p, variantIdx);
+  const galleryImgs = variantImgs.length ? variantImgs : getProductImages(p);
+  let ss = card.querySelector('.card-slideshow');
+  const placeholder = card.querySelector('.color-placeholder');
+  if(galleryImgs.length){
+    const slidesHTML = galleryImgs.map(function(img,i){ return '<img class="slide-img'+(i===0?' active':'')+'" src="'+img+'" alt="'+(p.name||'')+'" />'; }).join('')
+      + (galleryImgs.length>1 ? (
+          '<div class="slide-arrows"><button class="slide-arr" onclick="slideCard(event,'+p.id+',-1)">‹</button><button class="slide-arr" onclick="slideCard(event,'+p.id+',1)">›</button></div>'+
+          '<div class="slide-dots">'+galleryImgs.map(function(_,i){ return '<div class="slide-dot'+(i===0?' active':'')+'" onclick="goSlide(event,'+p.id+','+i+')"></div>'; }).join('')+'</div>'
+        ) : '');
+    if(ss){ ss.innerHTML = slidesHTML; }
+    else {
+      ss=document.createElement('div');
+      ss.className='card-slideshow';
+      ss.innerHTML=slidesHTML;
+      if(placeholder) placeholder.replaceWith(ss); else card.insertBefore(ss, card.querySelector('.card-body'));
     }
-    // Update previewImages so preview modal shows variant image
-    card.dataset.previewOverride = variant.image;
   }
+
+  // 5. Update available sizes for this variant (stock-aware), clearing the previous size selection
+  const sizesContainer = document.getElementById('sizes_'+productId);
+  const newSizes = getVariantSizesFull(p, variantIdx);
+  if(sizesContainer) sizesContainer.innerHTML = sizeButtonsHTML(productId, newSizes, '');
+
+  // 6. Update price row + selected-summary line to reflect the new color (no size yet)
+  const priceEl = document.getElementById('price_'+productId);
+  if(priceEl) priceEl.innerHTML = priceRowHTML(p, variantIdx, null);
+  const lineEl = document.getElementById('selLine_'+productId);
+  if(lineEl) lineEl.innerHTML = selectedLineInner(p, variantIdx, null);
+
+  // 7. Add to Cart / Buy Now should not be disabled just because a different, now out-of-stock,
+  //    color was previously the state (re-evaluate against THIS variant only)
+  card.querySelectorAll('.add-cart-btn,.buy-now-btn').forEach(function(btn){ btn.disabled=false; });
 }
-
-// ── Color Variant Size Toggle ──
-function toggleCVSize(productId, variantIdx, size){
-  const p = getProductById(productId);
-  if(!p||!p.colorVariants||!p.colorVariants[variantIdx]) return;
-  if(!p.colorVariants[variantIdx].sizes) p.colorVariants[variantIdx].sizes = [];
-  const sz = p.colorVariants[variantIdx].sizes;
-  const pos = sz.indexOf(size);
-  if(pos === -1) sz.push(size); else sz.splice(pos,1);
-  saveProductById(productId, p);
-  // Update button style in place (no full re-render = slots stay intact)
-  const btn = document.getElementById('cvSz_'+productId+'_'+variantIdx+'_'+size);
-  if(btn){
-    const isActive = sz.includes(size);
-    btn.style.border = '1px solid '+(isActive?'var(--rose)':'#e8dcc8');
-    btn.style.background = isActive?'var(--rose)':'#fff';
-    btn.style.color = isActive?'#fff':'var(--muted)';
-  }
-}
-
-// ══════════════════════════════════════════════════
-// COLOR VARIANT ADMIN SYSTEM — full rebuild
-// ══════════════════════════════════════════════════
-const ALL_SIZES_LIST = ['XS','S','M','L','XL','XXL','XXXL','Free Size','Custom'];
-const MAX_VARIANT_IMGS = 4;
-
-function makeNewVariant(isPrimary){
-  return {
-    name: isPrimary ? 'Primary' : 'New Color',
-    hex: '#c0392b',
-    images: [null,null,null,null],
-    isPrimary: !!isPrimary,
-    sizes: []  // [{size,price,salePrice,stock,sku}]
-  };
-}
-
-// ── Render full variant admin panel for a product ──
-function buildColorVarAdmin(p){
-  // Normalize all variants first
-  p = normalizeProductVariants(p) || p;
-  const vv = p.colorVariants || [];
-  if(!vv.length) return cvAddCard(p.id);
-  const cards = vv.map(function(v,i){ return buildCVCard(p, v, i); }).join('');
-  return cards + cvAddCard(p.id);
-}
-
-function cvAddCard(pid){
-  return '<div class="cv-add-card" onclick="addColorVariant('+pid+')"><span class="cv-add-card-icon">+</span>Add Color Variant</div>';
-}
-
-
-// ── Normalize variant sizes — always return array ──
-function normalizeCVSizes(v){
-  if(!v) return [];
-  if(!v.sizes) return [];
-  // If it's already an array of objects [{size,price,...}]
-  if(Array.isArray(v.sizes)){
-    return v.sizes.map(function(s){
-      if(typeof s === 'string') return {size:s, price:'', salePrice:'', stock:0, sku:''};
-      return s;
-    });
-  }
-  // If it's a comma-separated string like "S,M,L,XL"
-  if(typeof v.sizes === 'string' && v.sizes.trim()){
-    return v.sizes.split(',').map(function(sz){
-      return {size:sz.trim(), price:'', salePrice:'', stock:0, sku:''};
-    }).filter(function(s){ return s.size; });
-  }
-  return [];
-}
-
-// ── Normalize all variants of a product — call before rendering ──
-function normalizeProductVariants(p){
-  if(!p || !p.colorVariants) return p;
-  p.colorVariants = p.colorVariants.map(function(v){
-    v.sizes = normalizeCVSizes(v);
-    if(!Array.isArray(v.images)) v.images = [v.image||null,null,null,null];
-    while(v.images.length < 4) v.images.push(null);
-    return v;
-  });
-  return p;
-}
-
-function buildCVCard(p, v, i){
-  const pid = p.id;
-  // Normalize sizes to array (handles old string format)
-  v.sizes = normalizeCVSizes(v);
-  const imgs = Array.isArray(v.images) ? v.images : [v.image||null,null,null,null];
-  // ensure 4 slots
-  while(imgs.length < 4) imgs.push(null);
-
-  // Image strip
-  const imgStrip = imgs.map(function(img, si){
-    const filled = !!img;
-    return '<div class="cv-img-slot-sm'+(filled?' filled':'')+'" id="cvs_'+pid+'_'+i+'_'+si+'">'+
-      (filled?'<img src="'+img+'" alt="" />':'')+
-      '<div class="cv-img-slot-hint-sm"><span>'+(si===0?'📷 Main':'📷')+'</span></div>'+
-      '<input type="file" accept="image/*" onchange="handleCVImgNew(event,'+pid+','+i+','+si+')" />'+
-      '<button class="cv-slot-rm" onclick="removeCVImgNew(event,'+pid+','+i+','+si+')">✕</button>'+
-    '</div>';
-  }).join('');
-
-  // Size pills
-  const activeSizeNames = (v.sizes||[]).map(function(s){ return s.size; });
-  const sizePills = ALL_SIZES_LIST.map(function(sz){
-    const isActive = activeSizeNames.indexOf(sz) !== -1;
-    return '<span class="cv-size-pill'+(isActive?' active':'')+'" onclick="toggleCVSize('+pid+','+i+',\''+sz+'\')">'+(sz==='Free Size'?'Free':sz)+'</span>';
-  }).join('');
-
-  // Per-size table
-  const sizeRows = (v.sizes||[]).map(function(s, si){
-    return '<tr>'+
-      '<td><b style="font-family:monospace;font-size:.7rem;">'+s.size+'</b></td>'+
-      '<td><input type="text" value="'+(s.price||'')+'" placeholder="Price" onchange="updateCVSize('+pid+','+i+','+si+',\'price\',this.value)" /></td>'+
-      '<td><input type="text" value="'+(s.salePrice||'')+'" placeholder="Optional" onchange="updateCVSize('+pid+','+i+','+si+',\'salePrice\',this.value)" /></td>'+
-      '<td><input type="number" value="'+(s.stock||0)+'" min="0" onchange="updateCVSize('+pid+','+i+','+si+',\'stock\',parseInt(this.value)||0)" /></td>'+
-      '<td><input type="text" value="'+(s.sku||'')+'" placeholder="SKU" onchange="updateCVSize('+pid+','+i+','+si+',\'sku\',this.value)" /></td>'+
-    '</tr>';
-  }).join('');
-
-  const sizeTable = (v.sizes||[]).length > 0 ?
-    '<table class="cv-size-table">'+
-      '<thead><tr><th>Size</th><th>Price (Rs.)</th><th>Sale Price</th><th>Stock</th><th>SKU</th></tr></thead>'+
-      '<tbody>'+sizeRows+'</tbody>'+
-    '</table>' : '<p style="font-family:monospace;font-size:.55rem;color:#8a6f6f;margin-bottom:8px;">Size select karo neeche se ↓</p>';
-
-  return '<div class="cv-variant-card'+(v.isPrimary?' is-primary':'')+'" id="cvc_'+pid+'_'+i+'">'+
-    (v.isPrimary?'<div class="cv-primary-badge">⭐ Primary</div>':'')+
-    // Image strip
-    '<div class="cv-img-strip">'+imgStrip+'</div>'+
-    // Name + color row
-    '<div class="cv-name-row">'+
-      '<input type="text" value="'+(v.name||'')+'" placeholder="Variant name (e.g. Charcoal)" onchange="updateColorVariant('+pid+','+i+',\'name\',this.value)" />'+
-      '<input type="color" value="'+(v.hex||'#c0392b')+'" title="Swatch" onchange="updateColorVariant('+pid+','+i+',\'hex\',this.value)" />'+
-    '</div>'+
-    // Size label + pills
-    '<div class="cv-size-label">Sizes for this color (tap to add/remove)</div>'+
-    '<div class="cv-size-pills">'+sizePills+'</div>'+
-    // Per-size table
-    sizeTable+
-    // Action row
-    '<div class="cv-action-row">'+
-      '<button class="cv-btn-dup" onclick="duplicateVariant('+pid+','+i+')">⊕ Duplicate Variant</button>'+
-      '<button class="cv-btn-rm" onclick="removeColorVariant('+pid+','+i+')">🗑 Remove</button>'+
-      (!v.isPrimary?'<button class="cv-btn-primary" onclick="setPrimaryVariant('+pid+','+i+')">★ Set Primary</button>':'')+
-    '</div>'+
-  '</div>';
-}
-
-function refreshColorVarList(id, p){
-  const list = document.getElementById('colorVarList_'+id);
-  if(!list) return;
-  list.innerHTML = buildColorVarAdmin(p);
-  refreshProductCard(id);
-}
-
-// ── Add / Remove / Duplicate variants ──
-function addColorVariant(id){
-  const p = getProductById(id);
-  if(!p) return;
-  if(!p.colorVariants) p.colorVariants = [];
-  const isPrimary = p.colorVariants.length === 0;
-  p.colorVariants.push(makeNewVariant(isPrimary));
-  saveProductById(id, p);
-  refreshColorVarList(id, p);
-}
-
-function removeColorVariant(id, idx){
-  const p = getProductById(id);
-  if(!p || !p.colorVariants) return;
-  p.colorVariants.splice(idx, 1);
-  // If removed was primary, make first one primary
-  if(p.colorVariants.length > 0 && !p.colorVariants.find(function(v){ return v.isPrimary; })){
-    p.colorVariants[0].isPrimary = true;
-  }
-  saveProductById(id, p);
-  refreshColorVarList(id, p);
-}
-
-function duplicateVariant(id, idx){
-  const p = getProductById(id);
-  if(!p || !p.colorVariants || !p.colorVariants[idx]) return;
-  const clone = JSON.parse(JSON.stringify(p.colorVariants[idx]));
-  clone.name = clone.name + ' (Copy)';
-  clone.isPrimary = false;
-  p.colorVariants.splice(idx+1, 0, clone);
-  saveProductById(id, p);
-  refreshColorVarList(id, p);
-}
-
-function setPrimaryVariant(id, idx){
-  const p = getProductById(id);
-  if(!p || !p.colorVariants) return;
-  p.colorVariants.forEach(function(v){ v.isPrimary = false; });
-  p.colorVariants[idx].isPrimary = true;
-  saveProductById(id, p);
-  refreshColorVarList(id, p);
-  refreshProductCard(id);
-}
-
-// ── Image upload per variant ──
-function handleCVImgNew(event, pid, variantIdx, slotIdx){
-  const file = event.target.files[0];
-  if(!file) return;
-  showToast('Uploading...','');
-  // Compress aggressively: 500x500 max, quality 0.65
-  // This keeps each image ~40-80KB so sync stays under limit
-  compressImage(file, 500, 600, 0.65).then(function(dataUrl){
-    const p = getProductById(pid);
-    if(!p || !p.colorVariants || !p.colorVariants[variantIdx]) return;
-    const v = p.colorVariants[variantIdx];
-    if(!Array.isArray(v.images)) v.images = [null,null,null,null];
-    while(v.images.length < 4) v.images.push(null);
-    v.images[slotIdx] = dataUrl;
-    if(slotIdx === 0 || !v.image) v.image = dataUrl;
-    const ok = saveProductById(pid, p);
-    if(ok === false){ showToast('Storage full — clear kuch images','error'); return; }
-    // Update slot DOM in-place (no re-render)
-    const slot = document.getElementById('cvs_'+pid+'_'+variantIdx+'_'+slotIdx);
-    if(slot){
-      slot.classList.add('filled');
-      let img = slot.querySelector('img');
-      if(!img){
-        img = document.createElement('img');
-        img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
-        slot.insertBefore(img, slot.firstChild);
-      }
-      img.src = dataUrl;
-      const hint = slot.querySelector('.cv-img-slot-hint-sm');
-      if(hint) hint.style.display = 'none';
-      const rmBtn = slot.querySelector('.cv-slot-rm');
-      if(rmBtn) rmBtn.style.display = 'flex';
-    }
-    refreshProductCard(pid);
-    const kb = Math.round(dataUrl.length * 0.75 / 1024);
-    showToast('Photo upload ✓ ('+kb+'KB) — Slot '+(slotIdx+1),'success');
-  }).catch(function(e){
-    console.error('CV upload error:', e);
-    showToast('Upload fail — dobara try karein','error');
-  });
-}
-
-function removeCVImgNew(event, pid, variantIdx, slotIdx){
-  event.stopPropagation();
-  const p = getProductById(pid);
-  if(!p || !p.colorVariants || !p.colorVariants[variantIdx]) return;
-  const v = p.colorVariants[variantIdx];
-  if(!Array.isArray(v.images)) v.images = [null,null,null,null];
-  v.images[slotIdx] = null;
-  // Update legacy v.image to next available
-  v.image = v.images.find(function(img){ return !!img; }) || null;
-  saveProductById(pid, p);
-  // Update slot DOM in-place
-  const slot = document.getElementById('cvs_'+pid+'_'+variantIdx+'_'+slotIdx);
-  if(slot){
-    slot.classList.remove('filled');
-    const img = slot.querySelector('img');
-    if(img) img.remove();
-    const hint = slot.querySelector('.cv-img-slot-hint-sm');
-    if(hint) hint.style.display = 'flex';
-    const rmBtn = slot.querySelector('.cv-slot-rm');
-    if(rmBtn) rmBtn.style.display = 'none';
-  }
-  refreshProductCard(pid);
-  showToast('Photo remove ho gai');
-}
-
-// ── Size toggle ──
-function toggleCVSize(pid, variantIdx, sizeName){
-  const p = getProductById(pid);
-  if(!p || !p.colorVariants || !p.colorVariants[variantIdx]) return;
-  const v = p.colorVariants[variantIdx];
-  // Always normalize to array first
-  v.sizes = normalizeCVSizes(v);
-  const existingIdx = v.sizes.findIndex(function(s){ return s.size === sizeName; });
-  if(existingIdx !== -1){
-    v.sizes.splice(existingIdx, 1); // remove
-  } else {
-    v.sizes.push({ size: sizeName, price: p.price||'', salePrice:'', stock:0, sku:'' }); // add
-  }
-  saveProductById(pid, p);
-  // Update pill active state in place
-  const card = document.getElementById('cvc_'+pid+'_'+variantIdx);
-  if(card){
-    card.querySelectorAll('.cv-size-pill').forEach(function(pill){
-      pill.classList.toggle('active', v.sizes.findIndex(function(s){ return s.size===pill.textContent.trim()||( pill.textContent.trim()==='Free'&&s.size==='Free Size'); }) !== -1);
-    });
-    // Rebuild only the table section
-    const table = card.querySelector('.cv-size-table');
-    if(table) table.remove();
-    const pTag = card.querySelector('p.no-size-msg');
-    if(pTag) pTag.remove();
-    // Insert updated table before action row
-    const actionRow = card.querySelector('.cv-action-row');
-    const tableHTML = buildSizeTableHTML(p, v, variantIdx);
-    actionRow.insertAdjacentHTML('beforebegin', tableHTML);
-  }
-  showToast(sizeName + (existingIdx!==-1?' removed':' added'));
-}
-
-function buildSizeTableHTML(p, v, i){
-  const pid = p.id;
-  if(!v.sizes || !v.sizes.length) return '<p class="no-size-msg" style="font-family:monospace;font-size:.55rem;color:#8a6f6f;margin-bottom:8px;">Size select karo ↓</p>';
-  const rows = v.sizes.map(function(s, si){
-    return '<tr>'+
-      '<td><b style="font-family:monospace;font-size:.7rem;">'+s.size+'</b></td>'+
-      '<td><input type="text" class="cv-size-table input" value="'+(s.price||'')+'" placeholder="Price" onchange="updateCVSize('+pid+','+i+','+si+',\'price\',this.value)" /></td>'+
-      '<td><input type="text" class="cv-size-table input" value="'+(s.salePrice||'')+'" placeholder="Optional" onchange="updateCVSize('+pid+','+i+','+si+',\'salePrice\',this.value)" /></td>'+
-      '<td><input type="number" class="cv-size-table input" value="'+(s.stock||0)+'" min="0" onchange="updateCVSize('+pid+','+i+','+si+',\'stock\',parseInt(this.value)||0)" /></td>'+
-      '<td><input type="text" class="cv-size-table input" value="'+(s.sku||'')+'" placeholder="SKU" onchange="updateCVSize('+pid+','+i+','+si+',\'sku\',this.value)" /></td>'+
-    '</tr>';
-  }).join('');
-  return '<table class="cv-size-table"><thead><tr><th>Size</th><th>Price (Rs.)</th><th>Sale Price</th><th>Stock</th><th>SKU</th></tr></thead><tbody>'+rows+'</tbody></table>';
-}
-
-function updateCVSize(pid, variantIdx, sizeIdx, field, val){
-  const p = getProductById(pid);
-  if(!p || !p.colorVariants || !p.colorVariants[variantIdx]) return;
-  const v = p.colorVariants[variantIdx];
-  if(!v.sizes || !v.sizes[sizeIdx]) return;
-  v.sizes[sizeIdx][field] = val;
-  saveProductById(pid, p);
-}
-
-// Keep backward compat for old handleCVImg calls
-function handleCVImg(event, pid, variantIdx){ handleCVImgNew(event, pid, variantIdx, 0); }
-function removeCVImg(e, pid, variantIdx){ removeCVImgNew(e, pid, variantIdx, 0); }
-
 // ── INIT ──
-reApplySavedPatches();
-// Migrate old string-based variant sizes to new array format
-(function migrateLegacyVariants(){
-  try{
-    var prods = JSON.parse(localStorage.getItem('zt_products')||'[]');
-    var changed = false;
-    prods.forEach(function(p){
-      (p.colorVariants||[]).forEach(function(v){
-        if(v.sizes && !Array.isArray(v.sizes)){
-          v.sizes = normalizeCVSizes(v);
-          changed = true;
-        }
-      });
-    });
-    if(changed) localStorage.setItem('zt_products', JSON.stringify(prods));
-
-    var mens = JSON.parse(localStorage.getItem('zt_mens')||'[]');
-    var changedM = false;
-    mens.forEach(function(p){
-      (p.colorVariants||[]).forEach(function(v){
-        if(v.sizes && !Array.isArray(v.sizes)){
-          v.sizes = normalizeCVSizes(v);
-          changedM = true;
-        }
-      });
-    });
-    if(changedM) localStorage.setItem('zt_mens', JSON.stringify(mens));
-  }catch(e){}
-}());
-renderProducts();
-renderMens();
-renderSocials();
-renderOwnerStrip();
-renderReviews();
-renderCartPanel();
-buildHeroSlideshow();
+// Image cache must be hydrated (and any already-uploaded photos migrated out of
+// localStorage into IndexedDB) BEFORE the first render, so cards don't flash broken
+// images while the async IndexedDB reads are still in flight.
+(async function initApp(){
+  reApplySavedPatches();
+  await hydrateImageCache();
+  if(idbAvailable && localStorage.getItem('zt_idb_migrated')!=='1'){
+    await migrateImagesToIndexedDB(false); // silent first-run migration — frees up existing full storage
+  }
+  renderProducts();
+  renderMens();
+  renderSocials();
+  renderOwnerStrip();
+  renderReviews();
+  renderCartPanel();
+  buildHeroSlideshow();
+})();
 </script>
 
 <!-- IMAGE PREVIEW MODAL -->
