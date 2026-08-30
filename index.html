@@ -722,6 +722,14 @@ footer{background:var(--deep);color:var(--cream);padding:64px 60px 40px;}
 </head>
 <body>
 
+<div id="dataStatusBanner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:var(--rose);color:#fff;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.05em;text-align:center;padding:8px 12px;align-items:center;justify-content:center;gap:10px;">
+  <span></span>
+</div>
+<style>
+  #dataStatusBanner button{background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.5);color:#fff;font-family:inherit;font-size:.6rem;padding:3px 10px;border-radius:3px;cursor:pointer;margin-left:6px;}
+  #dataStatusBanner button:hover{background:rgba(255,255,255,.4);}
+</style>
+
 <!-- HERO -->
 <header>
   <!-- SLIDESHOW BACKGROUND -->
@@ -1109,6 +1117,7 @@ footer{background:var(--deep);color:var(--cream);padding:64px 60px 40px;}
   <div class="login-box">
     <h3>Admin Access</h3>
     <div class="login-box-urdu">پاس ورڈ درج کریں</div>
+    <input class="login-input" type="email" id="adminEmail" placeholder="Admin email" style="margin-bottom:10px;" />
     <input class="login-input" type="password" id="adminPassword" placeholder="Password" />
     <button class="login-btn" id="loginSubmit">Enter Panel</button>
     <div class="login-error" id="loginError">Galat password. Dobara try karein.</div>
@@ -1124,12 +1133,19 @@ footer{background:var(--deep);color:var(--cream);padding:64px 60px 40px;}
   </div>
   <div class="panel-body">
 
-    <p class="panel-section-title">💾 Storage</p>
+    <p class="panel-section-title">☁️ Cloud Database (Supabase)</p>
+    <div id="supabaseStatusLine" style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--sage);margin-bottom:8px;line-height:1.7;">Checking...</div>
+    <p style="font-family:'DM Mono',monospace;font-size:.52rem;color:var(--muted);line-height:1.7;margin-bottom:8px;">
+      Yeh central database hai — is se products/prices/images har mobile aur browser par same dikhte hain. Setup steps ke liye ZABETAN-SUPABASE-SETUP.md file dekhein.
+    </p>
+    <button class="btn-save-set" onclick="runMigrationToSupabase()">☁️ Migrate Existing Data to Cloud</button>
+
+    <p class="panel-section-title">💾 Local Photo Cache</p>
     <p style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--muted);line-height:1.7;margin-bottom:8px;">
-      Photos ab IndexedDB mein save hoti hain (localStorage nahi) — is se "storage full" wala masla khatam ho jata hai, chahe kitni bhi color variant photos upload karein.
+      Naye uploads seedha cloud (Supabase Storage) mein jate hain — sab devices par dikhte hain. Yeh sirf purane, pre-cloud local photos ke liye hai.
     </p>
     <div id="storageStatusLine" style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--sage);margin-bottom:8px;">Checking storage...</div>
-    <button class="btn-save-set" onclick="runManualMigration()">🧹 Free Up Storage Now</button>
+    <button class="btn-save-set" onclick="runManualMigration()">🧹 Free Up Local Storage Now</button>
 
     <p class="panel-section-title">🖼 Hero Slideshow Images</p>
     <p style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--muted);line-height:1.7;margin-bottom:4px;">
@@ -1265,7 +1281,27 @@ footer{background:var(--deep);color:var(--cream);padding:64px 60px 40px;}
 
 <div class="toast" id="toast"></div>
 
+<!-- ══════════════════════════════════════════════════════════════════
+     SUPABASE — the real, shared, multi-device database + image storage.
+     Loaded from CDN so no build step is needed (works with a plain
+     static HTML deploy on Netlify/Vercel). -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
+// ══════════════════════════════════════════════════════════════════
+// ── SUPABASE CONFIGURATION — REQUIRED, FILL THESE IN ──
+// Get these from your Supabase project dashboard → Settings → API.
+// SUPABASE_ANON_KEY is safe to expose in frontend code — it is a PUBLIC
+// key, and Row Level Security (RLS) policies (set up per the SQL in
+// SETUP INSTRUCTIONS) are what actually control who can read/write.
+// Until these are filled in, the site falls back to the old local-only
+// behavior so it doesn't break while you're setting Supabase up.
+// ══════════════════════════════════════════════════════════════════
+const SUPABASE_URL = 'https://utrrmpzncvavokamuelg.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_A_r1Hjx-5dSs7lTTx1eJ9Q_mUUnnnjT'; // Settings → API → publishable key
+const supabaseReady = !!(typeof window.supabase!=='undefined' && SUPABASE_URL.indexOf('YOUR_SUPABASE')===-1 && SUPABASE_ANON_KEY.indexOf('YOUR_SUPABASE')===-1);
+const sb = supabaseReady ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
 const WA_NUMBER   = '923085738857';
 const OWNER_EMAIL = 's3074790@gmail.com';
 function getAdminPass(){return localStorage.getItem('zt_adminpass')||'zabetan2025';}
@@ -1328,27 +1364,52 @@ function idbDelete(key){
 // products, and updated immediately whenever a new photo is uploaded.
 let imgCache = {};
 function isIdbRef(ref){ return typeof ref==='string' && ref.indexOf('idb:')===0; }
-// The ONE place every consumer should resolve an image reference through — handles both
-// the new "idb:xxx" keys AND old inline base64 data URLs (pre-migration / no-IndexedDB fallback).
+// Resolves an image reference for display. Handles three cases: a real Supabase Storage
+// URL / any plain URL (used as-is — this is what NEW uploads produce), a legacy "idb:xxx"
+// key from local-only storage (pre-Supabase-setup uploads), or legacy inline base64.
 function resolveImgSrc(ref){
   if(!ref) return null;
   if(isIdbRef(ref)) return imgCache[ref] || '';
-  return ref; // legacy raw base64 (or a plain URL) — used as-is
+  return ref;
 }
 function resolveImgList(list){ return (list||[]).map(resolveImgSrc).filter(Boolean); }
-// Compress + persist a new photo into IndexedDB, returning the reference key to store on
-// the product. Falls back to storing the raw data URL inline if IndexedDB isn't available
-// at all (very old browsers) so uploads still work, just without the quota fix.
+const SUPABASE_STORAGE_BUCKET = 'product-images';
+function isSupabaseStorageUrl(ref){
+  return supabaseReady && typeof ref==='string' && ref.indexOf(SUPABASE_URL)===0;
+}
+// Uploads a photo to Supabase Storage (shared, permanent, works on every device) and
+// returns its public URL. If Supabase isn't configured yet (or the upload fails for any
+// reason — e.g. offline), falls back to the old local-only IndexedDB storage so uploads
+// still work — just without being visible on other devices until Supabase is set up.
 async function storeImageAsync(dataUrl){
-  if(!idbAvailable) return dataUrl; // no IndexedDB support — old behavior
+  if(supabaseReady){
+    try{
+      const blob = await (await fetch(dataUrl)).blob();
+      const path = 'img_'+Date.now()+'_'+Math.random().toString(36).slice(2,9)+'.jpg';
+      const {error} = await sb.storage.from(SUPABASE_STORAGE_BUCKET).upload(path, blob, {contentType:'image/jpeg', upsert:false});
+      if(error) throw error;
+      const {data} = sb.storage.from(SUPABASE_STORAGE_BUCKET).getPublicUrl(path);
+      return data.publicUrl; // real, permanent, cross-device HTTPS URL — this is what fixes "image not showing on other phone"
+    }catch(err){
+      console.error('Supabase Storage upload failed, falling back to local-only storage:', err);
+      showToast('⚠ Cloud image upload fail hui — abhi sirf is device par save hai','error');
+    }
+  }
+  if(!idbAvailable) return dataUrl;
   const key = 'idb:img_'+Date.now()+'_'+Math.random().toString(36).slice(2,9);
   const ok = await idbPut(key, dataUrl);
-  if(!ok) return dataUrl; // IndexedDB write failed for some reason — fall back safely
+  if(!ok) return dataUrl;
   imgCache[key] = dataUrl;
   return key;
 }
 async function deleteStoredImage(ref){
-  if(isIdbRef(ref)){ delete imgCache[ref]; await idbDelete(ref); }
+  if(isIdbRef(ref)){ delete imgCache[ref]; await idbDelete(ref); return; }
+  if(isSupabaseStorageUrl(ref)){
+    try{
+      const path = ref.split('/').pop().split('?')[0];
+      await sb.storage.from(SUPABASE_STORAGE_BUCKET).remove([path]);
+    }catch(err){ console.error('Storage delete failed (non-fatal):', err); }
+  }
 }
 // Scans every product for "idb:" keys and pre-loads them into imgCache before first render.
 async function hydrateImageCache(){
@@ -1425,6 +1486,80 @@ async function runManualMigration(){
   showToast('Storage free ki ja rahi hai...','');
   await migrateImagesToIndexedDB(true);
 }
+// ── ONE-CLICK MIGRATION: pushes whatever products currently exist on THIS device
+// (localStorage + any locally-cached/IndexedDB/base64 images) up into the shared Supabase
+// database + Storage bucket, so every other device starts seeing them too. Run this once
+// after you've filled in SUPABASE_URL/SUPABASE_ANON_KEY and created the tables/bucket.
+async function runMigrationToSupabase(){
+  if(!supabaseReady){ showToast('Pehle SUPABASE_URL aur SUPABASE_ANON_KEY code mein daalein','error'); return; }
+  showToast('Cloud migration shuru ho rahi hai — ismein thora waqt lag sakta hai...','');
+  try{
+    async function migrateOneRef(ref){
+      if(!ref) return ref;
+      if(isSupabaseStorageUrl(ref)) return ref; // already migrated
+      let dataUrl=null;
+      if(isIdbRef(ref)) dataUrl = imgCache[ref] || await idbGet(ref);
+      else if(typeof ref==='string' && ref.indexOf('data:')===0) dataUrl = ref;
+      if(!dataUrl) return ref; // a plain external URL already, or genuinely unresolved — leave as-is
+      return await storeImageAsync(dataUrl); // supabaseReady is true here, so this uploads to Storage
+    }
+    async function migrateProductImages(p){
+      if(Array.isArray(p.images)){
+        for(let i=0;i<p.images.length;i++) p.images[i]=await migrateOneRef(p.images[i]);
+      }
+      if(Array.isArray(p.colorVariants)){
+        for(const v of p.colorVariants){
+          if(!v) continue;
+          if(v.image) v.image=await migrateOneRef(v.image);
+          if(v.primaryImage) v.primaryImage=await migrateOneRef(v.primaryImage);
+          if(Array.isArray(v.images)){
+            for(let j=0;j<v.images.length;j++) v.images[j]=await migrateOneRef(v.images[j]);
+          }
+        }
+      }
+    }
+    const women = getProducts();
+    const mens = getMensProducts();
+    for(const p of women) await migrateProductImages(p);
+    for(const p of mens) await migrateProductImages(p);
+    const rows = women.map(function(p){return {id:p.id,category:'women',data:p,updated_at:new Date().toISOString()};})
+      .concat(mens.map(function(p){return {id:p.id,category:'mens',data:p,updated_at:new Date().toISOString()};}));
+    if(rows.length){
+      const {error}=await sb.from('products').upsert(rows,{onConflict:'id'});
+      if(error) throw error;
+    }
+    productsCache=women; mensCache=mens;
+    localStorage.setItem('zt_products',JSON.stringify(women));
+    localStorage.setItem('zt_mens',JSON.stringify(mens));
+    dataSourceStatus='server';
+    updateDataStatusBanner();
+    updateSupabaseStatusLine();
+    renderProducts(); renderMens();
+    showToast(`Migration complete ✓ — ${rows.length} products ab cloud mein hain`,'success');
+  }catch(err){
+    console.error(err);
+    showToast('Migration fail hui: '+err.message,'error');
+  }
+}
+// Shows whether Supabase is configured/reachable, and how many products are stored there.
+async function updateSupabaseStatusLine(){
+  const el=document.getElementById('supabaseStatusLine');
+  if(!el) return;
+  if(!supabaseReady){
+    el.innerHTML='⚠ Not configured — code mein SUPABASE_URL aur SUPABASE_ANON_KEY daalein (setup guide dekhein).';
+    el.style.color='var(--rose)';
+    return;
+  }
+  try{
+    const {count,error}=await sb.from('products').select('id',{count:'exact',head:true});
+    if(error) throw error;
+    el.innerHTML=`✓ Connected — cloud database mein ${count} products hain.`;
+    el.style.color='var(--sage)';
+  }catch(err){
+    el.innerHTML='⚠ Connect nahi ho saka: '+err.message;
+    el.style.color='var(--rose)';
+  }
+}
 // Shows current localStorage usage (the small, easily-filled quota) vs IndexedDB usage
 // (the near-unlimited store photos now live in) in the admin panel.
 async function updateStorageStatusLine(){
@@ -1469,11 +1604,115 @@ const defaultOwner={name:'ZabeTan',tagline:'Premium Pakistani Dresses · Faisala
 // PATCH 3: Empty default reviews — existing localStorage reviews are unaffected
 const defaultReviews=[];
 
-// ── STORAGE ──
-function getProducts(){try{const s=localStorage.getItem('zt_products');return s?JSON.parse(s):defaultProducts;}catch(e){return defaultProducts;}}
-function saveProducts(d){return safeSave('zt_products',d);}
-function getMensProducts(){try{const s=localStorage.getItem('zt_mens');return s?JSON.parse(s):defaultMensProducts;}catch(e){return defaultMensProducts;}}
-function saveMensProducts(d){return safeSave('zt_mens',d);}
+// ══════════════════════════════════════════════════════════════════
+// ── STORAGE — Supabase (central, shared, multi-device) is the source
+//    of truth. localStorage is kept ONLY as an offline/loading-time
+//    cache so the site still shows something instantly and still works
+//    if the network/Supabase is briefly unreachable — it must never be
+//    treated as authoritative, and it's always overwritten by fresh
+//    server data the moment a Supabase read succeeds.
+// ══════════════════════════════════════════════════════════════════
+let productsCache = null; // populated by loadProductsFromServer() before first render
+let mensCache = null;
+let dataSourceStatus = 'loading'; // 'loading' | 'server' | 'offline-cache' | 'error' | 'not-configured'
+
+function readLocalFallback(key, def){ try{const s=localStorage.getItem(key); return s?JSON.parse(s):def;}catch(e){return def;} }
+// Synchronous reads — everywhere in the app that calls getProducts()/getMensProducts()
+// keeps working unchanged; the async server fetch happens once up front in loadProductsFromServer().
+function getProducts(){ return productsCache!==null ? productsCache : readLocalFallback('zt_products', defaultProducts); }
+function getMensProducts(){ return mensCache!==null ? mensCache : readLocalFallback('zt_mens', defaultMensProducts); }
+
+// Saves are OPTIMISTIC: the local cache + localStorage update immediately (so the admin's
+// own UI responds instantly, same as before), and the write is pushed to Supabase in the
+// background. If that background push fails, the admin is shown a clear toast — the change
+// is NOT silently lost/local-only without them knowing.
+function saveProducts(list){
+  const previous = productsCache;
+  productsCache = list;
+  localStorage.setItem('zt_products', JSON.stringify(list));
+  pushProductsToServer(list, 'women', previous);
+  return true;
+}
+function saveMensProducts(list){
+  const previous = mensCache;
+  mensCache = list;
+  localStorage.setItem('zt_mens', JSON.stringify(list));
+  pushProductsToServer(list, 'mens', previous);
+  return true;
+}
+let pushDebounceTimers={};
+function pushProductsToServer(list, category, previousList){
+  if(!supabaseReady){
+    showToast('⚠ Supabase configure nahi hai — yeh change sirf isi device par save hua','error');
+    return;
+  }
+  clearTimeout(pushDebounceTimers[category]);
+  pushDebounceTimers[category]=setTimeout(async function(){
+    try{
+      const rows=list.map(function(p){ return {id:p.id, category:category, data:p, updated_at:new Date().toISOString()}; });
+      if(rows.length){
+        const {error}=await sb.from('products').upsert(rows,{onConflict:'id'});
+        if(error) throw error;
+      }
+      // Remove rows for products that were deleted from this list
+      const newIds=new Set(list.map(function(p){return p.id;}));
+      const deletedIds=(previousList||[]).map(function(p){return p.id;}).filter(function(id){return !newIds.has(id);});
+      if(deletedIds.length){
+        const {error:delErr}=await sb.from('products').delete().in('id',deletedIds).eq('category',category);
+        if(delErr) throw delErr;
+      }
+    }catch(err){
+      console.error('Supabase save failed:',err);
+      showToast('⚠ Cloud save fail hui (offline?) — dobara try karein','error');
+    }
+  }, 500); // debounce so rapid edits don't spam the database with a request per keystroke
+}
+// Fetches the current, authoritative product list from Supabase — called once at startup
+// and again whenever a realtime change notification arrives.
+async function loadProductsFromServer(){
+  if(!supabaseReady){
+    productsCache = readLocalFallback('zt_products', defaultProducts);
+    mensCache = readLocalFallback('zt_mens', defaultMensProducts);
+    dataSourceStatus='not-configured';
+    return;
+  }
+  try{
+    const {data, error} = await sb.from('products').select('id,category,data');
+    if(error) throw error;
+    productsCache = data.filter(function(r){return r.category==='women';}).map(function(r){return r.data;});
+    mensCache = data.filter(function(r){return r.category==='mens';}).map(function(r){return r.data;});
+    localStorage.setItem('zt_products', JSON.stringify(productsCache)); // offline cache only
+    localStorage.setItem('zt_mens', JSON.stringify(mensCache));
+    dataSourceStatus='server';
+  }catch(err){
+    console.error('Supabase load failed:',err);
+    productsCache = readLocalFallback('zt_products', defaultProducts);
+    mensCache = readLocalFallback('zt_mens', defaultMensProducts);
+    dataSourceStatus='error';
+  }
+}
+// Live updates: if Admin changes a product from any device, everyone currently browsing
+// gets the fresh data automatically — no manual refresh needed.
+function subscribeToProductChanges(){
+  if(!supabaseReady) return;
+  sb.channel('products-realtime')
+    .on('postgres_changes', {event:'*', schema:'public', table:'products'}, async function(){
+      await loadProductsFromServer();
+      renderProducts(); renderMens();
+      updateDataStatusBanner();
+    })
+    .subscribe();
+}
+function updateDataStatusBanner(){
+  const el=document.getElementById('dataStatusBanner');
+  if(!el) return;
+  if(dataSourceStatus==='server'){ el.style.display='none'; return; }
+  el.style.display='flex';
+  if(dataSourceStatus==='not-configured') el.innerHTML='⚠ Backend configure nahi hai — sirf is device ka data dikh raha hai. <button onclick="location.reload()">Retry</button>';
+  else if(dataSourceStatus==='error') el.innerHTML='⚠ Live data load nahi ho saki — purana cached data dikh raha hai. <button onclick="location.reload()">Retry</button>';
+  else if(dataSourceStatus==='loading') el.innerHTML='Products load ho rahe hain...';
+}
+
 function getSocials(){try{const s=localStorage.getItem('zt_socials');return s?JSON.parse(s):{facebook:'',instagram:'',tiktok:''};}catch(e){return{facebook:'',instagram:'',tiktok:''};}}
 function saveSocialData(d){localStorage.setItem('zt_socials',JSON.stringify(d));}
 function getOwner(){try{const s=localStorage.getItem('zt_owner');return s?JSON.parse(s):defaultOwner;}catch(e){return defaultOwner;}}
@@ -2506,7 +2745,7 @@ async function handleSlotImg(event,id,slotIdx){
     // reference key is kept in the localStorage-backed product JSON.
     const ref = await storeImageAsync(dataUrl);
     products[idx].images[slotIdx]=ref;
-    const ok=isMens?saveMensProducts(products):safeSave('zt_products', products);
+    const ok=isMens?saveMensProducts(products):saveProducts(products);
     if(!ok)return;
     if(isIdbRef(oldRef) && oldRef!==ref) deleteStoredImage(oldRef); // replaced — free the old photo
     const slot=document.getElementById('slot_'+id+'_'+slotIdx);
@@ -2534,7 +2773,7 @@ async function removeSlotImg(e,id,slotIdx){
       products[idx].images=[null,null,null,null,null,null,null,null];
     const oldRef=products[idx].images[slotIdx];
     products[idx].images[slotIdx]=null;
-    if(isMensR)saveMensProducts(products);else safeSave('zt_products', products);
+    if(isMensR)saveMensProducts(products);else saveProducts(products);
     if(isIdbRef(oldRef)) deleteStoredImage(oldRef);
   }
   const slot=document.getElementById('slot_'+id+'_'+slotIdx);
@@ -2830,17 +3069,39 @@ document.getElementById('adminToggle').addEventListener('click',()=>{document.ge
 document.getElementById('loginCancel').addEventListener('click',()=>document.getElementById('adminLoginOverlay').classList.remove('open'));
 document.getElementById('loginSubmit').addEventListener('click',attemptLogin);
 document.getElementById('adminPassword').addEventListener('keydown',e=>{if(e.key==='Enter')attemptLogin();});
-function attemptLogin(){
+async function attemptLogin(){
   const pw=document.getElementById('adminPassword');
-  if(pw.value===getAdminPass()){
+  const emailEl=document.getElementById('adminEmail');
+  const submitBtn=document.getElementById('loginSubmit');
+  function openPanel(){
     document.getElementById('adminLoginOverlay').classList.remove('open');
     document.getElementById('adminPanel').classList.add('open');
     document.body.classList.add('admin-active');
     renderEditPanel();
     renderHeroImgGrid();
     updateStorageStatusLine();
+    updateSupabaseStatusLine();
   }
-  else{document.getElementById('loginError').style.display='block';pw.value='';pw.focus();pw.style.borderColor='var(--rose)';setTimeout(()=>pw.style.borderColor='',1000);}
+  function fail(){
+    document.getElementById('loginError').style.display='block';
+    pw.value='';pw.focus();pw.style.borderColor='var(--rose)';
+    setTimeout(()=>pw.style.borderColor='',1000);
+  }
+  if(supabaseReady){
+    // Real backend-enforced admin auth (Supabase Auth) — the products table's Row Level
+    // Security policy only allows writes from an authenticated session, so this is actual
+    // security, not just a frontend "if" check.
+    submitBtn.disabled=true; submitBtn.textContent='Checking...';
+    try{
+      const {error} = await sb.auth.signInWithPassword({email: (emailEl.value||'').trim(), password: pw.value});
+      if(error){ fail(); } else { openPanel(); }
+    }catch(err){ console.error(err); fail(); }
+    finally{ submitBtn.disabled=false; submitBtn.textContent='Enter Panel'; }
+  } else {
+    // Supabase not configured yet — fall back to the old local-only password gate so the
+    // site remains usable while you're setting the backend up. NOT real security.
+    if(pw.value===getAdminPass()) openPanel(); else fail();
+  }
 }
 document.getElementById('panelClose').addEventListener('click',()=>{
   document.getElementById('adminPanel').classList.remove('open');
@@ -3470,14 +3731,18 @@ function selectColorVariant(e, productId, variantIdx){
   card.querySelectorAll('.add-cart-btn,.buy-now-btn').forEach(function(btn){ btn.disabled=false; });
 }
 // ── INIT ──
-// Image cache must be hydrated (and any already-uploaded photos migrated out of
-// localStorage into IndexedDB) BEFORE the first render, so cards don't flash broken
-// images while the async IndexedDB reads are still in flight.
+// 1. Load the current, authoritative product list from Supabase (the shared database) —
+//    this is what makes every device/browser see the same data. Falls back to the local
+//    cache only if Supabase isn't configured yet or is briefly unreachable.
+// 2. Hydrate the local IndexedDB image cache too, for backward compatibility with any
+//    photos uploaded before Supabase was configured (or if Supabase Storage is unavailable).
 (async function initApp(){
   reApplySavedPatches();
+  updateDataStatusBanner();
+  await loadProductsFromServer();
   await hydrateImageCache();
   if(idbAvailable && localStorage.getItem('zt_idb_migrated')!=='1'){
-    await migrateImagesToIndexedDB(false); // silent first-run migration — frees up existing full storage
+    await migrateImagesToIndexedDB(false); // silent first-run cleanup for any pre-Supabase local images
   }
   renderProducts();
   renderMens();
@@ -3486,6 +3751,8 @@ function selectColorVariant(e, productId, variantIdx){
   renderReviews();
   renderCartPanel();
   buildHeroSlideshow();
+  updateDataStatusBanner();
+  subscribeToProductChanges();
 })();
 </script>
 
